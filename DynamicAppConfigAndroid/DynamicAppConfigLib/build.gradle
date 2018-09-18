@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'DynamicAppConfigLib'
+
+    publishedGroupId = 'com.crescentflare.dynamicappconfig'
+    libraryName = 'DynamicAppConfigAndroid'
+    artifact = 'DynamicAppConfigLib'
+
+    libraryDescription = 'A useful library to support multiple build configurations in one application build'
+
+    siteUrl = 'https://github.com/crescentflare/DynamicAppConfig'
+    gitUrl = 'https://github.com/crescentflare/DynamicAppConfig.git'
+
+    libraryVersion = '1.2.0'
+
+    developerId = 'crescentflare'
+    developerName = 'Johan Bos'
+    developerEmail = 'info@crescentflare.com'
+
+    licenseName = 'The MIT License (MIT)'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        prerelease {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
