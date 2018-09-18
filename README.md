@@ -19,3 +19,47 @@ For example: be able to make one build with a build selector that contains devel
 - Separate global settings which work across different configurations
 - Be able to write custom plugins, like development tools, making them accessible through the selection menu
 - Dynamic configurations can be disabled to prevent them from being available on distribution (App Store) or Google Play builds
+
+
+### iOS Integration guide
+
+The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add one of the following lines to your Podfile.
+
+```ruby
+pod "DynamicAppConfig", '~> 1.2.0'
+```
+
+The above version is for Swift 4.1. For older Swift versions use the old AppConfigSwift library, available [here](https://github.com/crescentflare/AppConfigSwift).
+
+
+### Android Integration guide
+When using gradle, the library can easily be imported into the build.gradle file of your project. Add the following dependency:
+
+compile 'com.crescentflare.appconfig:AppConfigLib:1.2.0'
+
+Make sure that jcenter is added as a repository. The above is for Android API level 14 and higher. To support older Android versions use the old library, available [here](https://github.com/crescentflare/DynamicAppConfigAndroid).
+
+
+### Storage
+
+When existing configurations are edited or custom ones are being added, the changes are saved in the user preferences (Android) or user defaults (iOS) of the device. Also the last selected configuration and global settings are stored there. This makes sure that it remembers the correct settings, even if the app is restarted. It also works correctly when an Android app is closed silently when the device is running out of memory.
+
+
+### Automated testing
+
+The library is ready for automated testing using Espresso (for Android). The example project provides a demonstration on how to modify the configuration within automated test scripts. Automated testing for iOS will be added later as well.
+
+
+### Security
+
+Because the library can give a lot of control on the product (by making its settings configurable), it's important to prevent any code (either the selection menu itself, or the JSON/plist configuration data like test servers and passwords) from being deployed to Google Play or the App Store. Take a look at the example project for more information. For the release configuration it doesn't activate the app config and places an empty configuration json in the asset folder (for that specific configuration) on Android, or just excludes the plist file (on iOS).
+
+
+### Example
+
+The provided example shows how to set up a configuration model, define configuration settings and launch the configuration tool. It also includes a demo of using global settings and a custom logging tool.
+
+
+### Status
+
+The library is stable and has been used in many projects. Improvements may be added in the future.
