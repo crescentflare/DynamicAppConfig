@@ -116,7 +116,7 @@ public class AppConfigCellList extends LinearLayout
     public void addSectionItem(View view)
     {
         // Add divider line
-        if (previousItemView != null && (!(previousItemView instanceof AppConfigEditableOldCell) || !(view instanceof AppConfigEditableOldCell)))
+        if (previousItemView != null)
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
