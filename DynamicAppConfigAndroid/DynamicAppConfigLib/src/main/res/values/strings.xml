@@ -1,0 +1,49 @@
+<resources>
+    <!-- Shared items -->
+    <string name="app_config_loading">Loading configurations...</string>
+
+    <!-- Manage configurations -->
+    <string name="app_config_title_list">App configurations</string>
+    <string name="app_config_header_list_last_selection">Last selected</string>
+    <string name="app_config_item_none">None</string>
+    <string name="app_config_item_edited">Edited</string>
+    <string name="app_config_header_list">Predefined configurations</string>
+    <string name="app_config_header_list_custom">Custom configurations</string>
+    <string name="app_config_action_add">Add new...</string>
+    <string name="app_config_header_global_prefix">Global settings</string>
+    <string name="app_config_header_list_plugins">Custom plugins</string>
+    <string name="app_config_header_list_build_info">Build information</string>
+    <string name="app_config_field_build">Build</string>
+    <string name="app_config_field_api_level">API level</string>
+
+    <!-- New custom configuration -->
+    <string name="app_config_title_choose_custom_copy">New custom configuration</string>
+    <string name="app_config_header_choose_custom_copy">Copy from...</string>
+
+    <!-- Edit configuration -->
+    <string name="app_config_title_edit">Edit configuration</string>
+    <string name="app_config_title_edit_new">New custom configuration</string>
+    <string name="app_config_menu_save">Save</string>
+    <string name="app_config_menu_create">Create</string>
+    <string name="app_config_header_edit_new">Adjust custom settings</string>
+    <string name="app_config_header_edit_name">Custom settings name</string>
+    <string name="app_config_header_edit_other">Others</string>
+    <string name="app_config_header_edit_actions">Actions</string>
+    <string name="app_config_action_ok_edit">Apply changes</string>
+    <string name="app_config_action_ok_edit_new">Confirm creation</string>
+    <string name="app_config_action_delete">Delete</string>
+    <string name="app_config_action_restore">Restore to defaults</string>
+    <string name="app_config_modifier_copy">copy</string>
+
+    <!-- Select value -->
+    <string name="app_config_title_choose_enum_prefix">Select</string>
+    <string name="app_config_header_choose_enum">Possible values:</string>
+
+    <!-- Dialogs -->
+    <string name="app_config_title_dialog_confirm_save_changes">Save changes?</string>
+    <string name="app_config_title_dialog_edit_value">Value for %s</string>
+    <string name="app_config_action_confirm">Yes</string>
+    <string name="app_config_action_deny">No</string>
+    <string name="app_config_action_ok">OK</string>
+    <string name="app_config_action_cancel">Cancel</string>
+</resources>

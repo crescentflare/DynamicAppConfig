@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'DynamicAppConfig_Example' do
+  pod 'DynamicAppConfig', :path => '../../'
+
+  target 'DynamicAppConfig_Tests' do
+    inherit! :search_paths
+  end
+end

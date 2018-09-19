@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Mock server",
+        "apiUrl": "https://mock.example.com/",
+        "runType": "runQuickly",
+        "networkTimeoutSec": 4
+    },
+    {
+        "name": "Test server",
+        "apiUrl": "https://test.example.com/",
+        "subConfigs":
+        [
+            {
+                "name": "Test server (insecure)",
+                "acceptAllSSL": true
+            }
+        ]
+    },
+    {
+        "name": "Acceptation server",
+        "apiUrl": "https://accept.example.com/",
+        "runType": "runStrictly"
+    },
+    {
+        "name": "Production"
+    }
+]

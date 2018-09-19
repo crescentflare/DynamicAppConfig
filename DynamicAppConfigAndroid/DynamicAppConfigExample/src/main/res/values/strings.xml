@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Example App Config</string>
+    <string name="show_log_title">Example App Config log</string>
+    <string name="message">Example application for the app configuration library</string>
+    <string name="prefix_config_name">name:</string>
+    <string name="prefix_config_api_url">apiUrl:</string>
+    <string name="prefix_config_run_type">runType:</string>
+    <string name="prefix_config_accept_all_ssl">acceptAllSSL:</string>
+    <string name="prefix_config_network_timeout_sec">networkTimeoutSec:</string>
+    <string name="prefix_config_console_url">consoleUrl:</string>
+    <string name="prefix_config_console_enabled">consoleEnabled:</string>
+    <string name="prefix_config_console_timeout_sec">consoleTimeoutSec:</string>
+    <string name="prefix_config_log_level">logLevel:</string>
+</resources>

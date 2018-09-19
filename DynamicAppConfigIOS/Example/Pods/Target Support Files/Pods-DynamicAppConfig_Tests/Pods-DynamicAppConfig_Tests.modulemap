@@ -1,0 +1,6 @@
+framework module Pods_DynamicAppConfig_Tests {
+  umbrella header "Pods-DynamicAppConfig_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

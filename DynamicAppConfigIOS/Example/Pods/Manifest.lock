@@ -1,0 +1,16 @@
+PODS:
+  - DynamicAppConfig (1.2.0)
+
+DEPENDENCIES:
+  - DynamicAppConfig (from `../../`)
+
+EXTERNAL SOURCES:
+  DynamicAppConfig:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  DynamicAppConfig: fd1db85e1b294aa7faacce8bdc50a888efd405a4
+
+PODFILE CHECKSUM: bd8d7527006aac0815d1773127b8a71dc167f62a
+
+COCOAPODS: 1.5.3
