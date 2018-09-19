@@ -42,6 +42,11 @@ compile 'com.crescentflare.dynamicappconfig:AppConfigLib:1.2.0'
 Make sure that jcenter is added as a repository. The above is for Android API level 14 and higher. To support older Android versions use the old library, available [here](https://github.com/crescentflare/DynamicAppConfigAndroid).
 
 
+### Integration documentation
+
+An explanation on how to further integrate and use the library itself is available on the [wiki](https://github.com/crescentflare/DynamicAppConfig/wiki). It contains documentation for both iOS and Android separately.
+
+
 ### Storage
 
 When existing configurations are edited or custom ones are being added, the changes are saved in the user preferences (Android) or user defaults (iOS) of the device. Also the last selected configuration and global settings are stored there. This makes sure that it remembers the correct settings, even if the app is restarted. It also works correctly when an Android app is closed silently when the device is running out of memory.
