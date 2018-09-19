@@ -80,6 +80,7 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
 
         // Add list view
         listView = new ListView(this);
+        listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         listView.setBackgroundColor(AppConfigResourceHelper.getColor(this, "app_config_background"));
         listView.setDivider(null);
         listView.setDividerHeight(0);
