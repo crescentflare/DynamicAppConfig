@@ -100,12 +100,12 @@ public class AppConfigManageViewController : UIViewController, AppConfigManageTa
             // Create button
             let doneButton = UIButton()
             doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            doneButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_DONE"), for: UIControlState())
-            doneButton.setTitleColor(tintColor, for: UIControlState())
-            doneButton.setTitleColor(highlightColor, for: UIControlState.highlighted)
+            doneButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_DONE"), for: UIControl.State())
+            doneButton.setTitleColor(tintColor, for: UIControl.State())
+            doneButton.setTitleColor(highlightColor, for: UIControl.State.highlighted)
             let size = doneButton.sizeThatFits(CGSize.zero)
             doneButton.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-            doneButton.addTarget(self, action: #selector(doneButtonPressed), for: UIControlEvents.touchUpInside)
+            doneButton.addTarget(self, action: #selector(doneButtonPressed), for: UIControl.Event.touchUpInside)
             
             // Wrap in bar button item
             let doneButtonWrapper = UIBarButtonItem.init(customView: doneButton)
