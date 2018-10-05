@@ -10,14 +10,10 @@ import UIKit
 import DynamicAppConfig
 
 // Enum definition using string raw values for storage
-enum ExampleAppConfigRunType: String {
+enum ExampleAppConfigRunType: String, CaseIterable {
     
     case runNormally = "runNormally"
     case runQuickly = "runQuickly"
     case runStrictly = "runStrictly"
-    
-    static func allValues() -> [ExampleAppConfigRunType] {
-        return [runNormally, runQuickly, runStrictly]
-    }
 
 }

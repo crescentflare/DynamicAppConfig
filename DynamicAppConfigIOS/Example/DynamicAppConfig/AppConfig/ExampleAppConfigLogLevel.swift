@@ -10,14 +10,10 @@ import UIKit
 import DynamicAppConfig
 
 // Enum definition using string raw values for storage
-enum ExampleAppConfigLogLevel: String {
+enum ExampleAppConfigLogLevel: String, CaseIterable {
     
     case logDisabled = "logDisabled"
     case logNormal = "logNormal"
     case logVerbose = "logVerbose"
-    
-    static func allValues() -> [ExampleAppConfigLogLevel] {
-        return [logDisabled, logNormal, logVerbose]
-    }
 
 }
