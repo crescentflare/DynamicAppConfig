@@ -19,7 +19,6 @@
 		04EB15531D0DA9A300D5E380 /* ExampleAppConfigRunType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB15501D0DA9A300D5E380 /* ExampleAppConfigRunType.swift */; };
 		04EB15551D0DAA1100D5E380 /* AppConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04EB15541D0DAA1100D5E380 /* AppConfig.plist */; };
 		343136A6C445D20ECD32A714 /* Pods_DynamicAppConfig_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4030E709494F9DE7881FC1EF /* Pods_DynamicAppConfig_Example.framework */; };
-		4266B45F7A8BE94CE9FBEC08 /* Pods_AppConfigSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2AD9183BF0F91E271AEAEE1 /* Pods_AppConfigSwift_Tests.framework */; };
 		50BAFA0856DBE481F07AA924 /* Pods_DynamicAppConfig_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2EFAF6B7FD9271A250CEEB1 /* Pods_DynamicAppConfig_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -95,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4266B45F7A8BE94CE9FBEC08 /* Pods_AppConfigSwift_Tests.framework in Frameworks */,
 				50BAFA0856DBE481F07AA924 /* Pods_DynamicAppConfig_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
