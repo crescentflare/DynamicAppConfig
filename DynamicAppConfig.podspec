@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DynamicAppConfig'
-  s.version          = '1.2.0'
+  s.version          = '1.2.1'
   s.summary          = 'A useful library to support multiple build configurations in one application build.'
 
 # This description is used to generate tags and improve search results.
