@@ -26,10 +26,12 @@ For example: be able to make one build with a build selector that contains devel
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add one of the following lines to your Podfile.
 
 ```ruby
-pod "DynamicAppConfig", '~> 1.2.0'
+pod "DynamicAppConfig", '~> 1.2.1'
 ```
 
-The above version is for Swift 4.1. For older Swift versions use the old AppConfigSwift library, available [here](https://github.com/crescentflare/AppConfigSwift).
+The above version is for Swift 4.2. For older Swift versions use the following:
+- Swift 4.1: DynamicAppConfig 1.2.0
+- Other swift versions: The old AppConfigSwift library, available [here](https://github.com/crescentflare/AppConfigSwift)
 
 
 ### Android Integration guide
