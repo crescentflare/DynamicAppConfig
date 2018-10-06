@@ -43,13 +43,13 @@ class ExampleAppConfigModel : AppConfigBaseModel {
         mapper.map(key: "apiUrl", value: &apiUrl, category: "API related")
         mapper.map(key: "networkTimeoutSec", value: &networkTimeoutSec, category: "API related")
         mapper.map(key: "acceptAllSSL", value: &acceptAllSSL, category: "API related")
-        mapper.map(key: "runType", value: &runType, fallback: .runNormally, allValues: ExampleAppConfigRunType.allValues())
+        mapper.map(key: "runType", value: &runType, fallback: .runNormally, allValues: ExampleAppConfigRunType.allCases)
         
         // Global serialization
         mapper.map(key: "consoleUrl", value: &consoleUrl, category: "Console related", global: true)
         mapper.map(key: "consoleTimeoutSec", value: &consoleTimeoutSec, category: "Console related", global: true)
         mapper.map(key: "consoleEnabled", value: &consoleEnabled, category: "Console related", global: true)
-        mapper.map(key: "logLevel", value: &logLevel, fallback: .logDisabled, allValues: ExampleAppConfigLogLevel.allValues(), global: true)
+        mapper.map(key: "logLevel", value: &logLevel, fallback: .logDisabled, allValues: ExampleAppConfigLogLevel.allCases, global: true)
     }
 
 }

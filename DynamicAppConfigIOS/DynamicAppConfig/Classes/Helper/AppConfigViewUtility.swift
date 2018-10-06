@@ -38,7 +38,7 @@ class AppConfigViewUtility {
     // --
     
     @discardableResult
-    static func addPinSuperViewEdgeConstraint(view: UIView, parentView: UIView, edge: NSLayoutAttribute, constant: CGFloat = 0) -> NSLayoutConstraint? {
+    static func addPinSuperViewEdgeConstraint(view: UIView, parentView: UIView, edge: NSLayoutConstraint.Attribute, constant: CGFloat = 0) -> NSLayoutConstraint? {
         if edge == .left || edge == .right || edge == .top || edge == .bottom {
             let constraint = NSLayoutConstraint(item: view,
                                                 attribute: edge,
@@ -66,7 +66,7 @@ class AppConfigViewUtility {
         addPinSuperViewEdgeConstraint(view: view, parentView: parentView, edge: .bottom)
     }
     
-    static func addSizeAxisConstraint(view: UIView, axisSize: CGFloat, axis: NSLayoutAttribute) {
+    static func addSizeAxisConstraint(view: UIView, axisSize: CGFloat, axis: NSLayoutConstraint.Attribute) {
         if axis == .width || axis == .height {
             let constraint = NSLayoutConstraint(item: view,
                                                 attribute: axis,

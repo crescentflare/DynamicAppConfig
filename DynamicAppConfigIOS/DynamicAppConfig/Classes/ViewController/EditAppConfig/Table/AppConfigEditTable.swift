@@ -62,7 +62,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
         AppConfigViewUtility.addPinSuperViewEdgesConstraints(view: table, parentView: self)
         
         // Set table view properties
-        table.rowHeight = UITableViewAutomaticDimension
+        table.rowHeight = UITableView.automaticDimension
         table.estimatedRowHeight = 40
         table.dataSource = self
         table.delegate = self

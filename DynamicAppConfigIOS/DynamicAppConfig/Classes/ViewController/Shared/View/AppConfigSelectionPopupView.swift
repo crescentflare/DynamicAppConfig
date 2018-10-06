@@ -87,7 +87,7 @@ protocol AppConfigSelectionPopupViewDelegate: class {
         _tableView.tableFooterView = tableFooter
         
         // Set table view properties
-        _tableView.rowHeight = UITableViewAutomaticDimension
+        _tableView.rowHeight = UITableView.automaticDimension
         _tableView.estimatedRowHeight = 40
         _tableView.dataSource = self
         _tableView.delegate = self

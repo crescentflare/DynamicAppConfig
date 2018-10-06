@@ -53,13 +53,13 @@ class AppConfigEditViewController : UIViewController, AppConfigEditTableDelegate
             // Add cancel button
             let cancelButton = UIButton()
             cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            cancelButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_CANCEL"), for: UIControlState())
-            cancelButton.setTitleColor(tintColor, for: UIControlState())
-            cancelButton.setTitleColor(highlightColor, for: UIControlState.highlighted)
-            cancelButton.setTitleColor(highlightColor, for: UIControlState.disabled)
+            cancelButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_CANCEL"), for: UIControl.State())
+            cancelButton.setTitleColor(tintColor, for: UIControl.State())
+            cancelButton.setTitleColor(highlightColor, for: UIControl.State.highlighted)
+            cancelButton.setTitleColor(highlightColor, for: UIControl.State.disabled)
             let cancelButtonSize = cancelButton.sizeThatFits(CGSize.zero)
             cancelButton.frame = CGRect(x: 0, y: 0, width: cancelButtonSize.width, height: cancelButtonSize.height)
-            cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: UIControlEvents.touchUpInside)
+            cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: UIControl.Event.touchUpInside)
             
             // Wrap in bar button item
             let cancelButtonWrapper = UIBarButtonItem.init(customView: cancelButton)
@@ -68,13 +68,13 @@ class AppConfigEditViewController : UIViewController, AppConfigEditTableDelegate
             // Create button
             let saveButton = UIButton()
             saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            saveButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_SAVE"), for: UIControlState())
-            saveButton.setTitleColor(tintColor, for: UIControlState())
-            saveButton.setTitleColor(highlightColor, for: UIControlState.highlighted)
-            saveButton.setTitleColor(highlightColor, for: UIControlState.disabled)
+            saveButton.setTitle(AppConfigBundle.localizedString(key: "CFLAC_SHARED_SAVE"), for: UIControl.State())
+            saveButton.setTitleColor(tintColor, for: UIControl.State())
+            saveButton.setTitleColor(highlightColor, for: UIControl.State.highlighted)
+            saveButton.setTitleColor(highlightColor, for: UIControl.State.disabled)
             let saveButtonSize = saveButton.sizeThatFits(CGSize.zero)
             saveButton.frame = CGRect(x: 0, y: 0, width: saveButtonSize.width, height: saveButtonSize.height)
-            saveButton.addTarget(self, action: #selector(saveButtonPressed), for: UIControlEvents.touchUpInside)
+            saveButton.addTarget(self, action: #selector(saveButtonPressed), for: UIControl.Event.touchUpInside)
             
             // Wrap in bar button item
             let saveButtonWrapper = UIBarButtonItem.init(customView: saveButton)
