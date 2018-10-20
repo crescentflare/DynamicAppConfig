@@ -19,6 +19,7 @@ import UIKit
     @IBOutlet private var _label: UILabel! = nil
     @IBOutlet private var _value: UILabel! = nil
     private var _applyNumberLimitation = false
+    private var _isEmpty = true
 
     
     // --
@@ -52,9 +53,17 @@ import UIKit
 
     var value: String? {
         set {
-            _value!.text = newValue
+            _isEmpty = newValue?.count == 0
+            _value!.text = _isEmpty ? AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY") : newValue
+            _value!.textColor = _isEmpty ? UIColor.gray : UIColor.black
+            _value!.font = _isEmpty ? UIFont.italicSystemFont(ofSize: 14) : UIFont.systemFont(ofSize: 14)
         }
-        get { return _value!.text }
+        get {
+            if _isEmpty {
+                return ""
+            }
+            return _value!.text
+        }
     }
     
     var applyNumberLimitation: Bool {
@@ -83,8 +92,9 @@ import UIKit
         _contentView = AppConfigViewUtility.loadNib(named: "EditableTextCell", parentView: self)
         _label.textColor = tintColor
         _label.text = ""
-        _value.textColor = UIColor.black
-        _value.text = ""
+        _value.textColor = UIColor.gray
+        _value.text = AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY")
+        _value.font = UIFont.italicSystemFont(ofSize: 14)
     }
     
 }
