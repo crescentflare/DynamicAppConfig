@@ -34,16 +34,6 @@ public class AppConfigResourceHelper
         return Color.BLACK;
     }
 
-    static public int getColor(Context context, String name)
-    {
-        int identifier = context.getResources().getIdentifier(name, "color", context.getPackageName());
-        if (identifier > 0)
-        {
-            return context.getResources().getColor(identifier);
-        }
-        return Color.TRANSPARENT;
-    }
-
     static public String getString(Context context, String name)
     {
         int identifier = context.getResources().getIdentifier(name, "string", context.getPackageName());
