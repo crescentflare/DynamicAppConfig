@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/crescentflare/DynamicAppConfig'
     gitUrl = 'https://github.com/crescentflare/DynamicAppConfig.git'
 
-    libraryVersion = '1.2.0'
+    libraryVersion = '1.2.2'
 
     developerId = 'crescentflare'
     developerName = 'Johan Bos'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
