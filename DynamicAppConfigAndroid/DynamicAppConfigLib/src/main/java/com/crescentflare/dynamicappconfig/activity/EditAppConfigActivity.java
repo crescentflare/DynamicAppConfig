@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -311,7 +312,7 @@ public class EditAppConfigActivity extends AppCompatActivity
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(AppConfigResourceHelper.getColor(this, "app_config_background"));
+        container.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add editing view for changing configuration

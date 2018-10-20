@@ -2,6 +2,7 @@ package com.crescentflare.dynamicappconfig.view;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -68,6 +69,7 @@ public class AppConfigSimpleCell extends FrameLayout
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
         container.addView(labelView = new TextView(context));
         labelView.setLayoutParams(layoutParams);
+        labelView.setTextColor(Color.DKGRAY);
     }
 
 

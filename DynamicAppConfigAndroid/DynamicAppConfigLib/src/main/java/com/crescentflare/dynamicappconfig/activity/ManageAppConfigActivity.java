@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -326,7 +327,7 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(AppConfigResourceHelper.getColor(this, "app_config_background"));
+        container.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add managing view for configuration selection and global settings editing
