@@ -2,9 +2,11 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
@@ -13,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
 /**
@@ -28,6 +31,7 @@ public class AppConfigEditableCell extends FrameLayout
     private TextView labelView;
     private TextView valueView;
     private boolean isNumberLimit = false;
+    private boolean isEmpty = true;
 
 
     // ---
@@ -72,14 +76,17 @@ public class AppConfigEditableCell extends FrameLayout
         container.addView(labelView = new TextView(context));
         labelView.setLayoutParams(layoutParams);
         labelView.setPadding(dp(4), 0, dp(4), 0);
+        labelView.setTextColor(Color.GRAY);
 
         // Add value view
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         container.addView(valueView = new TextView(context));
         valueView.setLayoutParams(layoutParams);
         valueView.setTextSize(18);
-        valueView.setTextColor(Color.BLACK);
+        valueView.setTextColor(Color.LTGRAY);
         valueView.setPadding(dp(4), dp(2), dp(4), 0);
+        valueView.setText(getContext().getString(R.string.app_config_edited_value_empty));
+        valueView.setTypeface(null, Typeface.ITALIC);
     }
 
 
@@ -94,11 +101,18 @@ public class AppConfigEditableCell extends FrameLayout
 
     public void setValue(String value)
     {
-        valueView.setText(value);
+        isEmpty = TextUtils.isEmpty(value);
+        valueView.setText(isEmpty ? getContext().getString(R.string.app_config_edited_value_empty) : value);
+        valueView.setTypeface(null, isEmpty ? Typeface.ITALIC : Typeface.NORMAL);
+        valueView.setTextColor(isEmpty ? Color.LTGRAY : Color.DKGRAY);
     }
 
     public String getValue()
     {
+        if (isEmpty)
+        {
+            return "";
+        }
         return valueView.getText().toString();
     }
 

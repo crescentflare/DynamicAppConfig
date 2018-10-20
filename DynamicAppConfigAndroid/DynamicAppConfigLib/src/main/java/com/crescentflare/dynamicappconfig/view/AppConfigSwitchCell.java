@@ -2,6 +2,7 @@ package com.crescentflare.dynamicappconfig.view;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
@@ -71,6 +72,7 @@ public class AppConfigSwitchCell extends FrameLayout
         switchView.setMinimumHeight(dp(60));
         switchView.setPadding(0, dp(12), 0, dp(12));
         switchView.setTextSize(18);
+        switchView.setTextColor(Color.DKGRAY);
     }
 
 

@@ -119,6 +119,7 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         viewHolder.labelView.setMinimumHeight(dip(60));
         viewHolder.labelView.setPadding(dip(12), dip(12), dip(12), dip(12));
         viewHolder.labelView.setTextSize(18);
+        viewHolder.labelView.setTextColor(Color.DKGRAY);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             viewHolder.labelView.setBackgroundDrawable(generateSelectionBackgroundDrawable());

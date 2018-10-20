@@ -81,6 +81,7 @@ public class AppConfigClickableCell extends FrameLayout
         container.addView(labelView = new TextView(context));
         labelView.setLayoutParams(layoutParams);
         labelView.setTextSize(18);
+        labelView.setTextColor(Color.DKGRAY);
 
         // Add value view
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

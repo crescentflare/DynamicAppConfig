@@ -34,6 +34,7 @@
     <string name="app_config_action_delete">Delete</string>
     <string name="app_config_action_restore">Restore to defaults</string>
     <string name="app_config_modifier_copy">copy</string>
+    <string name="app_config_edited_value_empty">Empty</string>
 
     <!-- Select value -->
     <string name="app_config_title_choose_enum_prefix">Select</string>
