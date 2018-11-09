@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="id" name="app_config_menu_save"/>
-    <item type="id" name="app_config_menu_create"/>
     <item type="id" name="app_config_dialog_input"/>
+    <item type="id" name="app_config_toolbar_title"/>
     <item type="id" name="app_config_activity_manage_select_current"/>
     <item type="id" name="app_config_activity_manage_new_custom"/>
     <item type="id" name="app_config_activity_edit_save"/>

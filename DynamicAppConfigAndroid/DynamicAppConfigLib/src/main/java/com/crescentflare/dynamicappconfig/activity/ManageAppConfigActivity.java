@@ -8,14 +8,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,6 +30,7 @@ import com.crescentflare.dynamicappconfig.view.AppConfigClickableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigEditableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigSimpleCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigSwitchCell;
+import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
 
@@ -42,7 +38,7 @@ import java.util.ArrayList;
  * Library activity: managing configurations
  * Be able to select, add and edit app configurations
  */
-public class ManageAppConfigActivity extends AppCompatActivity implements AppConfigStorage.ChangedConfigListener
+public class ManageAppConfigActivity extends Activity implements AppConfigStorage.ChangedConfigListener
 {
     // ---
     // Constants
@@ -102,13 +98,8 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
         }
 
         // Create layout and configure action bar
-        layout = createContentView();
         setTitle(AppConfigResourceHelper.getString(this, "app_config_title_list"));
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
+        layout = createContentView();
         setContentView(layout);
 
         // Load data and populate content
@@ -200,22 +191,6 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
 
 
     // ---
-    // Menu handling
-    // ---
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    // ---
     // View component generators
     // ---
 
@@ -272,7 +247,6 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
                     public void onInputEntered(String text)
                     {
                         editView.setValue(text);
-                        supportInvalidateOptionsMenu();
                     }
 
                     @Override
@@ -294,14 +268,6 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
         switchView.setText(label);
         switchView.setChecked(setting);
         switchView.setTag(label);
-        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                supportInvalidateOptionsMenu();
-            }
-        });
         return switchView;
     }
 
@@ -316,18 +282,23 @@ public class ManageAppConfigActivity extends AppCompatActivity implements AppCon
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        // Add a toolbar on top (if no action bar is present)
-        if (getSupportActionBar() == null)
+        // Add a toolbar on top
+        AppConfigToolbar toolbar = new AppConfigToolbar(this);
+        toolbar.setBackOnClickListener(new View.OnClickListener()
         {
-            Toolbar bar = new Toolbar(this);
-            layout.addView(bar, 0);
-            setSupportActionBar(bar);
-        }
+            @Override
+            public void onClick(View view)
+            {
+                onBackPressed();
+            }
+        });
+        toolbar.setTitle(getTitle().toString());
+        layout.addView(toolbar);
 
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
+        container.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add managing view for configuration selection and global settings editing

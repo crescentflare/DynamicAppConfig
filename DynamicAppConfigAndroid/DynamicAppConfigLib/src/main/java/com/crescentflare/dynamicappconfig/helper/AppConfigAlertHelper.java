@@ -31,6 +31,7 @@ public class AppConfigAlertHelper
         FrameLayout editTextContainer = new FrameLayout(context);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int margin = AppConfigViewHelper.dp(20);
+        layoutParams.topMargin = AppConfigViewHelper.dp(8);
         layoutParams.leftMargin = margin;
         layoutParams.rightMargin = margin;
 

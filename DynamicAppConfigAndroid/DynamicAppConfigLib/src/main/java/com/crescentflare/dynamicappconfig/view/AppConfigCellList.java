@@ -5,8 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +38,13 @@ public class AppConfigCellList extends LinearLayout
         init(context, null);
     }
 
-    public AppConfigCellList(Context context, @Nullable AttributeSet attrs)
+    public AppConfigCellList(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AppConfigCellList(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
+    public AppConfigCellList(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs);
         init(context, attrs);
@@ -75,7 +73,7 @@ public class AppConfigCellList extends LinearLayout
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+            topLineView.setBackgroundColor(AppConfigResourceHelper.getColor(getContext(), R.color.app_config_section_divider_line));
             addView(topLineView);
         }
 
@@ -98,16 +96,16 @@ public class AppConfigCellList extends LinearLayout
         // Top line divider (edge)
         View topLineView = new View(getContext());
         topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+        topLineView.setBackgroundColor(AppConfigResourceHelper.getColor(getContext(), R.color.app_config_section_divider_line));
         addView(topLineView);
 
         // Gradient divider
         View gradientView = new View(getContext());
         int colors[] = new int[]
         {
-            ContextCompat.getColor(getContext(), R.color.app_config_section_gradient_start),
-            ContextCompat.getColor(getContext(), R.color.app_config_section_gradient_end),
-            ContextCompat.getColor(getContext(), R.color.app_config_background)
+            AppConfigResourceHelper.getColor(getContext(), R.color.app_config_section_gradient_start),
+            AppConfigResourceHelper.getColor(getContext(), R.color.app_config_section_gradient_end),
+            AppConfigResourceHelper.getColor(getContext(), R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
         gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(8)));
@@ -122,7 +120,7 @@ public class AppConfigCellList extends LinearLayout
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+            topLineView.setBackgroundColor(AppConfigResourceHelper.getColor(getContext(), R.color.app_config_section_divider_line));
             addView(topLineView);
         }
 

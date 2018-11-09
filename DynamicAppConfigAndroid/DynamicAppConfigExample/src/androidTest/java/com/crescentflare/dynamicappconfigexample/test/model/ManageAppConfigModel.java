@@ -16,9 +16,11 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.crescentflare.dynamicappconfigexample.test.helper.CheckViewHelper.withConfigTagStringMatching;
 import static com.crescentflare.dynamicappconfigexample.test.helper.CheckViewHelper.withCustomPluginTagStringMatching;
 import static com.crescentflare.dynamicappconfigexample.test.helper.CheckViewHelper.withStringAdapterContent;
@@ -112,7 +114,7 @@ public class ManageAppConfigModel
 
     public EditAppConfigModel expectEditConfigScreen()
     {
-        CheckViewHelper.checkOnPage("Edit configuration");
+        onView(withId(R.id.app_config_toolbar_title)).check(matches(withText("Edit configuration")));
         WaitViewHelper.waitOptionalTextDisappear("Loading configurations...", 5000);
         return new EditAppConfigModel();
     }
