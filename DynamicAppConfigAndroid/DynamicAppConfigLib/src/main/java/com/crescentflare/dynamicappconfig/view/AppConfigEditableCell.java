@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
+import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
 
 import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
@@ -27,6 +29,46 @@ public class AppConfigEditableCell extends FrameLayout
     private TextView valueView;
     private boolean isNumberLimit = false;
     private boolean isEmpty = true;
+
+
+    // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigEditableCell generateEditableView(final Context context, final String label, final String setting, final boolean limitNumbers, final Runnable changeListener)
+    {
+        final AppConfigEditableCell editView = new AppConfigEditableCell(context);
+        editView.setDescription(label);
+        editView.setValue(setting);
+        editView.setNumberLimit(limitNumbers);
+        editView.setTag(label);
+        editView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                AppConfigAlertHelper.inputDialog(context, context.getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
+                {
+                    @Override
+                    public void onInputEntered(String text)
+                    {
+                        editView.setValue(text);
+                        if (changeListener != null)
+                        {
+                            changeListener.run();
+                        }
+                    }
+
+                    @Override
+                    public void onInputCanceled()
+                    {
+                        // No implementation
+                    }
+                });
+            }
+        });
+        return editView;
+    }
 
 
     // ---

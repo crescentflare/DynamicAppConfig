@@ -36,6 +36,38 @@ public class AppConfigClickableCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigClickableCell generateButtonView(Context context, String action)
+    {
+        return generateButtonView(context, null, action, false);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String label, String setting)
+    {
+        return generateButtonView(context, label, setting, false);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String action, boolean edited)
+    {
+        return generateButtonView(context, null, action, edited);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String label, String setting, boolean edited)
+    {
+        AppConfigClickableCell cellView = new AppConfigClickableCell(context);
+        cellView.setTag(label);
+        cellView.setText(setting);
+        if (edited)
+        {
+            cellView.setValue(context.getString(R.string.app_config_item_edited));
+        }
+        return cellView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 

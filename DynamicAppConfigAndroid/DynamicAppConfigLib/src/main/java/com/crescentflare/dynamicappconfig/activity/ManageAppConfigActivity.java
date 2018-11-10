@@ -18,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.manager.AppConfigStorage;
 import com.crescentflare.dynamicappconfig.model.AppConfigBaseModel;
@@ -190,81 +189,10 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         AppConfigStorage.instance.addChangedConfigListener(this);
     }
 
-
-    // ---
-    // View component generators
-    // ---
-
     @Override
     public void onChangedConfig()
     {
         populateContent();
-    }
-
-    private AppConfigSimpleCell generateInfoView(String infoLabel, String infoValue)
-    {
-        AppConfigSimpleCell cellView = new AppConfigSimpleCell(this);
-        cellView.setText(infoLabel + ": " + infoValue);
-        return cellView;
-    }
-
-    private AppConfigClickableCell generateButtonView(String action, boolean edited)
-    {
-        return generateButtonView(null, action, edited);
-    }
-
-    private AppConfigClickableCell generateButtonView(String label, String setting, boolean edited)
-    {
-        AppConfigClickableCell cellView = new AppConfigClickableCell(this);
-        cellView.setTag(label);
-        cellView.setText(setting);
-        if (edited)
-        {
-            cellView.setValue(getString(R.string.app_config_item_edited));
-        }
-        return cellView;
-    }
-
-    private AppConfigEditableCell generateEditableView(final String label, final String setting, final boolean limitNumbers)
-    {
-        final AppConfigEditableCell editView = new AppConfigEditableCell(this);
-        editView.setDescription(label);
-        editView.setValue(setting);
-        editView.setNumberLimit(limitNumbers);
-        editView.setTag(label);
-        editView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                AppConfigAlertHelper.inputDialog(ManageAppConfigActivity.this, getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
-                {
-                    @Override
-                    public void onInputEntered(String text)
-                    {
-                        editView.setValue(text);
-                    }
-
-                    @Override
-                    public void onInputCanceled()
-                    {
-                        // No implementation
-                    }
-                });
-            }
-        });
-        return editView;
-    }
-
-    private AppConfigSwitchCell generateSwitchView(String label, boolean setting)
-    {
-        AppConfigSwitchCell switchView = new AppConfigSwitchCell(this);
-        LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        switchView.setLayoutParams(switchViewLayoutParams);
-        switchView.setText(label);
-        switchView.setChecked(setting);
-        switchView.setTag(label);
-        return switchView;
     }
 
 
@@ -384,12 +312,12 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             {
                 if (result instanceof Boolean)
                 {
-                    layoutView = generateSwitchView(value, (Boolean)result);
+                    layoutView = AppConfigSwitchCell.generateSwitchView(this, value, (Boolean)result, null);
                 }
                 else if (result.getClass().isEnum())
                 {
                     final int index = fieldViews.size();
-                    layoutView = generateButtonView(value, value + ": " + result.toString(), false);
+                    layoutView = AppConfigClickableCell.generateButtonView(this, value, value + ": " + result.toString(), false);
                     layoutView.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
@@ -416,11 +344,11 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                 }
                 else if (result instanceof Integer || result instanceof Long)
                 {
-                    layoutView = generateEditableView(value, "" + result, true);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, "" + result, true, null);
                 }
                 else if (result instanceof String)
                 {
-                    layoutView = generateEditableView(value, (String)result, false);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, (String)result, false, null);
                 }
                 if (layoutView != null)
                 {
@@ -471,7 +399,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             }
 
             // Add button
-            AppConfigClickableCell selectButton = generateButtonView(buttonName, isOverride);
+            AppConfigClickableCell selectButton = AppConfigClickableCell.generateButtonView(this, buttonName, isOverride);
             selectButton.setId(R.id.app_config_activity_manage_select_current);
             managingView.addSectionItem(selectButton);
             if (hasLastSelection)
@@ -510,7 +438,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             // Add buttons
             for (final String configName : configs)
             {
-                AppConfigClickableCell configButton = generateButtonView(configName, AppConfigStorage.instance.isConfigOverride(configName));
+                AppConfigClickableCell configButton = AppConfigClickableCell.generateButtonView(this, configName, AppConfigStorage.instance.isConfigOverride(configName));
                 configButton.setTag("config: " + configName);
                 managingView.addSectionItem(configButton);
                 configButton.setOnClickListener(new View.OnClickListener()
@@ -551,7 +479,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             {
                 if (AppConfigStorage.instance.isCustomConfig(configName))
                 {
-                    AppConfigClickableCell configButton = generateButtonView(configName, false);
+                    AppConfigClickableCell configButton = AppConfigClickableCell.generateButtonView(this, configName, false);
                     configButton.setTag("config: " + configName);
                     managingView.addSectionItem(configButton);
                     configButton.setOnClickListener(new View.OnClickListener()
@@ -578,7 +506,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             }
 
             // Add new custom config button
-            AppConfigClickableCell newButton = generateButtonView(getString(R.string.app_config_action_add), false);
+            AppConfigClickableCell newButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_add), false);
             newButton.setId(R.id.app_config_activity_manage_new_custom);
             managingView.addSectionItem(newButton);
             newButton.setOnClickListener(new View.OnClickListener()
@@ -652,7 +580,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                 }
 
                 // Add plugin
-                AppConfigClickableCell pluginButton = generateButtonView(buttonText, false);
+                AppConfigClickableCell pluginButton = AppConfigClickableCell.generateButtonView(this, buttonText, false);
                 pluginButton.setTag("plugin: " + plugin.displayName());
                 managingView.addSectionItem(pluginButton);
                 if (plugin.canInteract())
@@ -675,8 +603,8 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
 
         // Add build information
         managingView.startSection(getString(R.string.app_config_header_list_build_info));
-        managingView.addSectionItem(generateInfoView(getString(R.string.app_config_field_build), "" + buildNr));
-        managingView.addSectionItem(generateInfoView(getString(R.string.app_config_field_api_level), "" + Build.VERSION.SDK_INT));
+        managingView.addSectionItem(AppConfigSimpleCell.generateInfoView(this, getString(R.string.app_config_field_build), "" + buildNr));
+        managingView.addSectionItem(AppConfigSimpleCell.generateInfoView(this, getString(R.string.app_config_field_api_level), "" + Build.VERSION.SDK_INT));
         managingView.endSection();
     }
 

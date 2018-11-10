@@ -22,6 +22,8 @@ import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
 
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
+
 /**
  * Library activity: selection activity
  * Select an item from a given set of strings, used when needed to make a choice out of a limited set of options
@@ -122,11 +124,6 @@ public class AppConfigStringChoiceActivity extends Activity
     // View handling
     // ---
 
-    private int dip(int pixels)
-    {
-        return (int)(getResources().getDisplayMetrics().density * pixels);
-    }
-
     private View generateHeader()
     {
         LinearLayout createdView = new LinearLayout(this);
@@ -134,7 +131,7 @@ public class AppConfigStringChoiceActivity extends Activity
         createdView.setOrientation(LinearLayout.VERTICAL);
         createdView.setBackgroundColor(Color.WHITE);
         createdView.addView(labelView);
-        labelView.setPadding(dip(12), dip(12), dip(12), dip(12));
+        labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);
         labelView.setTextColor(AppConfigViewHelper.getAccentColor(this));
         labelView.setText(getIntent().getStringExtra(ARG_SELECTION_TITLE));
@@ -162,7 +159,7 @@ public class AppConfigStringChoiceActivity extends Activity
             AppConfigViewHelper.getColor(this, R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-        gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip(8)));
+        gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(8)));
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             gradientView.setBackgroundDrawable(drawable);

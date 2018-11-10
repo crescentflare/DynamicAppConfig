@@ -25,6 +25,18 @@ public class AppConfigSimpleCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigSimpleCell generateInfoView(Context context, String infoLabel, String infoValue)
+    {
+        AppConfigSimpleCell cellView = new AppConfigSimpleCell(context);
+        cellView.setText(infoLabel + ": " + infoValue);
+        return cellView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 

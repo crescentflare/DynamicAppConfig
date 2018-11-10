@@ -18,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.manager.AppConfigStorage;
 import com.crescentflare.dynamicappconfig.model.AppConfigBaseModel;
@@ -172,75 +171,6 @@ public class EditAppConfigActivity extends Activity
 
 
     // ---
-    // View component generators
-    // ---
-
-    private AppConfigClickableCell generateButtonView(String action)
-    {
-        return generateButtonView(null, action);
-    }
-
-    private AppConfigClickableCell generateButtonView(String label, String setting)
-    {
-        AppConfigClickableCell cellView = new AppConfigClickableCell(this);
-        cellView.setTag(label);
-        cellView.setText(setting);
-        return cellView;
-    }
-
-    private AppConfigEditableCell generateEditableView(final String label, final String setting, final boolean limitNumbers)
-    {
-        final AppConfigEditableCell editView = new AppConfigEditableCell(this);
-        editView.setDescription(label);
-        editView.setValue(setting);
-        editView.setNumberLimit(limitNumbers);
-        editView.setTag(label);
-        editView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                AppConfigAlertHelper.inputDialog(EditAppConfigActivity.this, getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
-                {
-                    @Override
-                    public void onInputEntered(String text)
-                    {
-                        editView.setValue(text);
-                        checkOptionState();
-                    }
-
-                    @Override
-                    public void onInputCanceled()
-                    {
-                        // No implementation
-                    }
-                });
-            }
-        });
-        return editView;
-    }
-
-    private AppConfigSwitchCell generateSwitchView(String label, boolean setting)
-    {
-        AppConfigSwitchCell switchView = new AppConfigSwitchCell(this);
-        LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        switchView.setLayoutParams(switchViewLayoutParams);
-        switchView.setText(label);
-        switchView.setChecked(setting);
-        switchView.setTag(label);
-        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                checkOptionState();
-            }
-        });
-        return switchView;
-    }
-
-
-    // ---
     // View and layout generation
     // ---
 
@@ -354,12 +284,19 @@ public class EditAppConfigActivity extends Activity
             {
                 if (result instanceof Boolean)
                 {
-                    layoutView = generateSwitchView(value, (Boolean)result);
+                    layoutView = AppConfigSwitchCell.generateSwitchView(this, value, (Boolean) result, new CompoundButton.OnCheckedChangeListener()
+                    {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 else if (result.getClass().isEnum())
                 {
                     final int index = fieldViews.size();
-                    layoutView = generateButtonView(value, value + ": " + result.toString());
+                    layoutView = AppConfigClickableCell.generateButtonView(this, value, value + ": " + result.toString());
                     layoutView.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
@@ -386,11 +323,25 @@ public class EditAppConfigActivity extends Activity
                 }
                 else if (result instanceof Integer || result instanceof Long)
                 {
-                    layoutView = generateEditableView(value, "" + result, true);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, "" + result, true, new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 else if (result instanceof String)
                 {
-                    layoutView = generateEditableView(value, (String)result, false);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, (String) result, false, new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 if (layoutView != null)
                 {
@@ -439,7 +390,14 @@ public class EditAppConfigActivity extends Activity
             {
                 name += " " + getString(R.string.app_config_modifier_copy);
             }
-            AppConfigEditableCell editableCell = generateEditableView("name", name, false);
+            AppConfigEditableCell editableCell = AppConfigEditableCell.generateEditableView(this, "name", name, false, new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    checkOptionState();
+                }
+            });
             editingView.startSection(getString(R.string.app_config_header_edit_name));
             editingView.addSectionItem(editableCell);
             editingView.endSection();
@@ -465,7 +423,7 @@ public class EditAppConfigActivity extends Activity
         // Add buttons
         if (getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false))
         {
-            AppConfigClickableCell createButton = generateButtonView(getString(R.string.app_config_action_ok_edit_new));
+            AppConfigClickableCell createButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_ok_edit_new));
             createButton.setId(R.id.app_config_activity_edit_save);
             editingView.addSectionItem(createButton);
             createButton.setOnClickListener(new View.OnClickListener()
@@ -480,7 +438,7 @@ public class EditAppConfigActivity extends Activity
         else
         {
             // Updating configuration handler
-            AppConfigClickableCell saveButton = generateButtonView(getString(R.string.app_config_action_ok_edit));
+            AppConfigClickableCell saveButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_ok_edit));
             saveButton.setId(R.id.app_config_activity_edit_save);
             editingView.addSectionItem(saveButton);
             saveButton.setOnClickListener(new View.OnClickListener()
@@ -494,7 +452,7 @@ public class EditAppConfigActivity extends Activity
 
             // Restore to defaults or delete handler
             String buttonText = getString(AppConfigStorage.instance.isCustomConfig(getIntent().getStringExtra(ARG_CONFIG_NAME)) ? R.string.app_config_action_delete : R.string.app_config_action_restore);
-            AppConfigClickableCell deleteButton = generateButtonView(buttonText);
+            AppConfigClickableCell deleteButton = AppConfigClickableCell.generateButtonView(this, buttonText);
             deleteButton.setId(R.id.app_config_activity_edit_clear);
             editingView.addSectionItem(deleteButton);
             deleteButton.setOnClickListener(new View.OnClickListener()
@@ -517,7 +475,7 @@ public class EditAppConfigActivity extends Activity
                 }
             });
         }
-        AppConfigClickableCell cancelButton = generateButtonView(getString(R.string.app_config_action_cancel));
+        AppConfigClickableCell cancelButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_cancel));
         cancelButton.setId(R.id.app_config_activity_edit_cancel);
         editingView.addSectionItem(cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener()

@@ -26,6 +26,23 @@ public class AppConfigSwitchCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigSwitchCell generateSwitchView(Context context, String label, boolean setting, CompoundButton.OnCheckedChangeListener changeListener)
+    {
+        AppConfigSwitchCell switchView = new AppConfigSwitchCell(context);
+        LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        switchView.setLayoutParams(switchViewLayoutParams);
+        switchView.setText(label);
+        switchView.setChecked(setting);
+        switchView.setTag(label);
+        switchView.setOnCheckedChangeListener(changeListener);
+        return switchView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 
