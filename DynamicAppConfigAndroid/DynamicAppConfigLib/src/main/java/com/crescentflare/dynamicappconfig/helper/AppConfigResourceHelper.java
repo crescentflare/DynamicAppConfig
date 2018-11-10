@@ -44,6 +44,34 @@ public class AppConfigResourceHelper
         return "";
     }
 
+    static public int getColor(Context context, int resourceId)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            return context.getResources().getColor(resourceId, null);
+        }
+        return context.getResources().getColor(resourceId);
+    }
+
+    static public int pickBestForegroundColor(int backgroundColor, int lightForegroundColor, int darkForegroundColor)
+    {
+        double colorComponents[] = {
+            (double)(backgroundColor & 0xFF) / 255.0,
+            (double)((backgroundColor & 0xFF00) >> 8) / 255.0,
+            (double)((backgroundColor & 0xFF0000) >> 16) / 255.0
+        };
+        for (int i = 0; i < colorComponents.length; i++)
+        {
+            if (colorComponents[i] <= 0.03928)
+            {
+                colorComponents[i] /= 12.92;
+            }
+            colorComponents[i] = Math.pow((colorComponents[i] + 0.055) / 1.055, 2.4);
+        }
+        double intensity = (0.2126 * colorComponents[0]) + (0.7152 * colorComponents[1]) + (0.0722 * colorComponents[2]);
+        return intensity > 0.179 ? darkForegroundColor : lightForegroundColor;
+    }
+
     static public int getIdentifier(Context context, String name)
     {
         return context.getResources().getIdentifier(name, "id", context.getPackageName());

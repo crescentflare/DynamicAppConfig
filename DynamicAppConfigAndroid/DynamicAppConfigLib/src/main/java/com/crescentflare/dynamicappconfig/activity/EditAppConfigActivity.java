@@ -1,20 +1,13 @@
 package com.crescentflare.dynamicappconfig.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -35,6 +28,7 @@ import com.crescentflare.dynamicappconfig.view.AppConfigCellList;
 import com.crescentflare.dynamicappconfig.view.AppConfigClickableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigEditableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigSwitchCell;
+import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
 
@@ -42,7 +36,7 @@ import java.util.ArrayList;
  * Library activity: editing activity
  * Be able to change or create a new configuration copy
  */
-public class EditAppConfigActivity extends AppCompatActivity
+public class EditAppConfigActivity extends Activity
 {
     // ---
     // Constants
@@ -61,6 +55,7 @@ public class EditAppConfigActivity extends AppCompatActivity
     private LinearLayout layout = null;
     private AppConfigCellList editingView = null;
     private LinearLayout spinnerView = null;
+    private AppConfigToolbar toolbar = null;
     private AppConfigStorageItem initialEditValues = null;
 
 
@@ -81,13 +76,8 @@ public class EditAppConfigActivity extends AppCompatActivity
     {
         // Create layout and configure action bar
         super.onCreate(savedInstanceState);
-        layout = createContentView();
         setTitle(AppConfigResourceHelper.getString(this, getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? "app_config_title_edit_new" : "app_config_title_edit"));
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
+        layout = createContentView();
         setContentView(layout);
 
         // Load data and populate content
@@ -127,7 +117,7 @@ public class EditAppConfigActivity extends AppCompatActivity
                     ((AppConfigClickableCell)fieldViews.get(index)).setText(fieldViews.get(index).getTag() + ": " + resultString);
                 }
             }
-            supportInvalidateOptionsMenu();
+            checkOptionState();
         }
     }
 
@@ -169,51 +159,14 @@ public class EditAppConfigActivity extends AppCompatActivity
         }
     }
 
-
-    // ---
-    // Menu handling
-    // ---
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.edit, menu);
-        if (menu == null)
-        {
-            return false;
-        }
-        menu.findItem(R.id.app_config_menu_save).setVisible(!getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false));
-        menu.findItem(R.id.app_config_menu_create).setVisible(getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false));
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
+    private void checkOptionState()
     {
         boolean hasChange = false;
         if (initialEditValues != null)
         {
             hasChange = !fetchEditedValues().equals(initialEditValues);
         }
-        menu.findItem(R.id.app_config_menu_save).setEnabled(hasChange);
-        menu.findItem(R.id.app_config_menu_create).setEnabled(hasChange);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == R.id.app_config_menu_create || item.getItemId() == R.id.app_config_menu_save)
-        {
-            saveData();
-            return true;
-        }
-        else if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        toolbar.setOptionEnabled(hasChange);
     }
 
 
@@ -257,7 +210,7 @@ public class EditAppConfigActivity extends AppCompatActivity
                     public void onInputEntered(String text)
                     {
                         editView.setValue(text);
-                        supportInvalidateOptionsMenu();
+                        checkOptionState();
                     }
 
                     @Override
@@ -284,7 +237,7 @@ public class EditAppConfigActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                supportInvalidateOptionsMenu();
+                checkOptionState();
             }
         });
         return switchView;
@@ -301,18 +254,33 @@ public class EditAppConfigActivity extends AppCompatActivity
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        // Add a toolbar on top (if no action bar is present)
-        if (getSupportActionBar() == null)
+        // Add a toolbar on top
+        toolbar = new AppConfigToolbar(this);
+        toolbar.setBackOnClickListener(new View.OnClickListener()
         {
-            Toolbar bar = new Toolbar(this);
-            layout.addView(bar, 0);
-            setSupportActionBar(bar);
-        }
+            @Override
+            public void onClick(View view)
+            {
+                onBackPressed();
+            }
+        });
+        toolbar.setOptionOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                saveData();
+            }
+        });
+        toolbar.setTitle(getTitle().toString());
+        toolbar.setOption(getString(getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? R.string.app_config_menu_create : R.string.app_config_menu_save).toUpperCase());
+        checkOptionState();
+        layout.addView(toolbar);
 
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
+        container.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add editing view for changing configuration

@@ -3,7 +3,6 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -36,13 +35,13 @@ public class AppConfigSimpleCell extends FrameLayout
         init(context, null);
     }
 
-    public AppConfigSimpleCell(Context context, @Nullable AttributeSet attrs)
+    public AppConfigSimpleCell(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AppConfigSimpleCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
+    public AppConfigSimpleCell(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs);
         init(context, attrs);

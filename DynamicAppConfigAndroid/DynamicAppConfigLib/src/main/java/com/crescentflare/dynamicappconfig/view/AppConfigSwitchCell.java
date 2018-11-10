@@ -3,14 +3,13 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
@@ -24,7 +23,7 @@ public class AppConfigSwitchCell extends FrameLayout
     // Members
     // ---
 
-    private SwitchCompat switchView;
+    private Switch switchView;
 
 
     // ---
@@ -37,13 +36,13 @@ public class AppConfigSwitchCell extends FrameLayout
         init(context, null);
     }
 
-    public AppConfigSwitchCell(Context context, @Nullable AttributeSet attrs)
+    public AppConfigSwitchCell(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AppConfigSwitchCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
+    public AppConfigSwitchCell(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs);
         init(context, attrs);
@@ -67,7 +66,7 @@ public class AppConfigSwitchCell extends FrameLayout
         // Add switch view
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        container.addView(switchView = new SwitchCompat(context));
+        container.addView(switchView = new Switch(context));
         switchView.setLayoutParams(layoutParams);
         switchView.setMinimumHeight(dp(60));
         switchView.setPadding(0, dp(12), 0, dp(12));

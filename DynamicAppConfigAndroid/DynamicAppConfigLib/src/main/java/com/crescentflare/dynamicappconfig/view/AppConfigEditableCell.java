@@ -3,12 +3,7 @@ package com.crescentflare.dynamicappconfig.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatEditText;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -44,13 +39,13 @@ public class AppConfigEditableCell extends FrameLayout
         init(context, null);
     }
 
-    public AppConfigEditableCell(Context context, @Nullable AttributeSet attrs)
+    public AppConfigEditableCell(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AppConfigEditableCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
+    public AppConfigEditableCell(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs);
         init(context, attrs);
