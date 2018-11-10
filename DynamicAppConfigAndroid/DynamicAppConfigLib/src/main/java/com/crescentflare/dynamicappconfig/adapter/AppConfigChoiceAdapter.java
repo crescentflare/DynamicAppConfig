@@ -15,7 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
 import java.util.ArrayList;
 
@@ -101,8 +101,8 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
     private Drawable generateSelectionBackgroundDrawable()
     {
         StateListDrawable drawable = new StateListDrawable();
-        drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(AppConfigResourceHelper.getColor(context, R.color.app_config_background)));
-        drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(AppConfigResourceHelper.getColor(context, R.color.app_config_background)));
+        drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
+        drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
         drawable.addState(new int[] {  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         drawable.addState(new int[] { -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         return drawable;
@@ -129,7 +129,7 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         {
             viewHolder.labelView.setBackground(generateSelectionBackgroundDrawable());
         }
-        viewHolder.dividerView.setBackgroundColor(AppConfigResourceHelper.getColor(context, R.color.app_config_list_divider_line));
+        viewHolder.dividerView.setBackgroundColor(AppConfigViewHelper.getColor(context, R.color.app_config_list_divider_line));
         viewHolder.dividerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
         ((LinearLayout.LayoutParams)viewHolder.dividerView.getLayoutParams()).setMargins(dip(12), 0, 0, 0);
         createdView.setTag(viewHolder);

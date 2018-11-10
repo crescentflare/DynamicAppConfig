@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.manager.AppConfigStorage;
 import com.crescentflare.dynamicappconfig.model.AppConfigBaseModel;
 import com.crescentflare.dynamicappconfig.model.AppConfigStorageItem;
@@ -294,7 +294,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_background));
+        container.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add managing view for configuration selection and global settings editing

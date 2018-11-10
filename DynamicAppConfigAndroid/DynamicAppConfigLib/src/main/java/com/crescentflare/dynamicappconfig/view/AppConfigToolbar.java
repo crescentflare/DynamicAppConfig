@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
 import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
@@ -45,31 +44,8 @@ public class AppConfigToolbar extends LinearLayout
 
     public AppConfigToolbar(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigToolbar(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigToolbar(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigToolbar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Basic set up
+        super(context);
         setOrientation(HORIZONTAL);
         setPadding(0, 0, dp(8), 0);
 
@@ -126,7 +102,7 @@ public class AppConfigToolbar extends LinearLayout
         addView(optionView);
 
         // Set default background color
-        setBackgroundColor(AppConfigResourceHelper.getAccentColor(context));
+        setBackgroundColor(AppConfigViewHelper.getAccentColor(context));
     }
 
 
@@ -139,7 +115,7 @@ public class AppConfigToolbar extends LinearLayout
     {
         int lightColor = Color.WHITE;
         int darkColor = Color.BLACK;
-        int foregroundColor = AppConfigResourceHelper.pickBestForegroundColor(color, lightColor, darkColor);
+        int foregroundColor = AppConfigViewHelper.pickBestForegroundColor(color, lightColor, darkColor);
         super.setBackgroundColor(color);
         if (backButtonContainer != null)
         {

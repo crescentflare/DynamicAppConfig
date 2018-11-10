@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.adapter.AppConfigChoiceAdapter;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class AppConfigStringChoiceActivity extends Activity
         // Add list view
         ListView listView = new ListView(this);
         listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        listView.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_background));
+        listView.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_background));
         listView.setDivider(null);
         listView.setDividerHeight(0);
         layout.addView(listView);
@@ -136,7 +136,7 @@ public class AppConfigStringChoiceActivity extends Activity
         createdView.addView(labelView);
         labelView.setPadding(dip(12), dip(12), dip(12), dip(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);
-        labelView.setTextColor(AppConfigResourceHelper.getAccentColor(this));
+        labelView.setTextColor(AppConfigViewHelper.getAccentColor(this));
         labelView.setText(getIntent().getStringExtra(ARG_SELECTION_TITLE));
         return createdView;
     }
@@ -150,16 +150,16 @@ public class AppConfigStringChoiceActivity extends Activity
         // Top line divider (edge)
         View topLineView = new View(this);
         topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        topLineView.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_section_divider_line));
+        topLineView.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_section_divider_line));
         dividerLayout.addView(topLineView);
 
         // Middle divider (gradient on background)
         View gradientView = new View(this);
         int colors[] = new int[]
         {
-            AppConfigResourceHelper.getColor(this, R.color.app_config_section_gradient_start),
-            AppConfigResourceHelper.getColor(this, R.color.app_config_section_gradient_end),
-            AppConfigResourceHelper.getColor(this, R.color.app_config_background)
+            AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_start),
+            AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_end),
+            AppConfigViewHelper.getColor(this, R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
         gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip(8)));

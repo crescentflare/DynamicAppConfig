@@ -3,7 +3,6 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -31,31 +30,8 @@ public class AppConfigSimpleCell extends FrameLayout
 
     public AppConfigSimpleCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigSimpleCell(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSimpleCell(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSimpleCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

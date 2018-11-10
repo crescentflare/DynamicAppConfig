@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -36,31 +35,8 @@ public class AppConfigEditableCell extends FrameLayout
 
     public AppConfigEditableCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigEditableCell(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigEditableCell(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigEditableCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
