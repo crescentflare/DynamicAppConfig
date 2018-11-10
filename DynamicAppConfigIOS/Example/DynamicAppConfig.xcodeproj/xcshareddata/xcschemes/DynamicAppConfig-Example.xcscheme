@@ -52,6 +52,16 @@
                ReferencedContainer = "container:DynamicAppConfig.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0403444021972CA900FC45C1"
+               BuildableName = "DynamicAppConfig_UITests.xctest"
+               BlueprintName = "DynamicAppConfig_UITests"
+               ReferencedContainer = "container:DynamicAppConfig.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

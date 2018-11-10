@@ -234,6 +234,20 @@ public class AppConfigStorage {
         return customConfigs[config] != nil && storedConfigs[config] != nil
     }
 
+    // Restore everything to initial state
+    public func clearAllToDefaults() {
+        customConfigs.removeAllObjects()
+        synchronizeCustomConfigsWithUserDefaults()
+        selectedItem = ""
+        storeSelectedItemInUserDefaults()
+        globalConfig = [:]
+        storeGlobalConfigInUserDefaults()
+        if let configManager = configManagerInstance {
+            configManager.applyConfigToModel(config: [:], globalConfig: globalConfig, name: nil)
+        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: AppConfigStorage.configurationChanged), object: self)
+    }
+
     
     // --
     // MARK: Loading
