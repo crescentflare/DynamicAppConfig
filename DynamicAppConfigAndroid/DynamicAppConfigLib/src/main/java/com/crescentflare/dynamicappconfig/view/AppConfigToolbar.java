@@ -108,6 +108,8 @@ public class AppConfigToolbar extends LinearLayout
         titleView.setLayoutParams(titleLayoutParams);
         titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         titleView.setTextSize(20);
+        titleView.setLines(1);
+        titleView.setEllipsize(TextUtils.TruncateAt.END);
         addView(titleView);
 
         // Add option view
