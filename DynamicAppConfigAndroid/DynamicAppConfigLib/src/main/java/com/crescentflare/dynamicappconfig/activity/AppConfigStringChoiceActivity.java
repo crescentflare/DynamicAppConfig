@@ -40,14 +40,6 @@ public class AppConfigStringChoiceActivity extends Activity
 
 
     // ---
-    // Members
-    // ---
-
-    private ListView listView = null;
-    private AppConfigChoiceAdapter adapter = null;
-
-
-    // ---
     // Initialization
     // ---
 
@@ -84,7 +76,7 @@ public class AppConfigStringChoiceActivity extends Activity
         layout.addView(toolbar);
 
         // Add list view
-        listView = new ListView(this);
+        ListView listView = new ListView(this);
         listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         listView.setBackgroundColor(AppConfigResourceHelper.getColor(this, R.color.app_config_background));
         listView.setDivider(null);
@@ -98,7 +90,7 @@ public class AppConfigStringChoiceActivity extends Activity
         listView.addFooterView(generateFooter());
 
         // Set adapter
-        adapter = new AppConfigChoiceAdapter(this);
+        AppConfigChoiceAdapter adapter = new AppConfigChoiceAdapter(this);
         listView.setAdapter(adapter);
         adapter.setChoices(getIntent().getStringArrayListExtra(ARG_CHOICES));
 

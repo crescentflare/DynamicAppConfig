@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: simple cell
@@ -79,15 +79,5 @@ public class AppConfigSimpleCell extends FrameLayout
     public void setText(String text)
     {
         labelView.setText(text);
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

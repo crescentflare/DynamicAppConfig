@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: simple cell
@@ -97,15 +97,5 @@ public class AppConfigSwitchCell extends FrameLayout
     public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener)
     {
         switchView.setOnCheckedChangeListener(listener);
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

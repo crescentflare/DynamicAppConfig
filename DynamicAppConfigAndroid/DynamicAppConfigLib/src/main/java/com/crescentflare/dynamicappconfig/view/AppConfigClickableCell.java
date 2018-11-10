@@ -21,6 +21,8 @@ import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
+
 /**
  * Library view: clickable cell
  * Simulates a simple list view cell as a clickable item
@@ -152,10 +154,5 @@ public class AppConfigClickableCell extends FrameLayout
         stateDrawable.addState(new int[]{  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         stateDrawable.addState(new int[]{ -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         return stateDrawable;
-    }
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

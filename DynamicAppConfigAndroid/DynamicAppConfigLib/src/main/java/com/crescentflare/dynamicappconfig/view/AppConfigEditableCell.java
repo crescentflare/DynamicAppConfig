@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: editable cell
@@ -119,15 +120,5 @@ public class AppConfigEditableCell extends FrameLayout
     public boolean isNumberLimit()
     {
         return isNumberLimit;
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

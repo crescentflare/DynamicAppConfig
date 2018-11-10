@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.manager.AppConfigStorage;
 import com.crescentflare.dynamicappconfig.model.AppConfigBaseModel;
 import com.crescentflare.dynamicappconfig.model.AppConfigStorageItem;
@@ -33,6 +32,8 @@ import com.crescentflare.dynamicappconfig.view.AppConfigSwitchCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library activity: managing configurations
@@ -98,7 +99,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         }
 
         // Create layout and configure action bar
-        setTitle(AppConfigResourceHelper.getString(this, "app_config_title_list"));
+        setTitle(R.string.app_config_title_list);
         layout = createContentView();
         setContentView(layout);
 
@@ -200,11 +201,6 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         populateContent();
     }
 
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
-    }
-
     private AppConfigSimpleCell generateInfoView(String infoLabel, String infoValue)
     {
         AppConfigSimpleCell cellView = new AppConfigSimpleCell(this);
@@ -224,7 +220,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         cellView.setText(setting);
         if (edited)
         {
-            cellView.setValue(AppConfigResourceHelper.getString(this, "app_config_item_edited"));
+            cellView.setValue(getString(R.string.app_config_item_edited));
         }
         return cellView;
     }
@@ -327,7 +323,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         layoutParams.setMargins(0, dp(12), 0, 0);
         progressTextView.setLayoutParams(layoutParams);
         progressTextView.setGravity(Gravity.CENTER_HORIZONTAL);
-        progressTextView.setText(AppConfigResourceHelper.getString(this, "app_config_loading"));
+        progressTextView.setText(getString(R.string.app_config_loading));
         spinnerView.addView(progressTextView);
 
         // Add build number below loading text
@@ -338,7 +334,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             buildLayoutParams.setMargins(0, dp(2), 0, 0);
             progressBuildView.setLayoutParams(buildLayoutParams);
             progressBuildView.setGravity(Gravity.CENTER_HORIZONTAL);
-            progressBuildView.setText("(" + AppConfigResourceHelper.getString(this, "app_config_field_build").toLowerCase() + ": " + buildNr + ")");
+            progressBuildView.setText("(" + getString(R.string.app_config_field_build).toLowerCase() + ": " + buildNr + ")");
             spinnerView.addView(progressBuildView);
         }
         return layout;
@@ -347,7 +343,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
     private void generateEditingContent(String category, ArrayList<String> values, AppConfigStorageItem config, AppConfigBaseModel baseModel)
     {
         // Start section
-        String title = AppConfigResourceHelper.getString(this, "app_config_header_global_prefix");
+        String title = getString(R.string.app_config_header_global_prefix);
         if (category != null)
         {
             if (category.length() > 0)
@@ -356,7 +352,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             }
             else
             {
-                title += ": " + AppConfigResourceHelper.getString(this, "app_config_header_edit_other");
+                title += ": " + getString(R.string.app_config_header_edit_other);
             }
         }
         managingView.startSection(title);
@@ -401,16 +397,16 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                         {
                             Object constants[] = result.getClass().getEnumConstants();
                             ArrayList<String> enumValues = new ArrayList<>();
-                            for (int i = 0; i < constants.length; i++)
+                            for (Object constant : constants)
                             {
-                                enumValues.add(constants[i].toString());
+                                enumValues.add(constant.toString());
                             }
                             if (enumValues.size() > 0)
                             {
                                 AppConfigStringChoiceActivity.startWithResult(
                                         ManageAppConfigActivity.this,
-                                        AppConfigResourceHelper.getString(ManageAppConfigActivity.this, "app_config_title_choose_enum_prefix") + " " + value,
-                                        AppConfigResourceHelper.getString(ManageAppConfigActivity.this, "app_config_header_choose_enum"),
+                                        getString(R.string.app_config_title_choose_enum_prefix) + " " + value,
+                                        getString(R.string.app_config_header_choose_enum),
                                         enumValues,
                                         RESULT_CODE_SELECT_ENUM + index
                                 );
@@ -457,7 +453,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         if (configs.size() > 0)
         {
             // Start section
-            managingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_list_last_selection"));
+            managingView.startSection(getString(R.string.app_config_header_list_last_selection));
 
             // Determine last selection
             String buttonName;
@@ -471,12 +467,12 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             }
             else
             {
-                buttonName = AppConfigResourceHelper.getString(this, "app_config_item_none");
+                buttonName = getString(R.string.app_config_item_none);
             }
 
             // Add button
             AppConfigClickableCell selectButton = generateButtonView(buttonName, isOverride);
-            selectButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_manage_select_current"));
+            selectButton.setId(R.id.app_config_activity_manage_select_current);
             managingView.addSectionItem(selectButton);
             if (hasLastSelection)
             {
@@ -509,7 +505,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         if (configs.size() > 0)
         {
             // Start section
-            managingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_list"));
+            managingView.startSection(getString(R.string.app_config_header_list));
 
             // Add buttons
             for (final String configName : configs)
@@ -547,7 +543,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         if (configs.size() > 0)
         {
             // Start section
-            managingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_list_custom"));
+            managingView.startSection(getString(R.string.app_config_header_list_custom));
 
             // Add buttons
             ArrayList<String> customConfigs = AppConfigStorage.instance.customConfigList();
@@ -582,8 +578,8 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             }
 
             // Add new custom config button
-            AppConfigClickableCell newButton = generateButtonView(AppConfigResourceHelper.getString(this, "app_config_action_add"), false);
-            newButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_manage_new_custom"));
+            AppConfigClickableCell newButton = generateButtonView(getString(R.string.app_config_action_add), false);
+            newButton.setId(R.id.app_config_activity_manage_new_custom);
             managingView.addSectionItem(newButton);
             newButton.setOnClickListener(new View.OnClickListener()
             {
@@ -591,7 +587,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                 public void onClick(View v)
                 {
                     ArrayList<String> configs = AppConfigStorage.instance.configList();
-                    AppConfigStringChoiceActivity.startWithResult(ManageAppConfigActivity.this, AppConfigResourceHelper.getString(ManageAppConfigActivity.this, "app_config_title_edit_new"), AppConfigResourceHelper.getString(ManageAppConfigActivity.this, "app_config_header_choose_custom_copy"), configs, RESULT_CODE_CUSTOM_COPY_FROM);
+                    AppConfigStringChoiceActivity.startWithResult(ManageAppConfigActivity.this, getString(R.string.app_config_title_edit_new), getString(R.string.app_config_header_choose_custom_copy), configs, RESULT_CODE_CUSTOM_COPY_FROM);
                 }
             });
 
@@ -636,7 +632,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         if (AppConfigStorage.instance.getConfigManager() != null && AppConfigStorage.instance.getConfigManager().getPlugins() != null && AppConfigStorage.instance.getConfigManager().getPlugins().size() > 0)
         {
             // Start section
-            managingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_list_plugins"));
+            managingView.startSection(getString(R.string.app_config_header_list_plugins));
 
             // Add plugins
             for (final AppConfigPlugin plugin : AppConfigStorage.instance.getConfigManager().getPlugins())
@@ -678,9 +674,9 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         }
 
         // Add build information
-        managingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_list_build_info"));
-        managingView.addSectionItem(generateInfoView(AppConfigResourceHelper.getString(this, "app_config_field_build"), "" + buildNr));
-        managingView.addSectionItem(generateInfoView(AppConfigResourceHelper.getString(this, "app_config_field_api_level"), "" + Build.VERSION.SDK_INT));
+        managingView.startSection(getString(R.string.app_config_header_list_build_info));
+        managingView.addSectionItem(generateInfoView(getString(R.string.app_config_field_build), "" + buildNr));
+        managingView.addSectionItem(generateInfoView(getString(R.string.app_config_field_api_level), "" + Build.VERSION.SDK_INT));
         managingView.endSection();
     }
 

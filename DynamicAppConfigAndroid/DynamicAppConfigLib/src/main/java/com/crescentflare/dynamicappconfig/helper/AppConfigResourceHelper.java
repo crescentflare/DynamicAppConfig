@@ -34,16 +34,6 @@ public class AppConfigResourceHelper
         return Color.BLACK;
     }
 
-    static public String getString(Context context, String name)
-    {
-        int identifier = context.getResources().getIdentifier(name, "string", context.getPackageName());
-        if (identifier > 0)
-        {
-            return context.getResources().getString(identifier);
-        }
-        return "";
-    }
-
     static public int getColor(Context context, int resourceId)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -70,10 +60,5 @@ public class AppConfigResourceHelper
         }
         double intensity = (0.2126 * colorComponents[0]) + (0.7152 * colorComponents[1]) + (0.0722 * colorComponents[2]);
         return intensity > 0.179 ? darkForegroundColor : lightForegroundColor;
-    }
-
-    static public int getIdentifier(Context context, String name)
-    {
-        return context.getResources().getIdentifier(name, "id", context.getPackageName());
     }
 }

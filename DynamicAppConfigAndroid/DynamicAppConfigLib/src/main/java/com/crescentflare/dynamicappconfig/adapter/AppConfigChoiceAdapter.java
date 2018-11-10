@@ -182,7 +182,7 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
 
     public static class ViewHolder
     {
-        public TextView labelView = null;
-        public View dividerView = null;
+        TextView labelView = null;
+        View dividerView = null;
     }
 }

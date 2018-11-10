@@ -15,6 +15,8 @@ import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
+
 /**
  * Library view: a cell container
  * Simulates a list view with cells and dividers
@@ -135,15 +137,5 @@ public class AppConfigCellList extends LinearLayout
     {
         super.removeAllViews();
         previousItemView = null;
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

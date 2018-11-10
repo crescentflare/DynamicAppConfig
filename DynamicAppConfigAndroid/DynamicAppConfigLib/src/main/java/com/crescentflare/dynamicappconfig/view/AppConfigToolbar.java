@@ -19,7 +19,8 @@ import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: a toolbar
@@ -202,16 +203,6 @@ public class AppConfigToolbar extends LinearLayout
     public void setOptionOnClickListener(OnClickListener listener)
     {
         optionView.setOnClickListener(listener);
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 
 
