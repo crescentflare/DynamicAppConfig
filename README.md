@@ -32,7 +32,7 @@ For example: be able to make one build with a build selector that contains devel
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add one of the following lines to your Podfile.
 
 ```ruby
-pod "DynamicAppConfig", '~> 1.2.2'
+pod "DynamicAppConfig", '~> 1.3.0'
 ```
 
 The above version is for Swift 4.2. For older Swift versions use the following:
@@ -44,7 +44,7 @@ The above version is for Swift 4.2. For older Swift versions use the following:
 When using gradle, the library can easily be imported into the build.gradle file of your project. Add the following dependency:
 
 ```
-compile 'com.crescentflare.dynamicappconfig:DynamicAppConfigLib:1.2.2'
+compile 'com.crescentflare.dynamicappconfig:DynamicAppConfigLib:1.3.0'
 ```
 
 Make sure that jcenter is added as a repository. The above is for Android API level 14 and higher. To support older Android versions use the old library, available [here](https://github.com/crescentflare/DynamicAppConfigAndroid).
