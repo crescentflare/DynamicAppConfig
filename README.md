@@ -18,7 +18,7 @@ For example: be able to make one build with a build selector that contains devel
 
 ---
 
-### Features
+## Features
 
 - Be able to configure several app configurations using JSON (Android) or a plist file (iOS)
 - A built-in app configuration selection screen
