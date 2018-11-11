@@ -21,6 +21,8 @@
 		042C6F3C219841F500C12776 /* TestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3A21983F0600C12776 /* TestArguments.swift */; };
 		042C6F3E21985C0F00C12776 /* PluginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3D21985C0F00C12776 /* PluginUITests.swift */; };
 		042C6F4021985D7900C12776 /* CustomPluginTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3F21985D7900C12776 /* CustomPluginTestModel.swift */; };
+		042C6F4221985F7500C12776 /* EditAppConfigTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F4121985F7500C12776 /* EditAppConfigTestModel.swift */; };
+		042C6F442198620300C12776 /* EditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F432198620300C12776 /* EditUITests.swift */; };
 		04327A402049E19200D5E29D /* ExampleAppConfigLogPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */; };
 		04327A432049E6C700D5E29D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A422049E6C700D5E29D /* Logger.swift */; };
 		04327A452049EF7A00D5E29D /* ShowLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A442049EF7A00D5E29D /* ShowLogViewController.swift */; };
@@ -74,6 +76,8 @@
 		042C6F3A21983F0600C12776 /* TestArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestArguments.swift; sourceTree = "<group>"; };
 		042C6F3D21985C0F00C12776 /* PluginUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginUITests.swift; path = "Test Cases/PluginUITests.swift"; sourceTree = "<group>"; };
 		042C6F3F21985D7900C12776 /* CustomPluginTestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPluginTestModel.swift; path = Model/CustomPluginTestModel.swift; sourceTree = "<group>"; };
+		042C6F4121985F7500C12776 /* EditAppConfigTestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAppConfigTestModel.swift; path = Model/EditAppConfigTestModel.swift; sourceTree = "<group>"; };
+		042C6F432198620300C12776 /* EditUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditUITests.swift; path = "Test Cases/EditUITests.swift"; sourceTree = "<group>"; };
 		04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleAppConfigLogPlugin.swift; sourceTree = "<group>"; };
 		04327A422049E6C700D5E29D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		04327A442049EF7A00D5E29D /* ShowLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowLogViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		0403444F21972F6B00FC45C1 /* Test Cases */ = {
 			isa = PBXGroup;
 			children = (
+				042C6F432198620300C12776 /* EditUITests.swift */,
 				0403444321972CA900FC45C1 /* MainUITests.swift */,
 				042C6F3821983BFD00C12776 /* ManualUITests.swift */,
 				042C6F3D21985C0F00C12776 /* PluginUITests.swift */,
@@ -182,6 +187,7 @@
 			children = (
 				0403445C21977FDE00FC45C1 /* Shared */,
 				042C6F3F21985D7900C12776 /* CustomPluginTestModel.swift */,
+				042C6F4121985F7500C12776 /* EditAppConfigTestModel.swift */,
 				04034454219767A900FC45C1 /* MainAppTestModel.swift */,
 				040344572197699100FC45C1 /* ManageAppConfigTestModel.swift */,
 				04034451219730EB00FC45C1 /* UITestApplication.swift */,
@@ -573,12 +579,14 @@
 				042C6F4021985D7900C12776 /* CustomPluginTestModel.swift in Sources */,
 				040344532197325900FC45C1 /* UITestApplication.swift in Sources */,
 				042C6F3C219841F500C12776 /* TestArguments.swift in Sources */,
+				042C6F442198620300C12776 /* EditUITests.swift in Sources */,
 				040344562197688700FC45C1 /* MainAppTestModel.swift in Sources */,
 				0403445A2197746400FC45C1 /* ExampleAppConfigRunType.swift in Sources */,
 				040344592197699400FC45C1 /* ManageAppConfigTestModel.swift in Sources */,
 				042C6F3921983BFD00C12776 /* ManualUITests.swift in Sources */,
 				0403445F2197800300FC45C1 /* TestSettingType.swift in Sources */,
 				0403444421972CA900FC45C1 /* MainUITests.swift in Sources */,
+				042C6F4221985F7500C12776 /* EditAppConfigTestModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

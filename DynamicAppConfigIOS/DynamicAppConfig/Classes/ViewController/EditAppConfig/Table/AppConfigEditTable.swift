@@ -290,6 +290,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
             // Supply data
             cell.selectionStyle = .default
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.label = tableValue.configSetting
             cellView?.value = tableValue.labelString
             cellView?.applyNumberLimitation = tableValue.limitUsage
@@ -306,6 +307,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
             // Supply data
             cell.selectionStyle = .default
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.delegate = self
             cellView?.label = tableValue.configSetting
             cellView?.on = tableValue.booleanValue
@@ -323,6 +325,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.label = "\(tableValue.configSetting ?? ""): \(tableValue.labelString)"
         }
         

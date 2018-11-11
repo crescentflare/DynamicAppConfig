@@ -50,7 +50,7 @@ public class ManageAppConfigTestSetting {
         collectionViewsQuery.textFields[type.rawValue].clearText()
         collectionViewsQuery.textFields[type.rawValue].typeText(String(value))
         collectionViewsQuery.buttons["OK"].tap()
-        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
+        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 10)
         return ManageAppConfigTestModel()
     }
     
@@ -60,7 +60,7 @@ public class ManageAppConfigTestSetting {
         collectionViewsQuery.textFields[type.rawValue].clearText()
         collectionViewsQuery.textFields[type.rawValue].typeText(value)
         collectionViewsQuery.buttons["OK"].tap()
-        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
+        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 10)
         return ManageAppConfigTestModel()
     }
     
@@ -90,7 +90,13 @@ public class ManageAppConfigTestModel {
         XCUIApplication().navigationBars["App configurations"].buttons["Done"].tap()
         return self
     }
-    
+
+    @discardableResult func editConfig(_ configuration: ManageAppConfigType) -> ManageAppConfigTestModel {
+        XCUIApplication().tables.cells.staticTexts[configuration.rawValue].swipeLeft()
+        XCUIApplication().tables.cells.buttons["Edit"].tap()
+        return self
+    }
+
     @discardableResult func changeGlobalSetting(_ setting: TestSettingType) -> ManageAppConfigTestSetting {
         return ManageAppConfigTestSetting(type: setting)
     }
@@ -108,6 +114,11 @@ public class ManageAppConfigTestModel {
     @discardableResult func expectMainAppScreen() -> MainAppTestModel {
         XCTAssertTrue(XCUIApplication().navigationBars["Example App Config"].exists)
         return MainAppTestModel()
+    }
+
+    @discardableResult func expectEditConfigScreen() -> EditAppConfigTestModel {
+        XCTAssertTrue(XCUIApplication().navigationBars["Edit configuration"].exists)
+        return EditAppConfigTestModel()
     }
 
 }

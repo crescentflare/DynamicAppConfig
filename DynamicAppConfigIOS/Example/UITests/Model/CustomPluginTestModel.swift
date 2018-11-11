@@ -2,8 +2,8 @@
 //  ManageAppConfigTestModel.swift
 //  DynamicAppConfig Example
 //
-//  Manage app config test model
-//  Interaction related to the app configurations screen
+//  Custom plugin test model
+//  Interaction related to the custom plugin screen
 //
 
 import XCTest
