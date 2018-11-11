@@ -9,10 +9,10 @@ A useful library to support multiple build configurations or global settings in 
 
 For example: be able to make one build with a build selector that contains development, test, acceptance and a production configuration. There would be no need to deliver multiple builds for each environment for testing, it can all be done from one build.
 
-✓ Supports iOS and Android
-✓ Lightweight
-✓ Dependency free
-✓ Ready for test automation
+✓ Supports iOS and Android\
+✓ Lightweight\
+✓ Dependency free\
+✓ Ready for test automation\
 ✓ Proven in multiple projects
 
 
