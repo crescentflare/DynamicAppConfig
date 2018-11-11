@@ -46,20 +46,20 @@ public class ManageAppConfigTestSetting {
     
     @discardableResult func to(_ value: Int) -> ManageAppConfigTestModel {
         XCUIApplication().tables.cells[type.rawValue].tap()
-        let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
-        collectionViewsQuery.textFields[type.rawValue].clearText()
-        collectionViewsQuery.textFields[type.rawValue].typeText(String(value))
-        collectionViewsQuery.buttons["OK"].tap()
+        let alert = XCUIApplication().alerts["Value for \(type.rawValue)"]
+        alert.collectionViews.textFields[type.rawValue].clearText()
+        alert.collectionViews.textFields[type.rawValue].typeText(String(value))
+        alert.buttons["OK"].tap()
         _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 10)
         return ManageAppConfigTestModel()
     }
     
     @discardableResult func to(_ value: String) -> ManageAppConfigTestModel {
         XCUIApplication().tables.cells[type.rawValue].tap()
-        let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
-        collectionViewsQuery.textFields[type.rawValue].clearText()
-        collectionViewsQuery.textFields[type.rawValue].typeText(value)
-        collectionViewsQuery.buttons["OK"].tap()
+        let alert = XCUIApplication().alerts["Value for \(type.rawValue)"]
+        alert.collectionViews.textFields[type.rawValue].clearText()
+        alert.collectionViews.textFields[type.rawValue].typeText(value)
+        alert.buttons["OK"].tap()
         _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 10)
         return ManageAppConfigTestModel()
     }
