@@ -36,6 +36,7 @@ class ManualUITests: XCTestCase {
         let app = XCUIApplication()
         let arguments = TestArguments()
         arguments.clearConfig = true
+        arguments.speedyAnimations = true
         arguments.selectConfig = ManageAppConfigType.test.rawValue
         arguments.changeCurrentSettings = [TestSettingType.apiURL.rawValue: "https://manualchange.example.com/"]
         app.launchArguments = arguments.toArgumentsArray()
@@ -54,6 +55,7 @@ class ManualUITests: XCTestCase {
         let app = XCUIApplication()
         let arguments = TestArguments()
         arguments.clearConfig = true
+        arguments.speedyAnimations = true
         arguments.selectConfig = ManageAppConfigType.test.rawValue
         arguments.changeGlobalSettings = [TestSettingType.logLevel.rawValue: ExampleAppConfigLogLevel.logVerbose.rawValue]
         app.launchArguments = arguments.toArgumentsArray()

@@ -34,6 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if testArguments.clearConfig {
                 AppConfigStorage.shared.clearAllToDefaults()
             }
+        
+            // Enable speed up in animations if specified (by the UI tests)
+            if testArguments.speedyAnimations {
+                UIApplication.shared.keyWindow?.layer.speed = 10
+            }
 
             // Start app config
             ExampleAppConfigManager.shared.addPlugin(ExampleAppConfigLogPlugin())

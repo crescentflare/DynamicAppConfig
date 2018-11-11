@@ -15,6 +15,7 @@ public class TestArguments {
     // --
     
     var clearConfig = false
+    var speedyAnimations = false
     var selectConfig: String?
     var changeCurrentSettings = [String: String]()
     var changeGlobalSettings = [String: String]()
@@ -29,6 +30,9 @@ public class TestArguments {
         var arguments = [String]()
         if clearConfig {
             arguments.append("clearConfig")
+        }
+        if speedyAnimations {
+            arguments.append("speedyAnimations")
         }
         if let selectConfig = selectConfig {
             arguments.append("selectConfig=\"\(selectConfig)\"")
@@ -47,6 +51,7 @@ public class TestArguments {
     func parseArgumentsArray(arguments: [String]) {
         // Parse basic settings
         clearConfig = arguments.contains("clearConfig")
+        speedyAnimations = arguments.contains("speedyAnimations")
         selectConfig = nil
         for argument in arguments {
             if argument.hasPrefix("selectConfig=") {

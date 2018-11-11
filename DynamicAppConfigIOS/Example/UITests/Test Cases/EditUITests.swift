@@ -22,6 +22,7 @@ class EditUITests: XCTestCase {
         let app = XCUIApplication()
         let arguments = TestArguments()
         arguments.clearConfig = true
+        arguments.speedyAnimations = true
         continueAfterFailure = false
         app.launchArguments = arguments.toArgumentsArray()
         app.launch()
