@@ -20,8 +20,10 @@ class MainUITests: XCTestCase {
 
     override func setUp() {
         let app = XCUIApplication()
+        let arguments = TestArguments()
+        arguments.clearConfig = true
         continueAfterFailure = false
-        app.launchArguments = ["clearAppConfig"]
+        app.launchArguments = arguments.toArgumentsArray()
         app.launch()
     }
 

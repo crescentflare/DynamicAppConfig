@@ -16,6 +16,9 @@
 		0403445F2197800300FC45C1 /* TestSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0403445D2197800000FC45C1 /* TestSettingType.swift */; };
 		04034466219788DF00FC45C1 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034465219788DE00FC45C1 /* XCUIElement+clearText.swift */; };
 		040344682197908800FC45C1 /* XCUIElement+waitForNotExistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040344672197908700FC45C1 /* XCUIElement+waitForNotExistence.swift */; };
+		042C6F3921983BFD00C12776 /* ManualUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3821983BFD00C12776 /* ManualUITests.swift */; };
+		042C6F3B21983F0600C12776 /* TestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3A21983F0600C12776 /* TestArguments.swift */; };
+		042C6F3C219841F500C12776 /* TestArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C6F3A21983F0600C12776 /* TestArguments.swift */; };
 		04327A402049E19200D5E29D /* ExampleAppConfigLogPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */; };
 		04327A432049E6C700D5E29D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A422049E6C700D5E29D /* Logger.swift */; };
 		04327A452049EF7A00D5E29D /* ShowLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A442049EF7A00D5E29D /* ShowLogViewController.swift */; };
@@ -65,6 +68,8 @@
 		0403445D2197800000FC45C1 /* TestSettingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSettingType.swift; sourceTree = "<group>"; };
 		04034465219788DE00FC45C1 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		040344672197908700FC45C1 /* XCUIElement+waitForNotExistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+waitForNotExistence.swift"; sourceTree = "<group>"; };
+		042C6F3821983BFD00C12776 /* ManualUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManualUITests.swift; path = "Test Cases/ManualUITests.swift"; sourceTree = "<group>"; };
+		042C6F3A21983F0600C12776 /* TestArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestArguments.swift; sourceTree = "<group>"; };
 		04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleAppConfigLogPlugin.swift; sourceTree = "<group>"; };
 		04327A422049E6C700D5E29D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		04327A442049EF7A00D5E29D /* ShowLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowLogViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				0403444321972CA900FC45C1 /* MainUITests.swift */,
+				042C6F3821983BFD00C12776 /* ManualUITests.swift */,
 			);
 			name = "Test Cases";
 			sourceTree = "<group>";
@@ -208,6 +214,7 @@
 			children = (
 				04327A422049E6C700D5E29D /* Logger.swift */,
 				04327A442049EF7A00D5E29D /* ShowLogViewController.swift */,
+				042C6F3A21983F0600C12776 /* TestArguments.swift */,
 			);
 			name = Utility;
 			path = DynamicAppConfig/Utility;
@@ -557,9 +564,11 @@
 				0403445B21977E5200FC45C1 /* ExampleAppConfigLogLevel.swift in Sources */,
 				040344682197908800FC45C1 /* XCUIElement+waitForNotExistence.swift in Sources */,
 				040344532197325900FC45C1 /* UITestApplication.swift in Sources */,
+				042C6F3C219841F500C12776 /* TestArguments.swift in Sources */,
 				040344562197688700FC45C1 /* MainAppTestModel.swift in Sources */,
 				0403445A2197746400FC45C1 /* ExampleAppConfigRunType.swift in Sources */,
 				040344592197699400FC45C1 /* ManageAppConfigTestModel.swift in Sources */,
+				042C6F3921983BFD00C12776 /* ManualUITests.swift in Sources */,
 				0403445F2197800300FC45C1 /* TestSettingType.swift in Sources */,
 				0403444421972CA900FC45C1 /* MainUITests.swift in Sources */,
 			);
@@ -573,6 +582,7 @@
 				046559B81D50C44200B020D6 /* main.swift in Sources */,
 				04EB15511D0DA9A300D5E380 /* ExampleAppConfigManager.swift in Sources */,
 				04327A402049E19200D5E29D /* ExampleAppConfigLogPlugin.swift in Sources */,
+				042C6F3B21983F0600C12776 /* TestArguments.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				04327A432049E6C700D5E29D /* Logger.swift in Sources */,
 				04EB15531D0DA9A300D5E380 /* ExampleAppConfigRunType.swift in Sources */,
