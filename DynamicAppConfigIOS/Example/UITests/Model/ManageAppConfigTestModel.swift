@@ -18,6 +18,12 @@ public enum ManageAppConfigType: String {
 
 }
 
+public enum ManageAppPluginType: String {
+    
+    case viewLog = "View log"
+    
+}
+
 @available(iOS 9.0, *)
 public class ManageAppConfigTestSetting {
     
@@ -89,7 +95,12 @@ public class ManageAppConfigTestModel {
         return ManageAppConfigTestSetting(type: setting)
     }
 
+    @discardableResult func openCustomPlugin(_ plugin: ManageAppPluginType) -> CustomPluginTestModel {
+        XCUIApplication().tables.cells[plugin.rawValue].tap()
+        return CustomPluginTestModel()
+    }
 
+    
     // --
     // MARK: Checks
     // --

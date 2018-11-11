@@ -23,6 +23,7 @@ class ShowLogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "View log"
         logText.text = Logger.logString()
     }
     

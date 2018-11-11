@@ -391,6 +391,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.plugin?.displayName()
             if let displayValue = tableValue.plugin?.displayValue() {
                 cellView?.label = "\(tableValue.plugin?.displayName() ?? ""): \(displayValue)"
             } else {
