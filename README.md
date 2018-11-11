@@ -56,7 +56,7 @@ When existing configurations are edited or custom ones are being added, the chan
 
 ### Automated testing
 
-The library is ready for automated testing using Espresso (for Android). The example project provides a demonstration on how to modify the configuration within automated test scripts. Automated testing for iOS will be added later as well.
+The library is ready for automated testing using Espresso (for Android) and UI testing (for iOS). The example project provides a demonstration on how to modify the configuration within automated test scripts.
 
 
 ### Security
