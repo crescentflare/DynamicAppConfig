@@ -12,6 +12,10 @@
 		040344562197688700FC45C1 /* MainAppTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034454219767A900FC45C1 /* MainAppTestModel.swift */; };
 		040344592197699400FC45C1 /* ManageAppConfigTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040344572197699100FC45C1 /* ManageAppConfigTestModel.swift */; };
 		0403445A2197746400FC45C1 /* ExampleAppConfigRunType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EB15501D0DA9A300D5E380 /* ExampleAppConfigRunType.swift */; };
+		0403445B21977E5200FC45C1 /* ExampleAppConfigLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C660471FC62A540051C5B4 /* ExampleAppConfigLogLevel.swift */; };
+		0403445F2197800300FC45C1 /* TestSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0403445D2197800000FC45C1 /* TestSettingType.swift */; };
+		04034466219788DF00FC45C1 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04034465219788DE00FC45C1 /* XCUIElement+clearText.swift */; };
+		040344682197908800FC45C1 /* XCUIElement+waitForNotExistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040344672197908700FC45C1 /* XCUIElement+waitForNotExistence.swift */; };
 		04327A402049E19200D5E29D /* ExampleAppConfigLogPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */; };
 		04327A432049E6C700D5E29D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A422049E6C700D5E29D /* Logger.swift */; };
 		04327A452049EF7A00D5E29D /* ShowLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04327A442049EF7A00D5E29D /* ShowLogViewController.swift */; };
@@ -58,6 +62,9 @@
 		04034451219730EB00FC45C1 /* UITestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UITestApplication.swift; path = Model/UITestApplication.swift; sourceTree = "<group>"; };
 		04034454219767A900FC45C1 /* MainAppTestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainAppTestModel.swift; path = Model/MainAppTestModel.swift; sourceTree = "<group>"; };
 		040344572197699100FC45C1 /* ManageAppConfigTestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManageAppConfigTestModel.swift; path = Model/ManageAppConfigTestModel.swift; sourceTree = "<group>"; };
+		0403445D2197800000FC45C1 /* TestSettingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSettingType.swift; sourceTree = "<group>"; };
+		04034465219788DE00FC45C1 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
+		040344672197908700FC45C1 /* XCUIElement+waitForNotExistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+waitForNotExistence.swift"; sourceTree = "<group>"; };
 		04327A3F2049E19200D5E29D /* ExampleAppConfigLogPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleAppConfigLogPlugin.swift; sourceTree = "<group>"; };
 		04327A422049E6C700D5E29D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		04327A442049EF7A00D5E29D /* ShowLogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowLogViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +142,7 @@
 		0403444221972CA900FC45C1 /* UITests */ = {
 			isa = PBXGroup;
 			children = (
+				040344602197862900FC45C1 /* Helper */,
 				04034450219730A200FC45C1 /* Model */,
 				0403444F21972F6B00FC45C1 /* Test Cases */,
 				0403444C21972CD300FC45C1 /* Supporting Files */,
@@ -161,11 +169,30 @@
 		04034450219730A200FC45C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0403445C21977FDE00FC45C1 /* Shared */,
 				04034454219767A900FC45C1 /* MainAppTestModel.swift */,
 				040344572197699100FC45C1 /* ManageAppConfigTestModel.swift */,
 				04034451219730EB00FC45C1 /* UITestApplication.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		0403445C21977FDE00FC45C1 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0403445D2197800000FC45C1 /* TestSettingType.swift */,
+			);
+			name = Shared;
+			path = Model/Shared;
+			sourceTree = "<group>";
+		};
+		040344602197862900FC45C1 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				04034465219788DE00FC45C1 /* XCUIElement+clearText.swift */,
+				040344672197908700FC45C1 /* XCUIElement+waitForNotExistence.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		04327A3E2049E19200D5E29D /* Plugins */ = {
@@ -526,10 +553,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04034466219788DF00FC45C1 /* XCUIElement+clearText.swift in Sources */,
+				0403445B21977E5200FC45C1 /* ExampleAppConfigLogLevel.swift in Sources */,
+				040344682197908800FC45C1 /* XCUIElement+waitForNotExistence.swift in Sources */,
 				040344532197325900FC45C1 /* UITestApplication.swift in Sources */,
 				040344562197688700FC45C1 /* MainAppTestModel.swift in Sources */,
 				0403445A2197746400FC45C1 /* ExampleAppConfigRunType.swift in Sources */,
 				040344592197699400FC45C1 /* ManageAppConfigTestModel.swift in Sources */,
+				0403445F2197800300FC45C1 /* TestSettingType.swift in Sources */,
 				0403444421972CA900FC45C1 /* MainUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

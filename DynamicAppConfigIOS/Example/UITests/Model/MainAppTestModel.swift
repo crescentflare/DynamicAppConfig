@@ -8,25 +8,11 @@
 
 import XCTest
 
-public enum MainAppTestSettingType: String {
-    
-    case name = "name"
-    case apiURL = "apiUrl"
-    case runType = "runType"
-    case acceptAllSSL = "acceptAllSSL"
-    case networkTimeoutSeconds = "networkTimeoutSec"
-    case consoleURL = "consoleUrl"
-    case consoleEnabled = "consoleEnabled"
-    case consoleTimeoutSeconds = "consoleTimeoutSec"
-    case logLevel = "logLevel"
-    
-}
-
 public class MainAppTestSetting {
     
-    private let type: MainAppTestSettingType
+    private let type: TestSettingType
     
-    init(type: MainAppTestSettingType) {
+    init(type: TestSettingType) {
         self.type = type
     }
     
@@ -52,6 +38,13 @@ public class MainAppTestSetting {
     }
 
     @discardableResult func toBe(_ value: ExampleAppConfigRunType) -> MainAppTestModel {
+        if #available(iOS 9.0, *) {
+            XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
+        }
+        return MainAppTestModel()
+    }
+
+    @discardableResult func toBe(_ value: ExampleAppConfigLogLevel) -> MainAppTestModel {
         if #available(iOS 9.0, *) {
             XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
         }
@@ -85,7 +78,7 @@ public class MainAppTestModel {
         return ManageAppConfigTestModel()
     }
 
-    @discardableResult func expectSetting(_ setting: MainAppTestSettingType) -> MainAppTestSetting {
+    @discardableResult func expectSetting(_ setting: TestSettingType) -> MainAppTestSetting {
         return MainAppTestSetting(type: setting)
     }
 
