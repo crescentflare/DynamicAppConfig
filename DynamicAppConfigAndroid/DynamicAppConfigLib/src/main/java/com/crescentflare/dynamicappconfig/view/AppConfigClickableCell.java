@@ -9,10 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -21,6 +18,8 @@ import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: clickable cell
@@ -37,36 +36,45 @@ public class AppConfigClickableCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigClickableCell generateButtonView(Context context, String action)
+    {
+        return generateButtonView(context, null, action, false);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String label, String setting)
+    {
+        return generateButtonView(context, label, setting, false);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String action, boolean edited)
+    {
+        return generateButtonView(context, null, action, edited);
+    }
+
+    public static AppConfigClickableCell generateButtonView(Context context, String label, String setting, boolean edited)
+    {
+        AppConfigClickableCell cellView = new AppConfigClickableCell(context);
+        cellView.setTag(label);
+        cellView.setText(setting);
+        if (edited)
+        {
+            cellView.setValue(context.getString(R.string.app_config_item_edited));
+        }
+        return cellView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 
     public AppConfigClickableCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigClickableCell(Context context, @Nullable AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigClickableCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigClickableCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -136,8 +144,8 @@ public class AppConfigClickableCell extends FrameLayout
             };
             int[] colors = new int[]
             {
-                ContextCompat.getColor(getContext(), R.color.app_config_background),
-                ContextCompat.getColor(getContext(), R.color.app_config_background),
+                AppConfigViewHelper.getColor(getContext(), R.color.app_config_background),
+                AppConfigViewHelper.getColor(getContext(), R.color.app_config_background),
                 Color.WHITE,
                 Color.WHITE
             };
@@ -148,15 +156,10 @@ public class AppConfigClickableCell extends FrameLayout
 
         // Create generic state drawable otherwise
         StateListDrawable stateDrawable = new StateListDrawable();
-        stateDrawable.addState(new int[]{  android.R.attr.state_focused }, new ColorDrawable(ContextCompat.getColor(getContext(), R.color.app_config_background)));
-        stateDrawable.addState(new int[]{  android.R.attr.state_pressed }, new ColorDrawable(ContextCompat.getColor(getContext(), R.color.app_config_background)));
+        stateDrawable.addState(new int[]{  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)));
+        stateDrawable.addState(new int[]{  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)));
         stateDrawable.addState(new int[]{  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         stateDrawable.addState(new int[]{ -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         return stateDrawable;
-    }
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

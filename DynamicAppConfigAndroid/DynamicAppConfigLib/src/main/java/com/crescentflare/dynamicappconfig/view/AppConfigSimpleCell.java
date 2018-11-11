@@ -3,15 +3,13 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: simple cell
@@ -27,36 +25,25 @@ public class AppConfigSimpleCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigSimpleCell generateInfoView(Context context, String infoLabel, String infoValue)
+    {
+        AppConfigSimpleCell cellView = new AppConfigSimpleCell(context);
+        cellView.setText(infoLabel + ": " + infoValue);
+        return cellView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 
     public AppConfigSimpleCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigSimpleCell(Context context, @Nullable AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSimpleCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSimpleCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -80,15 +67,5 @@ public class AppConfigSimpleCell extends FrameLayout
     public void setText(String text)
     {
         labelView.setText(text);
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

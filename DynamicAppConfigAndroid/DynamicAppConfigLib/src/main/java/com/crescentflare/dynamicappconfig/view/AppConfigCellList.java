@@ -5,17 +5,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: a cell container
@@ -37,29 +35,6 @@ public class AppConfigCellList extends LinearLayout
     public AppConfigCellList(Context context)
     {
         super(context);
-        init(context, null);
-    }
-
-    public AppConfigCellList(Context context, @Nullable AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigCellList(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigCellList(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         setOrientation(VERTICAL);
     }
 
@@ -75,7 +50,7 @@ public class AppConfigCellList extends LinearLayout
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+            topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_divider_line));
             addView(topLineView);
         }
 
@@ -87,7 +62,7 @@ public class AppConfigCellList extends LinearLayout
         createdView.addView(labelView = new TextView(getContext()));
         labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);
-        labelView.setTextColor(AppConfigResourceHelper.getAccentColor(getContext()));
+        labelView.setTextColor(AppConfigViewHelper.getAccentColor(getContext()));
         labelView.setText(headerText);
         addView(createdView);
         previousItemView = null;
@@ -98,16 +73,16 @@ public class AppConfigCellList extends LinearLayout
         // Top line divider (edge)
         View topLineView = new View(getContext());
         topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+        topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_divider_line));
         addView(topLineView);
 
         // Gradient divider
         View gradientView = new View(getContext());
         int colors[] = new int[]
         {
-            ContextCompat.getColor(getContext(), R.color.app_config_section_gradient_start),
-            ContextCompat.getColor(getContext(), R.color.app_config_section_gradient_end),
-            ContextCompat.getColor(getContext(), R.color.app_config_background)
+            AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_gradient_start),
+            AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_gradient_end),
+            AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
         gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(8)));
@@ -122,7 +97,7 @@ public class AppConfigCellList extends LinearLayout
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            topLineView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.app_config_section_divider_line));
+            topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_divider_line));
             addView(topLineView);
         }
 
@@ -137,15 +112,5 @@ public class AppConfigCellList extends LinearLayout
     {
         super.removeAllViews();
         previousItemView = null;
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

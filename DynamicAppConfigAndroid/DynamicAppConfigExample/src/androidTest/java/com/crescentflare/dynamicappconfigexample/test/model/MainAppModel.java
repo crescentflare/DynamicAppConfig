@@ -13,8 +13,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Test model: manage app config
- * Interaction related to the app configurations screen
+ * Test model: main app
+ * Interaction related to the main example application
  */
 public class MainAppModel
 {

@@ -18,8 +18,8 @@ public class AppConfigBaseManager
     // Members
     // ---
 
-    AppConfigBaseModel currentConfig = null;
-    List<AppConfigPlugin> plugins = new ArrayList<>();
+    private AppConfigBaseModel currentConfig = null;
+    private List<AppConfigPlugin> plugins = new ArrayList<>();
 
 
     // ---

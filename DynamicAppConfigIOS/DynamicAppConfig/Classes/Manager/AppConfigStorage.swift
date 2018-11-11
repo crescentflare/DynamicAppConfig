@@ -234,6 +234,48 @@ public class AppConfigStorage {
         return customConfigs[config] != nil && storedConfigs[config] != nil
     }
 
+    // Restore everything to initial state
+    public func clearAllToDefaults() {
+        customConfigs.removeAllObjects()
+        synchronizeCustomConfigsWithUserDefaults()
+        selectedItem = ""
+        storeSelectedItemInUserDefaults()
+        globalConfig = [:]
+        storeGlobalConfigInUserDefaults()
+        if let configManager = configManagerInstance {
+            configManager.applyConfigToModel(config: [:], globalConfig: globalConfig, name: nil)
+        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: AppConfigStorage.configurationChanged), object: self)
+    }
+
+    public func manuallyChangeCurrentConfig(key: String, value: String) {
+        var newValues = [String: Any]()
+        if let selectedConfig = selectedItem {
+            if var customConfig = customConfigs[selectedConfig] as? [String: Any] {
+                customConfig[key] = value
+                newValues = customConfig
+                customConfigs[selectedConfig] = newValues
+            } else {
+                newValues = [key: value]
+                customConfigs[selectedConfig] = newValues
+            }
+        }
+        storeSelectedItemInUserDefaults()
+        if let configManager = configManagerInstance {
+            configManager.applyConfigToModel(config: newValues, globalConfig: globalConfig, name: selectedItem)
+        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: AppConfigStorage.configurationChanged), object: self)
+    }
+    
+    public func manuallyChangeGlobalConfig(key: String, value: String) {
+        globalConfig[key] = value
+        storeGlobalConfigInUserDefaults()
+        if let configManager = configManagerInstance {
+            configManager.applyConfigToModel(config: configSettings(config: selectedItem ?? "") ?? [:], globalConfig: globalConfig, name: selectedItem)
+        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: AppConfigStorage.configurationChanged), object: self)
+    }
+
     
     // --
     // MARK: Loading

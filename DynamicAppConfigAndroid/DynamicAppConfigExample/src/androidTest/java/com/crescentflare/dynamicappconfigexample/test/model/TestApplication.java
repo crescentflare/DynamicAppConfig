@@ -1,7 +1,13 @@
 package com.crescentflare.dynamicappconfigexample.test.model;
 
+import com.crescentflare.dynamicappconfigexample.R;
 import com.crescentflare.dynamicappconfigexample.test.helper.CheckViewHelper;
 import com.crescentflare.dynamicappconfigexample.test.helper.WaitViewHelper;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Test model: application
@@ -26,7 +32,7 @@ public class TestApplication
 
     public ManageAppConfigModel expectAppConfigurationsScreen()
     {
-        CheckViewHelper.checkOnPage("App configurations");
+        onView(withId(R.id.app_config_toolbar_title)).check(matches(withText("App configurations")));
         WaitViewHelper.waitOptionalTextDisappear("Loading configurations...", 5000);
         return new ManageAppConfigModel();
     }

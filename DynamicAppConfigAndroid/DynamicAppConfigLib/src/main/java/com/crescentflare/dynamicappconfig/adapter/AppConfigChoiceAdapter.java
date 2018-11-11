@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 
 import java.util.ArrayList;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library adapter: basic selection list view
@@ -94,16 +95,11 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
     // View handling
     // ---
 
-    private int dip(int pixels)
-    {
-        return (int)(context.getResources().getDisplayMetrics().density * pixels);
-    }
-
     private Drawable generateSelectionBackgroundDrawable()
     {
         StateListDrawable drawable = new StateListDrawable();
-        drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(ContextCompat.getColor(context, R.color.app_config_background)));
-        drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(ContextCompat.getColor(context, R.color.app_config_background)));
+        drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
+        drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
         drawable.addState(new int[] {  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         drawable.addState(new int[] { -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
         return drawable;
@@ -118,8 +114,8 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         createdView.addView(viewHolder.labelView = new TextView(context));
         createdView.addView(viewHolder.dividerView = new View(context));
         viewHolder.labelView.setGravity(Gravity.CENTER_VERTICAL);
-        viewHolder.labelView.setMinimumHeight(dip(60));
-        viewHolder.labelView.setPadding(dip(12), dip(12), dip(12), dip(12));
+        viewHolder.labelView.setMinimumHeight(dp(60));
+        viewHolder.labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         viewHolder.labelView.setTextSize(18);
         viewHolder.labelView.setTextColor(Color.DKGRAY);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
@@ -130,9 +126,9 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         {
             viewHolder.labelView.setBackground(generateSelectionBackgroundDrawable());
         }
-        viewHolder.dividerView.setBackgroundColor(ContextCompat.getColor(context, R.color.app_config_list_divider_line));
+        viewHolder.dividerView.setBackgroundColor(AppConfigViewHelper.getColor(context, R.color.app_config_list_divider_line));
         viewHolder.dividerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        ((LinearLayout.LayoutParams)viewHolder.dividerView.getLayoutParams()).setMargins(dip(12), 0, 0, 0);
+        ((LinearLayout.LayoutParams)viewHolder.dividerView.getLayoutParams()).setMargins(dp(12), 0, 0, 0);
         createdView.setTag(viewHolder);
         return createdView;
     }
@@ -183,7 +179,7 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
 
     public static class ViewHolder
     {
-        public TextView labelView = null;
-        public View dividerView = null;
+        TextView labelView = null;
+        View dividerView = null;
     }
 }

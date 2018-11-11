@@ -8,10 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,15 +17,18 @@ import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
 import com.crescentflare.dynamicappconfig.adapter.AppConfigChoiceAdapter;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library activity: selection activity
  * Select an item from a given set of strings, used when needed to make a choice out of a limited set of options
  */
-public class AppConfigStringChoiceActivity extends AppCompatActivity
+public class AppConfigStringChoiceActivity extends Activity
 {
     // ---
     // Constants
@@ -40,14 +39,6 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
     private static final String ARG_TITLE = "ARG_TITLE";
     private static final String ARG_SELECTION_TITLE = "ARG_SELECTION_TITLE";
     private static final String ARG_CHOICES = "ARG_CHOICES";
-
-
-    // ---
-    // Members
-    // ---
-
-    private ListView listView = null;
-    private AppConfigChoiceAdapter adapter = null;
 
 
     // ---
@@ -71,27 +62,27 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         setContentView(layout);
+        setTitle(getIntent().getStringExtra(ARG_TITLE));
 
-        // Add a toolbar on top (if no action bar is present)
-        if (getSupportActionBar() == null)
+        // Add a toolbar on top
+        AppConfigToolbar toolbar = new AppConfigToolbar(this);
+        toolbar.setBackOnClickListener(new View.OnClickListener()
         {
-            Toolbar bar = new Toolbar(this);
-            layout.addView(bar, 0);
-            setSupportActionBar(bar);
-        }
+            @Override
+            public void onClick(View view)
+            {
+                onBackPressed();
+            }
+        });
+        toolbar.setTitle(getTitle().toString());
+        layout.addView(toolbar);
 
         // Add list view
-        listView = new ListView(this);
+        ListView listView = new ListView(this);
         listView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        listView.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
+        listView.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_background));
         listView.setDivider(null);
         listView.setDividerHeight(0);
-        setTitle(getIntent().getStringExtra(ARG_TITLE));
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
         layout.addView(listView);
 
         // Add header and footer
@@ -101,7 +92,7 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
         listView.addFooterView(generateFooter());
 
         // Set adapter
-        adapter = new AppConfigChoiceAdapter(this);
+        AppConfigChoiceAdapter adapter = new AppConfigChoiceAdapter(this);
         listView.setAdapter(adapter);
         adapter.setChoices(getIntent().getStringArrayListExtra(ARG_CHOICES));
 
@@ -130,29 +121,8 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
 
 
     // ---
-    // Menu handling
-    // ---
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    // ---
     // View handling
     // ---
-
-    private int dip(int pixels)
-    {
-        return (int)(getResources().getDisplayMetrics().density * pixels);
-    }
 
     private View generateHeader()
     {
@@ -161,9 +131,9 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
         createdView.setOrientation(LinearLayout.VERTICAL);
         createdView.setBackgroundColor(Color.WHITE);
         createdView.addView(labelView);
-        labelView.setPadding(dip(12), dip(12), dip(12), dip(12));
+        labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);
-        labelView.setTextColor(AppConfigResourceHelper.getAccentColor(this));
+        labelView.setTextColor(AppConfigViewHelper.getAccentColor(this));
         labelView.setText(getIntent().getStringExtra(ARG_SELECTION_TITLE));
         return createdView;
     }
@@ -177,19 +147,19 @@ public class AppConfigStringChoiceActivity extends AppCompatActivity
         // Top line divider (edge)
         View topLineView = new View(this);
         topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        topLineView.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_section_divider_line));
+        topLineView.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_section_divider_line));
         dividerLayout.addView(topLineView);
 
         // Middle divider (gradient on background)
         View gradientView = new View(this);
         int colors[] = new int[]
         {
-                ContextCompat.getColor(this, R.color.app_config_section_gradient_start),
-                ContextCompat.getColor(this, R.color.app_config_section_gradient_end),
-                ContextCompat.getColor(this, R.color.app_config_background)
+            AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_start),
+            AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_end),
+            AppConfigViewHelper.getColor(this, R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
-        gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip(8)));
+        gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(8)));
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             gradientView.setBackgroundDrawable(drawable);

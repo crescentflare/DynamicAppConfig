@@ -340,6 +340,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
             // Supply data
             cell.selectionStyle = .default
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.label = tableValue.configSetting
             cellView?.value = tableValue.labelString
             cellView?.applyNumberLimitation = tableValue.limitUsage
@@ -356,6 +357,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
             // Supply data
             cell.selectionStyle = .default
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.delegate = self
             cellView?.label = tableValue.configSetting
             cellView?.on = tableValue.booleanValue
@@ -373,6 +375,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.configSetting
             cellView?.label = "\(tableValue.configSetting ?? ""): \(tableValue.labelString)"
         }
         
@@ -388,6 +391,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
             cell.shouldHideDivider = !nextType.isCellType()
+            cell.accessibilityIdentifier = tableValue.plugin?.displayName()
             if let displayValue = tableValue.plugin?.displayValue() {
                 cellView?.label = "\(tableValue.plugin?.displayName() ?? ""): \(displayValue)"
             } else {

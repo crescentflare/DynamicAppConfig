@@ -1,20 +1,13 @@
 package com.crescentflare.dynamicappconfig.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -25,8 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
-import com.crescentflare.dynamicappconfig.helper.AppConfigResourceHelper;
 import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
 import com.crescentflare.dynamicappconfig.manager.AppConfigStorage;
 import com.crescentflare.dynamicappconfig.model.AppConfigBaseModel;
@@ -35,14 +26,17 @@ import com.crescentflare.dynamicappconfig.view.AppConfigCellList;
 import com.crescentflare.dynamicappconfig.view.AppConfigClickableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigEditableCell;
 import com.crescentflare.dynamicappconfig.view.AppConfigSwitchCell;
+import com.crescentflare.dynamicappconfig.view.AppConfigToolbar;
 
 import java.util.ArrayList;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library activity: editing activity
  * Be able to change or create a new configuration copy
  */
-public class EditAppConfigActivity extends AppCompatActivity
+public class EditAppConfigActivity extends Activity
 {
     // ---
     // Constants
@@ -61,6 +55,7 @@ public class EditAppConfigActivity extends AppCompatActivity
     private LinearLayout layout = null;
     private AppConfigCellList editingView = null;
     private LinearLayout spinnerView = null;
+    private AppConfigToolbar toolbar = null;
     private AppConfigStorageItem initialEditValues = null;
 
 
@@ -81,13 +76,8 @@ public class EditAppConfigActivity extends AppCompatActivity
     {
         // Create layout and configure action bar
         super.onCreate(savedInstanceState);
+        setTitle(getString(getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? R.string.app_config_title_edit_new : R.string.app_config_title_edit));
         layout = createContentView();
-        setTitle(AppConfigResourceHelper.getString(this, getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? "app_config_title_edit_new" : "app_config_title_edit"));
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
         setContentView(layout);
 
         // Load data and populate content
@@ -127,7 +117,7 @@ public class EditAppConfigActivity extends AppCompatActivity
                     ((AppConfigClickableCell)fieldViews.get(index)).setText(fieldViews.get(index).getTag() + ": " + resultString);
                 }
             }
-            supportInvalidateOptionsMenu();
+            checkOptionState();
         }
     }
 
@@ -142,9 +132,9 @@ public class EditAppConfigActivity extends AppCompatActivity
         if (hasChange)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this)
-                    .setTitle(AppConfigResourceHelper.getString(this, "app_config_title_dialog_confirm_save_changes"))
+                    .setTitle(getString(R.string.app_config_title_dialog_confirm_save_changes))
                     .setCancelable(true)
-                    .setPositiveButton(AppConfigResourceHelper.getString(this, "app_config_action_confirm"), new DialogInterface.OnClickListener()
+                    .setPositiveButton(getString(R.string.app_config_action_confirm), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -152,7 +142,7 @@ public class EditAppConfigActivity extends AppCompatActivity
                             saveData();
                         }
                     })
-                    .setNegativeButton(AppConfigResourceHelper.getString(this, "app_config_action_deny"), new DialogInterface.OnClickListener()
+                    .setNegativeButton(getString(R.string.app_config_action_deny), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -169,125 +159,14 @@ public class EditAppConfigActivity extends AppCompatActivity
         }
     }
 
-
-    // ---
-    // Menu handling
-    // ---
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.edit, menu);
-        if (menu == null)
-        {
-            return false;
-        }
-        menu.findItem(R.id.app_config_menu_save).setVisible(!getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false));
-        menu.findItem(R.id.app_config_menu_create).setVisible(getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false));
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
+    private void checkOptionState()
     {
         boolean hasChange = false;
         if (initialEditValues != null)
         {
             hasChange = !fetchEditedValues().equals(initialEditValues);
         }
-        menu.findItem(R.id.app_config_menu_save).setEnabled(hasChange);
-        menu.findItem(R.id.app_config_menu_create).setEnabled(hasChange);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == R.id.app_config_menu_create || item.getItemId() == R.id.app_config_menu_save)
-        {
-            saveData();
-            return true;
-        }
-        else if (item.getItemId() == android.R.id.home)
-        {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    // ---
-    // View component generators
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
-    }
-
-    private AppConfigClickableCell generateButtonView(String action)
-    {
-        return generateButtonView(null, action);
-    }
-
-    private AppConfigClickableCell generateButtonView(String label, String setting)
-    {
-        AppConfigClickableCell cellView = new AppConfigClickableCell(this);
-        cellView.setTag(label);
-        cellView.setText(setting);
-        return cellView;
-    }
-
-    private AppConfigEditableCell generateEditableView(final String label, final String setting, final boolean limitNumbers)
-    {
-        final AppConfigEditableCell editView = new AppConfigEditableCell(this);
-        editView.setDescription(label);
-        editView.setValue(setting);
-        editView.setNumberLimit(limitNumbers);
-        editView.setTag(label);
-        editView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                AppConfigAlertHelper.inputDialog(EditAppConfigActivity.this, getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
-                {
-                    @Override
-                    public void onInputEntered(String text)
-                    {
-                        editView.setValue(text);
-                        supportInvalidateOptionsMenu();
-                    }
-
-                    @Override
-                    public void onInputCanceled()
-                    {
-                        // No implementation
-                    }
-                });
-            }
-        });
-        return editView;
-    }
-
-    private AppConfigSwitchCell generateSwitchView(String label, boolean setting)
-    {
-        AppConfigSwitchCell switchView = new AppConfigSwitchCell(this);
-        LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        switchView.setLayoutParams(switchViewLayoutParams);
-        switchView.setText(label);
-        switchView.setChecked(setting);
-        switchView.setTag(label);
-        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                supportInvalidateOptionsMenu();
-            }
-        });
-        return switchView;
+        toolbar.setOptionEnabled(hasChange);
     }
 
 
@@ -301,18 +180,33 @@ public class EditAppConfigActivity extends AppCompatActivity
         layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        // Add a toolbar on top (if no action bar is present)
-        if (getSupportActionBar() == null)
+        // Add a toolbar on top
+        toolbar = new AppConfigToolbar(this);
+        toolbar.setBackOnClickListener(new View.OnClickListener()
         {
-            Toolbar bar = new Toolbar(this);
-            layout.addView(bar, 0);
-            setSupportActionBar(bar);
-        }
+            @Override
+            public void onClick(View view)
+            {
+                onBackPressed();
+            }
+        });
+        toolbar.setOptionOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                saveData();
+            }
+        });
+        toolbar.setTitle(getTitle().toString());
+        toolbar.setOption(getString(getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? R.string.app_config_menu_create : R.string.app_config_menu_save).toUpperCase());
+        checkOptionState();
+        layout.addView(toolbar);
 
         // Add frame layout to contain the editing views or loading indicator
         FrameLayout container = new FrameLayout(this);
         container.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        container.setBackgroundColor(ContextCompat.getColor(this, R.color.app_config_background));
+        container.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_background));
         layout.addView(container);
 
         // Add editing view for changing configuration
@@ -341,7 +235,7 @@ public class EditAppConfigActivity extends AppCompatActivity
         layoutParams.setMargins(0, dp(12), 0, 0);
         progressTextView.setLayoutParams(layoutParams);
         progressTextView.setGravity(Gravity.CENTER_HORIZONTAL);
-        progressTextView.setText(AppConfigResourceHelper.getString(this, "app_config_loading"));
+        progressTextView.setText(getString(R.string.app_config_loading));
         spinnerView.addView(progressTextView);
         return layout;
     }
@@ -349,8 +243,7 @@ public class EditAppConfigActivity extends AppCompatActivity
     private void generateEditingContent(String category, ArrayList<String> values, AppConfigStorageItem config, AppConfigBaseModel baseModel)
     {
         // Create container
-        LinearLayout fieldEditLayout = new LinearLayout(this);
-        String title = getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? AppConfigResourceHelper.getString(this, "app_config_header_edit_new") : getIntent().getStringExtra(ARG_CONFIG_NAME);
+        String title = getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false) ? getString(R.string.app_config_header_edit_new) : getIntent().getStringExtra(ARG_CONFIG_NAME);
         if (category != null)
         {
             if (category.length() > 0)
@@ -359,7 +252,7 @@ public class EditAppConfigActivity extends AppCompatActivity
             }
             else
             {
-                title += ": " + AppConfigResourceHelper.getString(this, "app_config_header_edit_other");
+                title += ": " + getString(R.string.app_config_header_edit_other);
             }
         }
         editingView.startSection(title);
@@ -386,18 +279,24 @@ public class EditAppConfigActivity extends AppCompatActivity
         {
             final String value = editValues.get(i);
             View layoutView = null;
-            final Object previousResult = i > 0 ? editObjects.get(i - 1) : null;
             final Object result = editObjects.get(i);
             if (result != null)
             {
                 if (result instanceof Boolean)
                 {
-                    layoutView = generateSwitchView(value, (Boolean)result);
+                    layoutView = AppConfigSwitchCell.generateSwitchView(this, value, (Boolean) result, new CompoundButton.OnCheckedChangeListener()
+                    {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 else if (result.getClass().isEnum())
                 {
                     final int index = fieldViews.size();
-                    layoutView = generateButtonView(value, value + ": " + result.toString());
+                    layoutView = AppConfigClickableCell.generateButtonView(this, value, value + ": " + result.toString());
                     layoutView.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
@@ -405,16 +304,16 @@ public class EditAppConfigActivity extends AppCompatActivity
                         {
                             Object constants[] = result.getClass().getEnumConstants();
                             ArrayList<String> enumValues = new ArrayList<>();
-                            for (int i = 0; i < constants.length; i++)
+                            for (Object constant : constants)
                             {
-                                enumValues.add(constants[i].toString());
+                                enumValues.add(constant.toString());
                             }
                             if (enumValues.size() > 0)
                             {
                                 AppConfigStringChoiceActivity.startWithResult(
                                         EditAppConfigActivity.this,
-                                        AppConfigResourceHelper.getString(EditAppConfigActivity.this, "app_config_title_choose_enum_prefix") + " " + value,
-                                        AppConfigResourceHelper.getString(EditAppConfigActivity.this, "app_config_header_choose_enum"),
+                                        getString(R.string.app_config_title_choose_enum_prefix) + " " + value,
+                                        getString(R.string.app_config_header_choose_enum),
                                         enumValues,
                                         RESULT_CODE_SELECT_ENUM + index
                                 );
@@ -424,11 +323,25 @@ public class EditAppConfigActivity extends AppCompatActivity
                 }
                 else if (result instanceof Integer || result instanceof Long)
                 {
-                    layoutView = generateEditableView(value, "" + result, true);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, "" + result, true, new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 else if (result instanceof String)
                 {
-                    layoutView = generateEditableView(value, (String)result, false);
+                    layoutView = AppConfigEditableCell.generateEditableView(this, value, (String) result, false, new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            checkOptionState();
+                        }
+                    });
                 }
                 if (layoutView != null)
                 {
@@ -475,10 +388,17 @@ public class EditAppConfigActivity extends AppCompatActivity
             String name = getIntent().getStringExtra(ARG_CONFIG_NAME);
             if (getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false))
             {
-                name += " " + AppConfigResourceHelper.getString(this, "app_config_modifier_copy");
+                name += " " + getString(R.string.app_config_modifier_copy);
             }
-            AppConfigEditableCell editableCell = generateEditableView("name", name, false);
-            editingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_edit_name"));
+            AppConfigEditableCell editableCell = AppConfigEditableCell.generateEditableView(this, "name", name, false, new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    checkOptionState();
+                }
+            });
+            editingView.startSection(getString(R.string.app_config_header_edit_name));
             editingView.addSectionItem(editableCell);
             editingView.endSection();
             fieldViews.add(editableCell.findViewWithTag("name"));
@@ -498,13 +418,13 @@ public class EditAppConfigActivity extends AppCompatActivity
         }
 
         // Start button section
-        editingView.startSection(AppConfigResourceHelper.getString(this, "app_config_header_edit_actions"));
+        editingView.startSection(getString(R.string.app_config_header_edit_actions));
 
         // Add buttons
         if (getIntent().getBooleanExtra(ARG_CREATE_CUSTOM, false))
         {
-            AppConfigClickableCell createButton = generateButtonView(AppConfigResourceHelper.getString(this, "app_config_action_ok_edit_new"));
-            createButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_edit_save"));
+            AppConfigClickableCell createButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_ok_edit_new));
+            createButton.setId(R.id.app_config_activity_edit_save);
             editingView.addSectionItem(createButton);
             createButton.setOnClickListener(new View.OnClickListener()
             {
@@ -518,8 +438,8 @@ public class EditAppConfigActivity extends AppCompatActivity
         else
         {
             // Updating configuration handler
-            AppConfigClickableCell saveButton = generateButtonView(AppConfigResourceHelper.getString(this, "app_config_action_ok_edit"));
-            saveButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_edit_save"));
+            AppConfigClickableCell saveButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_ok_edit));
+            saveButton.setId(R.id.app_config_activity_edit_save);
             editingView.addSectionItem(saveButton);
             saveButton.setOnClickListener(new View.OnClickListener()
             {
@@ -531,9 +451,9 @@ public class EditAppConfigActivity extends AppCompatActivity
             });
 
             // Restore to defaults or delete handler
-            String buttonText = AppConfigResourceHelper.getString(this, AppConfigStorage.instance.isCustomConfig(getIntent().getStringExtra(ARG_CONFIG_NAME)) ? "app_config_action_delete" : "app_config_action_restore");
-            AppConfigClickableCell deleteButton = generateButtonView(buttonText);
-            deleteButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_edit_clear"));
+            String buttonText = getString(AppConfigStorage.instance.isCustomConfig(getIntent().getStringExtra(ARG_CONFIG_NAME)) ? R.string.app_config_action_delete : R.string.app_config_action_restore);
+            AppConfigClickableCell deleteButton = AppConfigClickableCell.generateButtonView(this, buttonText);
+            deleteButton.setId(R.id.app_config_activity_edit_clear);
             editingView.addSectionItem(deleteButton);
             deleteButton.setOnClickListener(new View.OnClickListener()
             {
@@ -555,8 +475,8 @@ public class EditAppConfigActivity extends AppCompatActivity
                 }
             });
         }
-        AppConfigClickableCell cancelButton = generateButtonView(AppConfigResourceHelper.getString(this, "app_config_action_cancel"));
-        cancelButton.setId(AppConfigResourceHelper.getIdentifier(this, "app_config_activity_edit_cancel"));
+        AppConfigClickableCell cancelButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_cancel));
+        cancelButton.setId(R.id.app_config_activity_edit_cancel);
         editingView.addSectionItem(cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener()
         {

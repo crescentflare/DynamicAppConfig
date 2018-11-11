@@ -3,20 +3,17 @@ package com.crescentflare.dynamicappconfig.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatEditText;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
-import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.dynamicappconfig.R;
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import com.crescentflare.dynamicappconfig.helper.AppConfigAlertHelper;
+
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: editable cell
@@ -35,36 +32,53 @@ public class AppConfigEditableCell extends FrameLayout
 
 
     // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigEditableCell generateEditableView(final Context context, final String label, final String setting, final boolean limitNumbers, final Runnable changeListener)
+    {
+        final AppConfigEditableCell editView = new AppConfigEditableCell(context);
+        editView.setDescription(label);
+        editView.setValue(setting);
+        editView.setNumberLimit(limitNumbers);
+        editView.setTag(label);
+        editView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                AppConfigAlertHelper.inputDialog(context, context.getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
+                {
+                    @Override
+                    public void onInputEntered(String text)
+                    {
+                        editView.setValue(text);
+                        if (changeListener != null)
+                        {
+                            changeListener.run();
+                        }
+                    }
+
+                    @Override
+                    public void onInputCanceled()
+                    {
+                        // No implementation
+                    }
+                });
+            }
+        });
+        return editView;
+    }
+
+
+    // ---
     // Initialization
     // ---
 
     public AppConfigEditableCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigEditableCell(Context context, @Nullable AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigEditableCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigEditableCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -124,15 +138,5 @@ public class AppConfigEditableCell extends FrameLayout
     public boolean isNumberLimit()
     {
         return isNumberLimit;
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

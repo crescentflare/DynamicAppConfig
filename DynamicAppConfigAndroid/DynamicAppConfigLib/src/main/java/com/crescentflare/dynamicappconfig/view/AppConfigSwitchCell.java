@@ -3,16 +3,14 @@ package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
-import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
  * Library view: simple cell
@@ -24,7 +22,24 @@ public class AppConfigSwitchCell extends FrameLayout
     // Members
     // ---
 
-    private SwitchCompat switchView;
+    private Switch switchView;
+
+
+    // ---
+    // Factory methods
+    // ---
+
+    public static AppConfigSwitchCell generateSwitchView(Context context, String label, boolean setting, CompoundButton.OnCheckedChangeListener changeListener)
+    {
+        AppConfigSwitchCell switchView = new AppConfigSwitchCell(context);
+        LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        switchView.setLayoutParams(switchViewLayoutParams);
+        switchView.setText(label);
+        switchView.setChecked(setting);
+        switchView.setTag(label);
+        switchView.setOnCheckedChangeListener(changeListener);
+        return switchView;
+    }
 
 
     // ---
@@ -33,31 +48,8 @@ public class AppConfigSwitchCell extends FrameLayout
 
     public AppConfigSwitchCell(Context context)
     {
-        super(context);
-        init(context, null);
-    }
-
-    public AppConfigSwitchCell(Context context, @Nullable AttributeSet attrs)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSwitchCell(Context context, @Nullable AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    public AppConfigSwitchCell(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs)
-    {
         // Prepare container
+        super(context);
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -67,7 +59,7 @@ public class AppConfigSwitchCell extends FrameLayout
         // Add switch view
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        container.addView(switchView = new SwitchCompat(context));
+        container.addView(switchView = new Switch(context));
         switchView.setLayoutParams(layoutParams);
         switchView.setMinimumHeight(dp(60));
         switchView.setPadding(0, dp(12), 0, dp(12));
@@ -98,15 +90,5 @@ public class AppConfigSwitchCell extends FrameLayout
     public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener)
     {
         switchView.setOnCheckedChangeListener(listener);
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    private int dp(int dp)
-    {
-        return AppConfigViewHelper.dp(dp);
     }
 }

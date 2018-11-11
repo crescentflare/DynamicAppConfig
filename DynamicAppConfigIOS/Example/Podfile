@@ -8,4 +8,8 @@ target 'DynamicAppConfig_Example' do
   target 'DynamicAppConfig_Tests' do
     inherit! :search_paths
   end
+
+  target 'DynamicAppConfig_UITests' do
+    inherit! :search_paths
+  end
 end
