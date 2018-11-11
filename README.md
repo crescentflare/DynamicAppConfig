@@ -16,8 +16,6 @@ For example: be able to make one build with a build selector that contains devel
 ✓ Proven in multiple projects
 
 
----
-
 ## Features
 
 - Be able to configure several app configurations using JSON (Android) or a plist file (iOS)
@@ -56,8 +54,6 @@ Make sure that jcenter is added as a repository. The above is for Android API le
 
 An explanation on how to further integrate and use the library itself is available on the [wiki](https://github.com/crescentflare/DynamicAppConfig/wiki). It contains documentation for both iOS and Android separately.
 
-
----
 
 ### Storage
 
