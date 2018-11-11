@@ -47,7 +47,7 @@ class EditUITests: XCTestCase {
     // And I see "networkTimeoutSec" set to "10"
     // And I see "runType" set to "runQuickly"
     // And I see "acceptAllSSL" set to "true"
-    func testEditGlobalSettings() {
+    func testEditConfiguration() {
         UITestApplication.shared
             .expectMainAppScreen()
             .openAppConfigurationsScreen()
