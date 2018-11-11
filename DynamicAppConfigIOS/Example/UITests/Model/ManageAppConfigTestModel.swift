@@ -18,6 +18,7 @@ public enum ManageAppConfigType: String {
 
 }
 
+@available(iOS 9.0, *)
 public class ManageAppConfigTestSetting {
     
     private let type: TestSettingType
@@ -27,60 +28,51 @@ public class ManageAppConfigTestSetting {
     }
     
     @discardableResult func to(_ value: Bool) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            var currentValue = false
-            if let currentValueString = XCUIApplication().tables.cells[type.rawValue].switches.firstMatch.value as? String {
-                currentValue = currentValueString != "0"
-            }
-            if currentValue != value {
-                XCUIApplication().tables.cells[type.rawValue].tap()
-            }
+        var currentValue = false
+        if let currentValueString = XCUIApplication().tables.cells[type.rawValue].switches.firstMatch.value as? String {
+            currentValue = currentValueString != "0"
+        }
+        if currentValue != value {
+            XCUIApplication().tables.cells[type.rawValue].tap()
         }
         return ManageAppConfigTestModel()
     }
     
     @discardableResult func to(_ value: Int) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().tables.cells[type.rawValue].tap()
-            let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
-            collectionViewsQuery.textFields[type.rawValue].clearText()
-            collectionViewsQuery.textFields[type.rawValue].typeText(String(value))
-            collectionViewsQuery.buttons["OK"].tap()
-            _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
-        }
+        XCUIApplication().tables.cells[type.rawValue].tap()
+        let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
+        collectionViewsQuery.textFields[type.rawValue].clearText()
+        collectionViewsQuery.textFields[type.rawValue].typeText(String(value))
+        collectionViewsQuery.buttons["OK"].tap()
+        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
         return ManageAppConfigTestModel()
     }
     
     @discardableResult func to(_ value: String) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().tables.cells[type.rawValue].tap()
-            let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
-            collectionViewsQuery.textFields[type.rawValue].clearText()
-            collectionViewsQuery.textFields[type.rawValue].typeText(value)
-            collectionViewsQuery.buttons["OK"].tap()
-            _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
-        }
+        XCUIApplication().tables.cells[type.rawValue].tap()
+        let collectionViewsQuery = XCUIApplication().alerts["Value for \(type.rawValue)"].collectionViews
+        collectionViewsQuery.textFields[type.rawValue].clearText()
+        collectionViewsQuery.textFields[type.rawValue].typeText(value)
+        collectionViewsQuery.buttons["OK"].tap()
+        _ = XCUIApplication().keyboards.firstMatch.waitForNotExistence(timeout: 5)
         return ManageAppConfigTestModel()
     }
     
     @discardableResult func to(_ value: ExampleAppConfigRunType) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().tables.cells[type.rawValue].tap()
-            XCUIApplication().tables.cells.staticTexts[value.rawValue].tap()
-        }
+        XCUIApplication().tables.cells[type.rawValue].tap()
+        XCUIApplication().tables.cells.staticTexts[value.rawValue].tap()
         return ManageAppConfigTestModel()
     }
     
     @discardableResult func to(_ value: ExampleAppConfigLogLevel) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().tables.cells[type.rawValue].tap()
-            XCUIApplication().tables.cells.staticTexts[value.rawValue].tap()
-        }
+        XCUIApplication().tables.cells[type.rawValue].tap()
+        XCUIApplication().tables.cells.staticTexts[value.rawValue].tap()
         return ManageAppConfigTestModel()
     }
     
 }
 
+@available(iOS 9.0, *)
 public class ManageAppConfigTestModel {
 
     // --
@@ -88,10 +80,8 @@ public class ManageAppConfigTestModel {
     // --
 
     @discardableResult func selectConfig(_ configuration: ManageAppConfigType) -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().tables.cells.staticTexts[configuration.rawValue].tap()
-            XCUIApplication().navigationBars["App configurations"].buttons["Done"].tap()
-        }
+        XCUIApplication().tables.cells.staticTexts[configuration.rawValue].tap()
+        XCUIApplication().navigationBars["App configurations"].buttons["Done"].tap()
         return self
     }
     
@@ -105,9 +95,7 @@ public class ManageAppConfigTestModel {
     // --
     
     @discardableResult func expectMainAppScreen() -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertTrue(XCUIApplication().navigationBars["Example App Config"].exists)
-        }
+        XCTAssertTrue(XCUIApplication().navigationBars["Example App Config"].exists)
         return MainAppTestModel()
     }
 

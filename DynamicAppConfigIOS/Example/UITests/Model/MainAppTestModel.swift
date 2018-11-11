@@ -8,6 +8,7 @@
 
 import XCTest
 
+@available(iOS 9.0, *)
 public class MainAppTestSetting {
     
     private let type: TestSettingType
@@ -17,42 +18,33 @@ public class MainAppTestSetting {
     }
     
     @discardableResult func toBe(_ value: Bool) -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertEqual(value ? "true" : "false", XCUIApplication().staticTexts[type.rawValue].label)
-        }
+        XCTAssertEqual(value ? "true" : "false", XCUIApplication().staticTexts[type.rawValue].label)
         return MainAppTestModel()
     }
 
     @discardableResult func toBe(_ value: Int) -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertEqual(String(value), XCUIApplication().staticTexts[type.rawValue].label)
-        }
+        XCTAssertEqual(String(value), XCUIApplication().staticTexts[type.rawValue].label)
         return MainAppTestModel()
     }
 
     @discardableResult func toBe(_ value: String) -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertEqual(value, XCUIApplication().staticTexts[type.rawValue].label)
-        }
+        XCTAssertEqual(value, XCUIApplication().staticTexts[type.rawValue].label)
         return MainAppTestModel()
     }
 
     @discardableResult func toBe(_ value: ExampleAppConfigRunType) -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
-        }
+        XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
         return MainAppTestModel()
     }
 
     @discardableResult func toBe(_ value: ExampleAppConfigLogLevel) -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
-        }
+        XCTAssertEqual(value.rawValue, XCUIApplication().staticTexts[type.rawValue].label)
         return MainAppTestModel()
     }
 
 }
 
+@available(iOS 9.0, *)
 public class MainAppTestModel {
 
     // --
@@ -60,9 +52,7 @@ public class MainAppTestModel {
     // --
 
     @discardableResult func openAppConfigurationsScreen() -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCUIApplication().navigationBars["Example App Config"].buttons["Change"].tap()
-        }
+        XCUIApplication().navigationBars["Example App Config"].buttons["Change"].tap()
         return self
     }
     
@@ -72,9 +62,7 @@ public class MainAppTestModel {
     // --
     
     @discardableResult func expectAppConfigurationsScreen() -> ManageAppConfigTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertTrue(XCUIApplication().navigationBars["App configurations"].exists)
-        }
+        XCTAssertTrue(XCUIApplication().navigationBars["App configurations"].exists)
         return ManageAppConfigTestModel()
     }
 

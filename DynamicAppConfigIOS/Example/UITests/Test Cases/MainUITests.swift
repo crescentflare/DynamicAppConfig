@@ -11,6 +11,7 @@
 import XCTest
 @testable import DynamicAppConfig
 
+@available(iOS 9.0, *)
 class MainUITests: XCTestCase {
 
     // --
@@ -18,14 +19,10 @@ class MainUITests: XCTestCase {
     // --
 
     override func setUp() {
+        let app = XCUIApplication()
         continueAfterFailure = false
-        if #available(iOS 9.0, *) {
-            let app = XCUIApplication()
-            app.launchArguments = ["clearAppConfig"]
-            app.launch()
-        } else {
-            // Won't be executed, because UI testing is not available anymore on old iOS versions
-        }
+        app.launchArguments = ["clearAppConfig"]
+        app.launch()
     }
 
 
@@ -39,19 +36,17 @@ class MainUITests: XCTestCase {
     // When I select the "Test server" configuration
     // Then I see the "Test server" settings
     func testSelectConfiguration() {
-        if #available(iOS 9.0, *) {
-            UITestApplication.shared
-                .expectMainAppScreen()
-                .openAppConfigurationsScreen()
-                .expectAppConfigurationsScreen()
-                .selectConfig(.test)
-                .expectMainAppScreen()
-                .expectSetting(.name).toBe("Test server")
-                .expectSetting(.apiURL).toBe("https://test.example.com/")
-                .expectSetting(.runType).toBe(.runNormally)
-                .expectSetting(.acceptAllSSL).toBe(false)
-                .expectSetting(.networkTimeoutSeconds).toBe(20)
-        }
+        UITestApplication.shared
+            .expectMainAppScreen()
+            .openAppConfigurationsScreen()
+            .expectAppConfigurationsScreen()
+            .selectConfig(.test)
+            .expectMainAppScreen()
+            .expectSetting(.name).toBe("Test server")
+            .expectSetting(.apiURL).toBe("https://test.example.com/")
+            .expectSetting(.runType).toBe(.runNormally)
+            .expectSetting(.acceptAllSSL).toBe(false)
+            .expectSetting(.networkTimeoutSeconds).toBe(20)
     }
 
     // Scenario: Editing global settings
@@ -67,22 +62,20 @@ class MainUITests: XCTestCase {
     // And I see "logLevel" set to "logVerbose"
     // And I see "consoleEnabled" set to "true"
     func testEditGlobalSettings() {
-        if #available(iOS 9.0, *) {
-            UITestApplication.shared
-                .expectMainAppScreen()
-                .openAppConfigurationsScreen()
-                .expectAppConfigurationsScreen()
-                .changeGlobalSetting(.consoleURL).to("https://console.example.com")
-                .changeGlobalSetting(.consoleTimeoutSeconds).to(100)
-                .changeGlobalSetting(.logLevel).to(.logVerbose)
-                .changeGlobalSetting(.consoleEnabled).to(true)
-                .selectConfig(.mock)
-                .expectMainAppScreen()
-                .expectSetting(.consoleURL).toBe("https://console.example.com")
-                .expectSetting(.consoleTimeoutSeconds).toBe(100)
-                .expectSetting(.logLevel).toBe(.logVerbose)
-                .expectSetting(.consoleEnabled).toBe(true)
-        }
+        UITestApplication.shared
+            .expectMainAppScreen()
+            .openAppConfigurationsScreen()
+            .expectAppConfigurationsScreen()
+            .changeGlobalSetting(.consoleURL).to("https://console.example.com")
+            .changeGlobalSetting(.consoleTimeoutSeconds).to(100)
+            .changeGlobalSetting(.logLevel).to(.logVerbose)
+            .changeGlobalSetting(.consoleEnabled).to(true)
+            .selectConfig(.mock)
+            .expectMainAppScreen()
+            .expectSetting(.consoleURL).toBe("https://console.example.com")
+            .expectSetting(.consoleTimeoutSeconds).toBe(100)
+            .expectSetting(.logLevel).toBe(.logVerbose)
+            .expectSetting(.consoleEnabled).toBe(true)
     }
     
 }

@@ -8,6 +8,7 @@
 
 import XCTest
 
+@available(iOS 9.0, *)
 public class UITestApplication {
 
     // --
@@ -22,9 +23,7 @@ public class UITestApplication {
     // --
     
     @discardableResult func expectMainAppScreen() -> MainAppTestModel {
-        if #available(iOS 9.0, *) {
-            XCTAssertTrue(XCUIApplication().navigationBars["Example App Config"].exists)
-        }
+        XCTAssertTrue(XCUIApplication().navigationBars["Example App Config"].exists)
         return MainAppTestModel()
     }
 
