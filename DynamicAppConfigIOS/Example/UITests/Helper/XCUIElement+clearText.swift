@@ -11,7 +11,7 @@ import XCTest
 @available(iOS 9.0, *)
 public extension XCUIElement {
     
-    public func clearText() {
+    func clearText() {
         // Obtain value
         guard let stringValue = self.value as? String else {
             return
