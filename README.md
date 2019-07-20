@@ -15,7 +15,7 @@ For example: be able to make one build with a build selector that contains devel
 ✓ Ready for test automation\
 ✓ Proven in multiple projects
 
-![iOS screenshot](https://raw.githubusercontent.com/crescentflare/DynamicAppConfig/develop/Screenshots/screenshot_ios.png)
+![iOS screenshot](https://raw.githubusercontent.com/crescentflare/DynamicAppConfig/develop/Screenshots/screenshot_ios.png)&nbsp;&nbsp;
 ![Android screenshot](https://raw.githubusercontent.com/crescentflare/DynamicAppConfig/develop/Screenshots/screenshot_android.png)
 
 
