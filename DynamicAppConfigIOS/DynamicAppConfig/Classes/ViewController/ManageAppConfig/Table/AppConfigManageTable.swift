@@ -282,8 +282,8 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create cell (if needed)
-        let tableValue = tableValues[(indexPath as NSIndexPath).row]
-        let nextType = (indexPath as NSIndexPath).row + 1 < tableValues.count ? tableValues[(indexPath as NSIndexPath).row + 1].type : AppConfigManageTableValueType.unknown
+        let tableValue = tableValues[indexPath.row]
+        let nextType = indexPath.row + 1 < tableValues.count ? tableValues[indexPath.row + 1].type : AppConfigManageTableValueType.unknown
         let cell = tableView.dequeueReusableCell(withIdentifier: tableValue.type.rawValue) as? AppConfigTableCell ?? AppConfigTableCell()
         
         // Set up a loader cell
@@ -434,13 +434,13 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let tableValue = tableValues[(indexPath as NSIndexPath).row]
+        let tableValue = tableValues[indexPath.row]
         return tableValue.type == .config && tableValue.config != nil
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction.init(style: .normal, title: AppConfigBundle.localizedString(key: "CFLAC_MANAGE_SWIPE_EDIT"), handler: { action, indexPath in
-            let tableValue = self.tableValues[(indexPath as NSIndexPath).row]
+            let tableValue = self.tableValues[indexPath.row]
             tableView.setEditing(false, animated: true)
             if tableValue.config != nil {
                 self.delegate?.editConfig(configName: tableValue.config!)
@@ -456,7 +456,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
     // --
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tableValue = tableValues[(indexPath as NSIndexPath).row]
+        let tableValue = tableValues[indexPath.row]
         if delegate != nil {
             if tableValue.config != nil {
                 delegate?.selectedConfig(configName: tableValue.config!)
@@ -495,7 +495,7 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
                         // Observe buttons and present
                         alert.addAction(UIAlertAction(title: AppConfigBundle.localizedString(key: "CFLAC_SHARED_OK"), style: .default, handler: { [weak alert] (_) in
                             let enteredText = alert?.textFields?[0].text ?? ""
-                            self.tableValues[(indexPath as NSIndexPath).row] = AppConfigManageTableValue.valueForTextEntry(configSetting: tableValue.configSetting ?? "", andValue: enteredText, numberOnly: tableValue.limitUsage)
+                            self.tableValues[indexPath.row] = AppConfigManageTableValue.valueForTextEntry(configSetting: tableValue.configSetting ?? "", andValue: enteredText, numberOnly: tableValue.limitUsage)
                             editTextCellView.value = enteredText
                             tableView.reloadRows(at: [indexPath], with: .none)
                         }))
