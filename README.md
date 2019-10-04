@@ -35,7 +35,7 @@ For example: be able to make one build with a build selector that contains devel
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add one of the following lines to your Podfile.
 
 ```ruby
-pod "DynamicAppConfig", '~> 1.3.3'
+pod "DynamicAppConfig", '~> 1.3.4'
 ```
 
 The above version is for Swift 5.0. For older Swift versions use the following:
