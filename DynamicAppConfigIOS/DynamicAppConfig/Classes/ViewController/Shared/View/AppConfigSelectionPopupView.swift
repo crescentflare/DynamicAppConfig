@@ -183,11 +183,13 @@ protocol AppConfigSelectionPopupViewDelegate: class {
     // --
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if delegate != nil {
-            delegate?.selectedItem(_tableChoices[indexPath.row], token: token)
-        }
         _tableView.deselectRow(at: indexPath, animated: false)
-        dismiss()
+        if indexPath.row < _tableChoices.count {
+            if delegate != nil {
+                delegate?.selectedItem(_tableChoices[indexPath.row], token: token)
+            }
+            dismiss()
+        }
     }
 
 }
