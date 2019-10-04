@@ -1,5 +1,5 @@
 PODS:
-  - DynamicAppConfig (1.3.3)
+  - DynamicAppConfig (1.3.4)
 
 DEPENDENCIES:
   - DynamicAppConfig (from `../../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../../"
 
 SPEC CHECKSUMS:
-  DynamicAppConfig: ff610086de74d1a61be2cb2b0ba94308dd20b411
+  DynamicAppConfig: 5dea2944366c5fbba52bcf09f165b43e74f1ffde
 
 PODFILE CHECKSUM: 79e308523c8fc52743ffa5d4cef5c6dbd80b623b
 
