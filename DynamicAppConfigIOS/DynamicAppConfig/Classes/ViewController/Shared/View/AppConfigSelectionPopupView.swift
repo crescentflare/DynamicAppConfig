@@ -148,7 +148,7 @@ protocol AppConfigSelectionPopupViewDelegate: class {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ignored") as? AppConfigTableCell ?? AppConfigTableCell()
         
         // Regular cell view
-        if (indexPath as NSIndexPath).row < _tableChoices.count {
+        if indexPath.row < _tableChoices.count {
             // Create view
             if cell.cellView == nil {
                 cell.cellView = AppConfigItemCellView()
@@ -158,12 +158,12 @@ protocol AppConfigSelectionPopupViewDelegate: class {
             // Supply data and return the cell
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
-            cell.shouldHideDivider = (indexPath as NSIndexPath).row + 1 >= _tableChoices.count
-            cellView?.label = _tableChoices[(indexPath as NSIndexPath).row]
+            cell.shouldHideDivider = indexPath.row + 1 >= _tableChoices.count
+            cellView?.label = _tableChoices[indexPath.row]
         }
         
         // Bottom divider
-        if (indexPath as NSIndexPath).row >= _tableChoices.count {
+        if indexPath.row >= _tableChoices.count {
             // Create view
             if cell.cellView == nil {
                 cell.cellView = AppConfigCellSectionDividerView(location: .bottom)
@@ -183,11 +183,13 @@ protocol AppConfigSelectionPopupViewDelegate: class {
     // --
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if delegate != nil {
-            delegate?.selectedItem(_tableChoices[(indexPath as NSIndexPath).row], token: token)
-        }
         _tableView.deselectRow(at: indexPath, animated: false)
-        dismiss()
+        if indexPath.row < _tableChoices.count {
+            if delegate != nil {
+                delegate?.selectedItem(_tableChoices[indexPath.row], token: token)
+            }
+            dismiss()
+        }
     }
 
 }

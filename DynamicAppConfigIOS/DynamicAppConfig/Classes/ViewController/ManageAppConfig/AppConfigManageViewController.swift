@@ -60,10 +60,13 @@ public class AppConfigManageViewController : UIViewController, AppConfigManageTa
     // MARK: Launching
     // --
     
-    public static func launch() {
+    public static func launch(forceFullscreen: Bool = true) {
         if AppConfigManageViewController.isOpenCounter == 0 && AppConfigStorage.shared.isActivated() {
             let viewController = AppConfigManageViewController()
             let navigationController = UINavigationController.init(rootViewController: viewController)
+            if forceFullscreen {
+                navigationController.modalPresentationStyle = .overFullScreen
+            }
             ac_topmostViewController?.present(navigationController, animated: true, completion: nil)
         }
     }

@@ -246,8 +246,8 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create cell (if needed)
-        let tableValue = tableValues[(indexPath as NSIndexPath).row]
-        let nextType = (indexPath as NSIndexPath).row + 1 < tableValues.count ? tableValues[(indexPath as NSIndexPath).row + 1].type : AppConfigEditTableValueType.unknown
+        let tableValue = tableValues[indexPath.row]
+        let nextType = indexPath.row + 1 < tableValues.count ? tableValues[indexPath.row + 1].type : AppConfigEditTableValueType.unknown
         let cell = tableView.dequeueReusableCell(withIdentifier: tableValue.type.rawValue) as? AppConfigTableCell ?? AppConfigTableCell()
         
         // Set up a loader cell
@@ -369,7 +369,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     // --
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tableValue = tableValues[(indexPath as NSIndexPath).row]
+        let tableValue = tableValues[indexPath.row]
         UIApplication.shared.sendAction(#selector(resignFirstResponder), to: nil, from: nil, for: nil)
         if tableValue.type == .action && delegate != nil {
             switch tableValue.action {
@@ -413,7 +413,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
                     // Observe buttons and present
                     alert.addAction(UIAlertAction(title: AppConfigBundle.localizedString(key: "CFLAC_SHARED_OK"), style: .default, handler: { [weak alert] (_) in
                         let enteredText = alert?.textFields?[0].text ?? ""
-                        self.tableValues[(indexPath as NSIndexPath).row] = AppConfigEditTableValue.valueForTextEntry(configSetting: tableValue.configSetting ?? "", andValue: enteredText, numberOnly: tableValue.limitUsage)
+                        self.tableValues[indexPath.row] = AppConfigEditTableValue.valueForTextEntry(configSetting: tableValue.configSetting ?? "", andValue: enteredText, numberOnly: tableValue.limitUsage)
                         tableView.reloadRows(at: [indexPath], with: .none)
                         self.delegate?.configChanged(newSettings: self.obtainNewConfigurationSettings())
                     }))

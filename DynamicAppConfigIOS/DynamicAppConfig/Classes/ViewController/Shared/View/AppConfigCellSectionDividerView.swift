@@ -35,7 +35,7 @@ enum AppConfigCellSectionLocation: String {
     
     @IBInspectable var dividerLocation: String = "" {
         didSet {
-            location = AppConfigCellSectionLocation.init(rawValue: dividerLocation) ?? .none
+            location = AppConfigCellSectionLocation.init(rawValue: dividerLocation) ?? AppConfigCellSectionLocation.none
         }
     }
 
