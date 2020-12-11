@@ -53,7 +53,11 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
     func initialize () {
         // Set up table view
         let tableFooter = UIView()
-        table.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        if #available(iOS 13.0, *) {
+            table.backgroundColor = UIColor.secondarySystemBackground
+        } else {
+            table.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        }
         tableFooter.frame = CGRect(x: 0, y: 0, width: 0, height: 8)
         table.tableFooterView = tableFooter
         addSubview(table)

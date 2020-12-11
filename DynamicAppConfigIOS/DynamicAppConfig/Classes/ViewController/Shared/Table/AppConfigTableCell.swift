@@ -47,7 +47,11 @@ class AppConfigTableCell : UITableViewCell {
     
     func setupView() {
         _dividerLine = UIView()
-        _dividerLine?.backgroundColor = UIColor.init(white: 0.8, alpha: 1)
+        if #available(iOS 13.0, *) {
+            _dividerLine?.backgroundColor = UIColor.separator
+        } else {
+            _dividerLine?.backgroundColor = UIColor.init(white: 0.8, alpha: 1)
+        }
         addSubview(_dividerLine!)
         AppConfigViewUtility.addHeightConstraint(view: _dividerLine!, height: 1 / UIScreen.main.scale)
         AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: _dividerLine!, parentView: self, edge: .left, constant: 16)

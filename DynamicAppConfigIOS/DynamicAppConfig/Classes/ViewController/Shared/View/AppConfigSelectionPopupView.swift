@@ -82,7 +82,11 @@ protocol AppConfigSelectionPopupViewDelegate: class {
 
         // Set up table view
         let tableFooter = UIView()
-        _tableView.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        if #available(iOS 13.0, *) {
+            _tableView.backgroundColor = UIColor.secondarySystemBackground
+        } else {
+            _tableView.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        }
         tableFooter.frame = CGRect(x: 0, y: 0, width: 0, height: 8)
         _tableView.tableFooterView = tableFooter
         
