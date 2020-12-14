@@ -58,7 +58,7 @@ public class AppConfigCellList extends LinearLayout
         LinearLayout createdView = new LinearLayout(getContext());
         TextView labelView;
         createdView.setOrientation(LinearLayout.VERTICAL);
-        createdView.setBackgroundColor(Color.WHITE);
+        createdView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background));
         createdView.addView(labelView = new TextView(getContext()));
         labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);
@@ -97,12 +97,12 @@ public class AppConfigCellList extends LinearLayout
         {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-            topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_divider_line));
+            topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_list_divider_line));
             addView(topLineView);
         }
 
         // Add view
-        view.setBackgroundColor(Color.WHITE);
+        view.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background));
         addView(view);
         previousItemView = view;
     }

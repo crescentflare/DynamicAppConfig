@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_config_background">#000000</color>
+    <color name="app_config_cell_background">#202020</color>
+    <color name="app_config_text">#c0c0c0</color>
+    <color name="app_config_text_additional">#707070</color>
+    <color name="app_config_section_divider_line">#585858</color>
+    <color name="app_config_list_divider_line">#383838</color>
+    <color name="app_config_section_gradient_start">#101010</color>
+</resources>

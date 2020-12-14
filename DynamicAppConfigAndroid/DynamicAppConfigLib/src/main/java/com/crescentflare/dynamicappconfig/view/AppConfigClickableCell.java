@@ -90,7 +90,7 @@ public class AppConfigClickableCell extends FrameLayout
         container.addView(labelView = new TextView(context));
         labelView.setLayoutParams(layoutParams);
         labelView.setTextSize(18);
-        labelView.setTextColor(Color.DKGRAY);
+        labelView.setTextColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_text));
 
         // Add value view
         layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -99,7 +99,7 @@ public class AppConfigClickableCell extends FrameLayout
         valueView.setLayoutParams(layoutParams);
         valueView.setPadding(dp(8), 0, 0, 0);
         valueView.setTextSize(14);
-        valueView.setTextColor(Color.LTGRAY);
+        valueView.setTextColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_text_additional));
         valueView.setVisibility(GONE);
     }
 
@@ -146,8 +146,8 @@ public class AppConfigClickableCell extends FrameLayout
             {
                 AppConfigViewHelper.getColor(getContext(), R.color.app_config_background),
                 AppConfigViewHelper.getColor(getContext(), R.color.app_config_background),
-                Color.WHITE,
-                Color.WHITE
+                AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background),
+                AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background)
             };
 
             // And create ripple drawable effect
@@ -158,8 +158,8 @@ public class AppConfigClickableCell extends FrameLayout
         StateListDrawable stateDrawable = new StateListDrawable();
         stateDrawable.addState(new int[]{  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)));
         stateDrawable.addState(new int[]{  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)));
-        stateDrawable.addState(new int[]{  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
-        stateDrawable.addState(new int[]{ -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
+        stateDrawable.addState(new int[]{  android.R.attr.state_enabled }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background)));
+        stateDrawable.addState(new int[]{ -android.R.attr.state_enabled }, new ColorDrawable(AppConfigViewHelper.getColor(getContext(), R.color.app_config_cell_background)));
         return stateDrawable;
     }
 }

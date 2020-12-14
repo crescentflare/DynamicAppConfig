@@ -100,8 +100,8 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         StateListDrawable drawable = new StateListDrawable();
         drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
         drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
-        drawable.addState(new int[] {  android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
-        drawable.addState(new int[] { -android.R.attr.state_enabled }, new ColorDrawable(Color.WHITE));
+        drawable.addState(new int[] {  android.R.attr.state_enabled }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_cell_background)));
+        drawable.addState(new int[] { -android.R.attr.state_enabled }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_cell_background)));
         return drawable;
     }
 
@@ -110,14 +110,14 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         ViewHolder viewHolder = new ViewHolder();
         LinearLayout createdView = new LinearLayout(context);
         createdView.setOrientation(LinearLayout.VERTICAL);
-        createdView.setBackgroundColor(Color.WHITE);
+        createdView.setBackgroundColor(AppConfigViewHelper.getColor(context, R.color.app_config_cell_background));
         createdView.addView(viewHolder.labelView = new TextView(context));
         createdView.addView(viewHolder.dividerView = new View(context));
         viewHolder.labelView.setGravity(Gravity.CENTER_VERTICAL);
         viewHolder.labelView.setMinimumHeight(dp(60));
         viewHolder.labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         viewHolder.labelView.setTextSize(18);
-        viewHolder.labelView.setTextColor(Color.DKGRAY);
+        viewHolder.labelView.setTextColor(AppConfigViewHelper.getColor(context, R.color.app_config_text));
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
         {
             viewHolder.labelView.setBackgroundDrawable(generateSelectionBackgroundDrawable());
