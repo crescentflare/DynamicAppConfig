@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DynamicAppConfig'
-  s.version          = '1.3.4'
+  s.version          = '1.4.0'
   s.swift_version    = '5.0'
   s.summary          = 'A useful library to support multiple build configurations in one application build.'
 
