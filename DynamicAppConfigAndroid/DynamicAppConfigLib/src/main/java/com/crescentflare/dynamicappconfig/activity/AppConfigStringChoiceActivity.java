@@ -129,7 +129,7 @@ public class AppConfigStringChoiceActivity extends Activity
         LinearLayout createdView = new LinearLayout(this);
         TextView labelView = new TextView(this);
         createdView.setOrientation(LinearLayout.VERTICAL);
-        createdView.setBackgroundColor(Color.WHITE);
+        createdView.setBackgroundColor(AppConfigViewHelper.getColor(this, R.color.app_config_cell_background));
         createdView.addView(labelView);
         labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         labelView.setTypeface(Typeface.DEFAULT_BOLD);

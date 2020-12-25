@@ -9,6 +9,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crescentflare.dynamicappconfig.R;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
 import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
@@ -56,7 +59,7 @@ public class AppConfigSimpleCell extends FrameLayout
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
         container.addView(labelView = new TextView(context));
         labelView.setLayoutParams(layoutParams);
-        labelView.setTextColor(Color.DKGRAY);
+        labelView.setTextColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_text));
     }
 
 

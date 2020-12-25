@@ -55,7 +55,11 @@ import UIKit
         set {
             _isEmpty = newValue?.count == 0
             _value!.text = _isEmpty ? AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY") : newValue
-            _value!.textColor = _isEmpty ? UIColor.gray : UIColor.black
+            if #available(iOS 13.0, *) {
+                _value!.textColor = _isEmpty ? UIColor.placeholderText : UIColor.label
+            } else {
+                _value!.textColor = _isEmpty ? UIColor.gray : UIColor.black
+            }
             _value!.font = _isEmpty ? UIFont.italicSystemFont(ofSize: 14) : UIFont.systemFont(ofSize: 14)
         }
         get {
@@ -92,7 +96,11 @@ import UIKit
         _contentView = AppConfigViewUtility.loadNib(named: "EditableTextCell", parentView: self)
         _label.textColor = tintColor
         _label.text = ""
-        _value.textColor = UIColor.gray
+        if #available(iOS 13.0, *) {
+            _value.textColor = UIColor.placeholderText
+        } else {
+            _value.textColor = UIColor.gray
+        }
         _value.text = AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY")
         _value.font = UIFont.italicSystemFont(ofSize: 14)
     }

@@ -10,6 +10,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
+import com.crescentflare.dynamicappconfig.R;
+import com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper;
+
 import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
 
 /**
@@ -64,7 +67,7 @@ public class AppConfigSwitchCell extends FrameLayout
         switchView.setMinimumHeight(dp(60));
         switchView.setPadding(0, dp(12), 0, dp(12));
         switchView.setTextSize(18);
-        switchView.setTextColor(Color.DKGRAY);
+        switchView.setTextColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_text));
     }
 
 

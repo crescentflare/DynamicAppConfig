@@ -46,9 +46,7 @@ class AppConfigEditViewController : UIViewController, AppConfigEditTableDelegate
         if navigationController != nil {
             // Obtain colors
             let tintColor = view.tintColor
-            var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-            tintColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-            let highlightColor = UIColor.init(red: red, green: green, blue: blue, alpha: 0.25)
+            let highlightColor = tintColor?.withAlphaComponent(0.25)
             
             // Add cancel button
             let cancelButton = UIButton()

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="app_config_background">#e8e8e8</color>
+    <color name="app_config_cell_background">#ffffff</color>
+    <color name="app_config_text">#404040</color>
+    <color name="app_config_text_additional">#808080</color>
     <color name="app_config_section_divider_line">#b0b0b0</color>
-    <color name="app_config_section_gradient_start">#c0c0c0</color>
-    <color name="app_config_section_gradient_end">@color/app_config_background</color>
     <color name="app_config_list_divider_line">#c0c0c0</color>
     <color name="app_config_toolbar_highlight_light">#e5f3f3f3</color>
     <color name="app_config_toolbar_highlight_dark">#e50c0c0c</color>
+    <color name="app_config_section_gradient_start">#c0c0c0</color>
+    <color name="app_config_section_gradient_end">@color/app_config_background</color>
 </resources>

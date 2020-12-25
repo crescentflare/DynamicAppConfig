@@ -23,7 +23,11 @@ public class ExampleAppConfigLogPlugin implements AppConfigPlugin
     @Override
     public String displayValue()
     {
-        return "" + Logger.logString().split("\\\n").length + " lines";
+        String logString = Logger.logString();
+        if (logString.length() == 0) {
+            return "0 lines";
+        }
+        return "" + logString.split("\\n").length + " lines";
     }
 
     @Override

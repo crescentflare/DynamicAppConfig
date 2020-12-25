@@ -74,12 +74,20 @@ enum AppConfigCellSectionLocation: String {
     }
     
     func setupView() {
-        self.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        if #available(iOS 13.0, *) {
+            self.backgroundColor = UIColor.secondarySystemBackground
+        } else {
+            self.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+        }
     }
     
     func setupDivider(location: AppConfigCellSectionLocation) {
         _dividerLine = UIView()
-        _dividerLine?.backgroundColor = UIColor.init(white: 0.75, alpha: 1)
+        if #available(iOS 13.0, *) {
+            _dividerLine?.backgroundColor = UIColor.opaqueSeparator
+        } else {
+            _dividerLine?.backgroundColor = UIColor.init(white: 0.75, alpha: 1)
+        }
         addSubview(_dividerLine!)
         AppConfigViewUtility.addPinSuperViewHorizontalEdgesConstraints(view: _dividerLine!, parentView: self)
         AppConfigViewUtility.addHeightConstraint(view: _dividerLine!, height: 1 / UIScreen.main.scale)
