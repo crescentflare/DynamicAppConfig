@@ -2,6 +2,9 @@
     <string name="app_name">Example App Config</string>
     <string name="show_log_title">Example App Config log</string>
     <string name="message">Example application for the app configuration library</string>
+    <string name="clear_log_title">Clear log?</string>
+    <string name="clear_log_confirm">Yes</string>
+    <string name="clear_log_cancel">No</string>
     <string name="prefix_config_name">name:</string>
     <string name="prefix_config_api_url">apiUrl:</string>
     <string name="prefix_config_run_type">runType:</string>

@@ -12,5 +12,7 @@ public interface AppConfigPlugin
     String displayName();
     String displayValue();
     boolean canInteract();
+    boolean canEdit();
     void interact(Activity fromActivity);
+    void edit(Activity fromActivity);
 }

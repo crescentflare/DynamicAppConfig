@@ -594,6 +594,19 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                             populateContent();
                         }
                     });
+                    if (plugin.canEdit())
+                    {
+                        pluginButton.setOnLongClickListener(new View.OnLongClickListener()
+                        {
+                            @Override
+                            public boolean onLongClick(View v)
+                            {
+                                plugin.edit(ManageAppConfigActivity.this);
+                                populateContent();
+                                return true;
+                            }
+                        });
+                    }
                 }
             }
 
