@@ -112,7 +112,11 @@ class AppConfigEditViewController : UIViewController, AppConfigEditTableDelegate
                 if value is String {
                     isEqual = value as? String == compareValue as? String
                 } else if value is Int {
-                    isEqual = value as? Int == compareValue as? Int
+                    if let boolCompareValue = compareValue as? Bool {
+                        isEqual = value as? Int == (boolCompareValue ? 1 : 0)
+                    } else {
+                        isEqual = value as? Int == compareValue as? Int
+                    }
                 } else if value is Float {
                     isEqual = value as? Float == compareValue as? Float
                 } else if value is Double {
