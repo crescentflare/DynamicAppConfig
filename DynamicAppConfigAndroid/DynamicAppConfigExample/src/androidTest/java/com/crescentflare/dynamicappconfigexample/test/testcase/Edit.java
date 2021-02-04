@@ -61,8 +61,8 @@ public class Edit
                 .expectEditConfigScreen()
                 .changeSetting(SettingType.ApiURL).to("https://changed.example.com")
                 .changeSetting(SettingType.NetworkTimeoutSeconds).to(10)
-                .changeSetting(SettingType.RunType).to(ExampleAppConfigRunType.RunQuickly)
                 .changeSetting(SettingType.AcceptAllSSL).to(true)
+                .changeSetting(SettingType.RunType).to(ExampleAppConfigRunType.RunQuickly)
                 .applyChanges()
                 .expectAppConfigurationsScreen()
                 .selectConfig(ManageAppConfigModel.Configuration.Test)
@@ -70,7 +70,7 @@ public class Edit
                 .expectSetting(SettingType.Name).toBe("Test server")
                 .expectSetting(SettingType.ApiURL).toBe("https://changed.example.com")
                 .expectSetting(SettingType.NetworkTimeoutSeconds).toBe(10)
-                .expectSetting(SettingType.RunType).toBe(ExampleAppConfigRunType.RunQuickly)
-                .expectSetting(SettingType.AcceptAllSSL).toBe(true);
+                .expectSetting(SettingType.AcceptAllSSL).toBe(true)
+                .expectSetting(SettingType.RunType).toBe(ExampleAppConfigRunType.RunQuickly);
     }
 }

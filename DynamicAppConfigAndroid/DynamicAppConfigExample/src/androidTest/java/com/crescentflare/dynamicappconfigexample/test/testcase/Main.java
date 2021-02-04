@@ -78,13 +78,13 @@ public class Main
                 .revertToConfigurationDefaults()
                 .changeGlobalSetting(SettingType.ConsoleURL).to("https://console.example.com")
                 .changeGlobalSetting(SettingType.ConsoleTimeoutSeconds).to(100)
-                .changeGlobalSetting(SettingType.LogLevel).to(ExampleAppConfigLogLevel.LogVerbose)
                 .changeGlobalSetting(SettingType.ConsoleEnabled).to(true)
+                .changeGlobalSetting(SettingType.LogLevel).to(ExampleAppConfigLogLevel.LogVerbose)
                 .selectConfig(ManageAppConfigModel.Configuration.Mock)
                 .expectMainAppScreen()
                 .expectSetting(SettingType.ConsoleURL).toBe("https://console.example.com")
                 .expectSetting(SettingType.ConsoleTimeoutSeconds).toBe(100)
-                .expectSetting(SettingType.LogLevel).toBe(ExampleAppConfigLogLevel.LogVerbose)
-                .expectSetting(SettingType.ConsoleEnabled).toBe(true);
+                .expectSetting(SettingType.ConsoleEnabled).toBe(true)
+                .expectSetting(SettingType.LogLevel).toBe(ExampleAppConfigLogLevel.LogVerbose);
     }
 }
