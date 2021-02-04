@@ -183,4 +183,8 @@ public class AppConfigManageViewController : UIViewController, AppConfigManageTa
         plugin.interact(fromViewController: self)
     }
     
+    func editPlugin(plugin: AppConfigPlugin) {
+        plugin.edit(fromViewController: self)
+    }
+    
 }

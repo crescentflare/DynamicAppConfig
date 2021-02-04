@@ -16,6 +16,7 @@ protocol AppConfigManageTableDelegate: class {
     func editConfig(configName: String)
     func newCustomConfigFrom(configName: String)
     func interactWithPlugin(plugin: AppConfigPlugin)
+    func editPlugin(plugin: AppConfigPlugin)
 
 }
 
@@ -439,15 +440,17 @@ class AppConfigManageTable : UIView, UITableViewDataSource, UITableViewDelegate,
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let tableValue = tableValues[indexPath.row]
-        return tableValue.type == .config && tableValue.config != nil
+        return (tableValue.type == .config && tableValue.config != nil) || (tableValue.type == .plugin && tableValue.plugin?.canEdit() ?? false)
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let editAction = UITableViewRowAction.init(style: .normal, title: AppConfigBundle.localizedString(key: "CFLAC_MANAGE_SWIPE_EDIT"), handler: { action, indexPath in
             let tableValue = self.tableValues[indexPath.row]
             tableView.setEditing(false, animated: true)
-            if tableValue.config != nil {
-                self.delegate?.editConfig(configName: tableValue.config!)
+            if tableValue.type == .plugin, let plugin = tableValue.plugin {
+                self.delegate?.editPlugin(plugin: plugin)
+            } else if let config = tableValue.config {
+                self.delegate?.editConfig(configName: config)
             }
         })
         editAction.backgroundColor = UIColor.blue

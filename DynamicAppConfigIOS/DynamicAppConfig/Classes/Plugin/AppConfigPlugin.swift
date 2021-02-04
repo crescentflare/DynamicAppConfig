@@ -15,7 +15,13 @@ public protocol AppConfigPlugin: class {
     // A value to display for the plugin, can be empty or nil if not applicable
     func displayValue() -> String?
     
+    // Return true if the plugin can be edited
+    func canEdit() -> Bool
+    
     // Called when the plugin is tapped in the menu, can be used to launch other screens or adjust the value
     func interact(fromViewController: UIViewController)
+    
+    // Called when the plugin cell's edit action is triggered, look at canEdit() to enable this
+    func edit(fromViewController: UIViewController)
     
 }
