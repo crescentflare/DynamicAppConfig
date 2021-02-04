@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements AppConfigStorage.
         for (int i = 0, len = viewGroup.getChildCount(); i < len; i++)
         {
             View view = viewGroup.getChildAt(i);
-            if (view.getClass().getName().equals("android.support.v7.widget.Toolbar") || view.getClass().getName().equals("android.widget.Toolbar"))
+            if (view.getClass().getName().equals("android.support.v7.widget.Toolbar") || view.getClass().getName().equals("androidx.appcompat.widget.Toolbar") || view.getClass().getName().equals("android.widget.Toolbar"))
             {
                 toolbar = (ViewGroup)view;
             }
