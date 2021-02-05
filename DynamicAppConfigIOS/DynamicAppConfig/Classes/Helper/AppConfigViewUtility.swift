@@ -20,6 +20,7 @@ class AppConfigViewUtility {
     // --
     
     static func loadNib(named: String, parentView: UIView) -> UIView {
+        // Load nib if possible
         let nib = AppConfigBundle.loadNib(named: named, owner: parentView, options: nil)
         if let contentView = nib?.instantiate(withOwner: parentView, options: nil)[0] as? UIView {
             contentView.frame = parentView.bounds
@@ -27,6 +28,8 @@ class AppConfigViewUtility {
             addPinSuperViewEdgesConstraints(view: contentView, parentView: parentView)
             return contentView
         }
+        
+        // Fallback on dummy view when loading fails
         let dummyView = UIView()
         parentView.addSubview(dummyView)
         return dummyView

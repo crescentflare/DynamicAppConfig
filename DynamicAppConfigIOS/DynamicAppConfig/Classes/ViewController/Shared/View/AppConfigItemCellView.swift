@@ -14,9 +14,9 @@ import UIKit
     // MARK: Members
     // --
     
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
-    @IBOutlet private var _additional: UILabel! = nil
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
+    @IBOutlet private var _additional: UILabel?
 
     
     // --
@@ -37,16 +37,16 @@ import UIKit
 
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
 
     var additional: String? {
         set {
-            _additional!.text = newValue
+            _additional?.text = newValue
         }
-        get { return _additional!.text }
+        get { return _additional?.text }
     }
 
     
@@ -66,8 +66,8 @@ import UIKit
     
     func setupView() {
         _contentView = AppConfigViewUtility.loadNib(named: "ItemCell", parentView: self)
-        _label.text = ""
-        _additional.text = ""
+        _label?.text = ""
+        _additional?.text = ""
     }
 
 }

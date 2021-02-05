@@ -12,8 +12,8 @@ public struct AppConfigOrderedDictionary<Tk: Hashable, Tv> {
     // MARK: Members
     // --
     
-    var keys: [Tk] = []
-    var values: [Tk: Tv] = [:]
+    var keys = [Tk]()
+    var values = [Tk: Tv]()
 
     
     // --
@@ -46,17 +46,14 @@ public struct AppConfigOrderedDictionary<Tk: Hashable, Tv> {
             return self.values[key]
         }
         set (newValue) {
-            // Remove value if key is nil
-            if newValue == nil {
+            if let value = newValue {
+                let oldValue = self.values.updateValue(value, forKey: key)
+                if oldValue == nil {
+                    self.keys.append(key)
+                }
+            } else {
                 self.values.removeValue(forKey: key)
                 self.keys = self.keys.filter {$0 != key}
-                return
-            }
-            
-            // Add or replace value
-            let oldValue = self.values.updateValue(newValue!, forKey: key)
-            if oldValue == nil {
-                self.keys.append(key)
             }
         }
     }

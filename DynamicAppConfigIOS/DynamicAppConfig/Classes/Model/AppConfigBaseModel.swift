@@ -70,8 +70,8 @@ open class AppConfigBaseModel {
     // Internal method to override the model with customized values
     public func apply(overrides: [String: Any], globalOverrides: [String: Any], name: String?) {
         var setValues = overrides
-        if name != nil {
-            setValues["name"] = name!
+        if let name = name {
+            setValues["name"] = name
         } else {
             setValues.removeValue(forKey: "name")
         }

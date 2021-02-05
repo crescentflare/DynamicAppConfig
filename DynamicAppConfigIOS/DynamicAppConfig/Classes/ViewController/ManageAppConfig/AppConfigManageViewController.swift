@@ -119,11 +119,7 @@ public class AppConfigManageViewController : UIViewController, AppConfigManageTa
     }
     
     public override func loadView() {
-        if navigationController != nil {
-            isPresentedController = navigationController!.isBeingPresented
-        } else {
-            isPresentedController = isBeingPresented
-        }
+        isPresentedController = navigationController?.isBeingPresented ?? isBeingPresented
         manageConfigTable.delegate = self
         view = manageConfigTable
     }

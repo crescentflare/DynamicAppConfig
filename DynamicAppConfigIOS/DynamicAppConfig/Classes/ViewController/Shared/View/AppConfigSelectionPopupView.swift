@@ -24,10 +24,10 @@ protocol AppConfigSelectionPopupViewDelegate: class {
     
     weak var delegate: AppConfigSelectionPopupViewDelegate?
     var token: String?
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
-    @IBOutlet private var _tableView: UITableView! = nil
-    private var _tableChoices: [String] = []
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
+    @IBOutlet private var _tableView: UITableView?
+    private var _tableChoices = [String]()
 
     
     // --
@@ -48,15 +48,15 @@ protocol AppConfigSelectionPopupViewDelegate: class {
 
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
     
     var choices: [String] {
         set {
             _tableChoices = newValue
-            _tableView.reloadData()
+            _tableView?.reloadData()
         }
         get { return _tableChoices }
     }
@@ -83,22 +83,22 @@ protocol AppConfigSelectionPopupViewDelegate: class {
         // Set up table view
         let tableFooter = UIView()
         if #available(iOS 13.0, *) {
-            _tableView.backgroundColor = UIColor.secondarySystemBackground
+            _tableView?.backgroundColor = UIColor.secondarySystemBackground
         } else {
-            _tableView.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
+            _tableView?.backgroundColor = UIColor.init(white: 0.95, alpha: 1)
         }
         tableFooter.frame = CGRect(x: 0, y: 0, width: 0, height: 8)
-        _tableView.tableFooterView = tableFooter
+        _tableView?.tableFooterView = tableFooter
         
         // Set table view properties
-        _tableView.rowHeight = UITableView.automaticDimension
-        _tableView.estimatedRowHeight = 40
-        _tableView.dataSource = self
-        _tableView.delegate = self
-        _tableView.separatorStyle = .none
+        _tableView?.rowHeight = UITableView.automaticDimension
+        _tableView?.estimatedRowHeight = 40
+        _tableView?.dataSource = self
+        _tableView?.delegate = self
+        _tableView?.separatorStyle = .none
 
         // Empty state
-        _label.text = ""
+        _label?.text = ""
     }
 
     
@@ -187,7 +187,7 @@ protocol AppConfigSelectionPopupViewDelegate: class {
     // --
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        _tableView.deselectRow(at: indexPath, animated: false)
+        _tableView?.deselectRow(at: indexPath, animated: false)
         if indexPath.row < _tableChoices.count {
             if delegate != nil {
                 delegate?.selectedItem(_tableChoices[indexPath.row], token: token)

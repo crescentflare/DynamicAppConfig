@@ -23,12 +23,12 @@ public class AppConfigModelMapper {
     // MARK: Members
     // --
 
-    var categorizedFields: AppConfigOrderedDictionary<String, [String]> = AppConfigOrderedDictionary()
-    var globalCategorizedFields: AppConfigOrderedDictionary<String, [String]> = AppConfigOrderedDictionary()
-    var rawRepresentableFields: [String] = []
-    var rawRepresentableFieldValues: [String: [String]] = [:]
-    var dictionary: [String: Any] = [:]
-    var globalDictionary: [String: Any] = [:]
+    var categorizedFields = AppConfigOrderedDictionary<String, [String]>()
+    var globalCategorizedFields = AppConfigOrderedDictionary<String, [String]>()
+    var rawRepresentableFields = [String]()
+    var rawRepresentableFieldValues = [String: [String]]()
+    var dictionary = [String: Any]()
+    var globalDictionary = [String: Any]()
     var mode: AppConfigModelMapperMode
 
     
@@ -62,9 +62,9 @@ public class AppConfigModelMapper {
                 dictionary[key] = value
             }
         } else if mode == .fromDictionary && global && globalDictionary[key] != nil {
-            value = globalDictionary[key] as! Bool
+            value = globalDictionary[key] as? Bool ?? false
         } else if mode == .fromDictionary && !global && dictionary[key] != nil {
-            value = dictionary[key] as! Bool
+            value = dictionary[key] as? Bool ?? false
         } else if mode == .collectKeys {
             add(key: key, category: category, global: global)
         }
@@ -79,9 +79,9 @@ public class AppConfigModelMapper {
                 dictionary[key] = value
             }
         } else if mode == .fromDictionary && global && globalDictionary[key] != nil {
-            value = globalDictionary[key] as! Int
+            value = globalDictionary[key] as? Int ?? 0
         } else if mode == .fromDictionary && !global && dictionary[key] != nil {
-            value = dictionary[key] as! Int
+            value = dictionary[key] as? Int ?? 0
         } else if mode == .collectKeys {
             add(key: key, category: category, global: global)
         }
@@ -96,9 +96,9 @@ public class AppConfigModelMapper {
                 dictionary[key] = value
             }
         } else if mode == .fromDictionary && global && globalDictionary[key] != nil {
-            value = globalDictionary[key] as! String
+            value = globalDictionary[key] as? String ?? ""
         } else if mode == .fromDictionary && !global && dictionary[key] != nil {
-            value = dictionary[key] as! String
+            value = dictionary[key] as? String ?? ""
         } else if mode == .collectKeys {
             add(key: key, category: category, global: global)
         }
@@ -114,21 +114,21 @@ public class AppConfigModelMapper {
             }
         } else if mode == .fromDictionary && global && globalDictionary[key] != nil {
             if let raw = globalDictionary[key] as? T.RawValue {
-                value = T(rawValue: raw)!
+                value = T(rawValue: raw) ?? fallback
             } else {
                 value = fallback
             }
         } else if mode == .fromDictionary && !global && dictionary[key] != nil {
             if let raw = dictionary[key] as? T.RawValue {
-                value = T(rawValue: raw)!
+                value = T(rawValue: raw) ?? fallback
             } else {
                 value = fallback
             }
         } else if mode == .collectKeys {
-            var stringValues: [String] = []
+            var stringValues = [String]()
             for value in allValues {
-                if value.rawValue is String {
-                    stringValues.append(value.rawValue as! String)
+                if let stringRawValue = value.rawValue as? String {
+                    stringValues.append(stringRawValue)
                 }
             }
             if stringValues.count > 0 {
@@ -179,12 +179,12 @@ public class AppConfigModelMapper {
             if globalCategorizedFields[category] == nil {
                 globalCategorizedFields[category] = []
             }
-            globalCategorizedFields[category]!.append(key)
+            globalCategorizedFields[category]?.append(key)
         } else {
             if categorizedFields[category] == nil {
                 categorizedFields[category] = []
             }
-            categorizedFields[category]!.append(key)
+            categorizedFields[category]?.append(key)
         }
         if isRawRepresentable && !rawRepresentableFields.contains(key) {
             rawRepresentableFields.append(key)

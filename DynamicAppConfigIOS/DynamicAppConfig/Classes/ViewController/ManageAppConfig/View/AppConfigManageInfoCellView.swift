@@ -14,8 +14,8 @@ import UIKit
     // MARK: Members
     // --
     
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
 
     
     // --
@@ -30,9 +30,9 @@ import UIKit
     
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
 
     
@@ -52,7 +52,7 @@ import UIKit
     
     func setupView() {
         _contentView = AppConfigViewUtility.loadNib(named: "ManageInfoCell", parentView: self)
-        _label.text = ""
+        _label?.text = ""
     }
    
 }

@@ -14,9 +14,9 @@ import UIKit
     // MARK: Members
     // --
     
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
-    @IBOutlet private var _spinner: UIActivityIndicatorView! = nil
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
+    @IBOutlet private var _spinner: UIActivityIndicatorView?
 
     
     // --
@@ -31,9 +31,9 @@ import UIKit
     
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
     
     
@@ -53,8 +53,8 @@ import UIKit
     
     func setupView() {
         _contentView = AppConfigViewUtility.loadNib(named: "LoadingCell", parentView: self)
-        _label.text = ""
-        _spinner.startAnimating()
+        _label?.text = ""
+        _spinner?.startAnimating()
     }
 
 }
