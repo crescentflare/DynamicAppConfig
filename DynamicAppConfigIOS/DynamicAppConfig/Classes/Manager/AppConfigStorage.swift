@@ -369,7 +369,7 @@ public class AppConfigStorage {
         selectedItem = UserDefaults.standard.value(forKey: AppConfigStorage.defaultsSelectedConfigName) as? String
         if let selectedConfigItem = selectedItem {
             if let values = UserDefaults.standard.value(forKey: AppConfigStorage.defaultsSelectedConfigDictionary) as? [String: AnyObject] {
-                var loadDictionary: [String: Any] = [:]
+                var loadDictionary = [String: Any]()
                 for (key, value) in values {
                     loadDictionary[key] = value as Any
                 }

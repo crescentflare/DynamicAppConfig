@@ -66,15 +66,15 @@ class Logger {
     
     static func printToFile(text: String) {
         readLogIfNeeded()
-        if logFileString!.count > 0 {
-            logFileString = logFileString! + "\n" + text
+        if !(logFileString?.isEmpty ?? true) {
+            logFileString = (logFileString ?? "") + "\n" + text
         } else {
             logFileString = text
         }
         do {
             if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 let fileURL = documentDirectory.appendingPathComponent(logFilename)
-                try logFileString!.write(to: fileURL, atomically: false, encoding: .utf8)
+                try logFileString?.write(to: fileURL, atomically: false, encoding: .utf8)
             }
         } catch {
             // Ignore
@@ -83,7 +83,7 @@ class Logger {
     
     static func logString() -> String {
         readLogIfNeeded()
-        return logFileString!
+        return logFileString ?? ""
     }
     
     static private func readLogIfNeeded() {
