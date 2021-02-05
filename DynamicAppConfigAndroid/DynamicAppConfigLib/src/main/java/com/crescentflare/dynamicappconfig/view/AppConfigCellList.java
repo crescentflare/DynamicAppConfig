@@ -2,7 +2,6 @@ package com.crescentflare.dynamicappconfig.view;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -19,35 +18,32 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library view: a cell container
  * Simulates a list view with cells and dividers
  */
-public class AppConfigCellList extends LinearLayout
-{
-    // ---
+public class AppConfigCellList extends LinearLayout {
+
+    // --
     // Members
-    // ---
+    // --
 
     private View previousItemView = null;
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigCellList(Context context)
-    {
+    public AppConfigCellList(Context context) {
         super(context);
         setOrientation(VERTICAL);
     }
 
 
-    // ---
+    // --
     // Add items
-    // ---
+    // --
 
-    public void startSection(String headerText)
-    {
+    public void startSection(String headerText) {
         // Add top divider if needed
-        if (getChildCount() > 0)
-        {
+        if (getChildCount() > 0) {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
             topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_divider_line));
@@ -68,8 +64,7 @@ public class AppConfigCellList extends LinearLayout
         previousItemView = null;
     }
 
-    public void endSection()
-    {
+    public void endSection() {
         // Top line divider (edge)
         View topLineView = new View(getContext());
         topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -78,8 +73,7 @@ public class AppConfigCellList extends LinearLayout
 
         // Gradient divider
         View gradientView = new View(getContext());
-        int colors[] = new int[]
-        {
+        int[] colors = new int[] {
             AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_gradient_start),
             AppConfigViewHelper.getColor(getContext(), R.color.app_config_section_gradient_end),
             AppConfigViewHelper.getColor(getContext(), R.color.app_config_background)
@@ -90,11 +84,9 @@ public class AppConfigCellList extends LinearLayout
         addView(gradientView);
     }
 
-    public void addSectionItem(View view)
-    {
+    public void addSectionItem(View view) {
         // Add divider line
-        if (previousItemView != null)
-        {
+        if (previousItemView != null) {
             View topLineView = new View(getContext());
             topLineView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
             topLineView.setBackgroundColor(AppConfigViewHelper.getColor(getContext(), R.color.app_config_list_divider_line));
@@ -108,8 +100,7 @@ public class AppConfigCellList extends LinearLayout
     }
 
     @Override
-    public void removeAllViews()
-    {
+    public void removeAllViews() {
         super.removeAllViews();
         previousItemView = null;
     }

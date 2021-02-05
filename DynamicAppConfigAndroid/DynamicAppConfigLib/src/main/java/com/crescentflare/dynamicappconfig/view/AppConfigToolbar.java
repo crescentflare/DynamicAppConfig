@@ -25,25 +25,24 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library view: a toolbar
  * Simulates a toolbar for all supported Android versions without using app compat
  */
-public class AppConfigToolbar extends LinearLayout
-{
-    // ---
-    // Members
-    // ---
+public class AppConfigToolbar extends LinearLayout {
 
-    private FrameLayout backButtonContainer;
-    private ImageView backButtonImage;
-    private TextView titleView;
-    private TextView optionView;
+    // --
+    // Members
+    // --
+
+    private final FrameLayout backButtonContainer;
+    private final ImageView backButtonImage;
+    private final TextView titleView;
+    private final TextView optionView;
     private int actionBarHeight;
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigToolbar(Context context)
-    {
+    public AppConfigToolbar(Context context) {
         // Basic set up
         super(context);
         setOrientation(HORIZONTAL);
@@ -52,8 +51,7 @@ public class AppConfigToolbar extends LinearLayout
         // Determine and store action bar height
         TypedValue typedValue = new TypedValue();
         actionBarHeight = 0;
-        if (getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true))
-        {
+        if (getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, context.getResources().getDisplayMetrics());
         }
 
@@ -68,7 +66,8 @@ public class AppConfigToolbar extends LinearLayout
         addView(backButtonContainer);
 
         // Add image to the button container
-        LayoutParams imageLayoutParams = new LayoutParams(actionBarHeight, actionBarHeight);
+        int backButtonSize = actionBarHeight;
+        LayoutParams imageLayoutParams = new LayoutParams(backButtonSize, backButtonSize);
         backButtonImage = new ImageView(context);
         backButtonImage.setLayoutParams(imageLayoutParams);
         backButtonImage.setImageResource(R.drawable.app_config_back_arrow);
@@ -106,40 +105,33 @@ public class AppConfigToolbar extends LinearLayout
     }
 
 
-    // ---
+    // --
     // Modify view
-    // ---
+    // --
 
     @Override
-    public void setBackgroundColor(int color)
-    {
+    public void setBackgroundColor(int color) {
         int lightColor = Color.WHITE;
         int darkColor = Color.BLACK;
         int foregroundColor = AppConfigViewHelper.pickBestForegroundColor(color, lightColor, darkColor);
         super.setBackgroundColor(color);
-        if (backButtonContainer != null)
-        {
+        if (backButtonContainer != null) {
             backButtonContainer.setBackgroundResource(foregroundColor == lightColor ? R.drawable.app_config_toolbar_highlight_light : R.drawable.app_config_toolbar_highlight_dark);
         }
-        if (backButtonImage != null)
-        {
+        if (backButtonImage != null) {
             backButtonImage.setColorFilter(new PorterDuffColorFilter(foregroundColor, PorterDuff.Mode.SRC_IN));
         }
-        if (titleView != null)
-        {
+        if (titleView != null) {
             titleView.setTextColor(foregroundColor);
         }
-        if (optionView != null)
-        {
-            int[][] states = new int[][]
-            {
+        if (optionView != null) {
+            int[][] states = new int[][] {
                 new int[] {  android.R.attr.state_focused }, // Focused
                 new int[] {  android.R.attr.state_pressed }, // Pressed
                 new int[] {  android.R.attr.state_enabled }, // Enabled
                 new int[] { -android.R.attr.state_enabled }  // Disabled
             };
-            int[] colors = new int[]
-            {
+            int[] colors = new int[] {
                 (foregroundColor & 0xFFFFFF) | 0x8F000000,
                 (foregroundColor & 0xFFFFFF) | 0x8F000000,
                 foregroundColor,
@@ -149,52 +141,43 @@ public class AppConfigToolbar extends LinearLayout
         }
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         titleView.setText(title);
     }
 
-    public void setOption(String option)
-    {
+    public void setOption(String option) {
         optionView.setText(option);
         optionView.setVisibility(TextUtils.isEmpty(option) ? GONE : VISIBLE);
     }
 
-    public void setOptionEnabled(boolean enabled)
-    {
+    public void setOptionEnabled(boolean enabled) {
         optionView.setEnabled(enabled);
     }
 
 
-    // ---
+    // --
     // Interaction
-    // ---
+    // --
 
-    public void setBackOnClickListener(OnClickListener listener)
-    {
+    public void setBackOnClickListener(OnClickListener listener) {
         backButtonContainer.setOnClickListener(listener);
         backButtonContainer.setVisibility(listener != null ? VISIBLE : GONE);
     }
 
-    public void setOptionOnClickListener(OnClickListener listener)
-    {
+    public void setOptionOnClickListener(OnClickListener listener) {
         optionView.setOnClickListener(listener);
     }
 
 
-    // ---
+    // --
     // Custom layout
-    // ---
+    // --
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (actionBarHeight > 0)
-        {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (actionBarHeight > 0) {
             super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(actionBarHeight, MeasureSpec.EXACTLY));
-        }
-        else
-        {
+        } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

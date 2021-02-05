@@ -1,7 +1,6 @@
 package com.crescentflare.dynamicappconfig.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,49 +19,42 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library view: editable cell
  * Simulates a list view cell showing an editable value, clicking on it should open a dialog box with an edit text to change its value
  */
-public class AppConfigEditableCell extends FrameLayout
-{
-    // ---
-    // Members
-    // ---
+public class AppConfigEditableCell extends FrameLayout {
 
-    private TextView labelView;
-    private TextView valueView;
+    // --
+    // Members
+    // --
+
+    private final TextView labelView;
+    private final TextView valueView;
     private boolean isNumberLimit = false;
     private boolean isEmpty = true;
 
 
-    // ---
+    // --
     // Factory methods
-    // ---
+    // --
 
-    public static AppConfigEditableCell generateEditableView(final Context context, final String label, final String setting, final boolean limitNumbers, final Runnable changeListener)
-    {
+    public static AppConfigEditableCell generateEditableView(final Context context, final String label, final String setting, final boolean limitNumbers, final Runnable changeListener) {
         final AppConfigEditableCell editView = new AppConfigEditableCell(context);
         editView.setDescription(label);
         editView.setValue(setting);
         editView.setNumberLimit(limitNumbers);
         editView.setTag(label);
-        editView.setOnClickListener(new View.OnClickListener()
-        {
+        editView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                AppConfigAlertHelper.inputDialog(context, context.getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener()
-                {
+            public void onClick(View view) {
+                AppConfigAlertHelper.inputDialog(context, context.getString(R.string.app_config_title_dialog_edit_value, label), label, editView.getValue(), limitNumbers ? AppConfigAlertHelper.InputType.NumbersOnly : AppConfigAlertHelper.InputType.Normal, new AppConfigAlertHelper.OnAlertInputListener() {
                     @Override
-                    public void onInputEntered(String text)
-                    {
+                    public void onInputEntered(String text) {
                         editView.setValue(text);
-                        if (changeListener != null)
-                        {
+                        if (changeListener != null) {
                             changeListener.run();
                         }
                     }
 
                     @Override
-                    public void onInputCanceled()
-                    {
+                    public void onInputCanceled() {
                         // No implementation
                     }
                 });
@@ -72,12 +64,11 @@ public class AppConfigEditableCell extends FrameLayout
     }
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigEditableCell(Context context)
-    {
+    public AppConfigEditableCell(Context context) {
         // Prepare container
         super(context);
         LinearLayout container = new LinearLayout(context);
@@ -105,39 +96,30 @@ public class AppConfigEditableCell extends FrameLayout
     }
 
 
-    // ---
+    // --
     // Modify view
-    // ---
+    // --
 
-    public void setDescription(String text)
-    {
+    public void setDescription(String text) {
         labelView.setText(text);
     }
 
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         isEmpty = TextUtils.isEmpty(value);
         valueView.setText(isEmpty ? getContext().getString(R.string.app_config_edited_value_empty) : value);
         valueView.setTypeface(null, isEmpty ? Typeface.ITALIC : Typeface.NORMAL);
         valueView.setTextColor(AppConfigViewHelper.getColor(getContext(), isEmpty ? R.color.app_config_text_additional : R.color.app_config_text));
     }
 
-    public String getValue()
-    {
-        if (isEmpty)
-        {
-            return "";
-        }
-        return valueView.getText().toString();
+    public String getValue() {
+        return isEmpty ? "" : valueView.getText().toString();
     }
 
-    public void setNumberLimit(boolean numbersOnly)
-    {
+    public void setNumberLimit(boolean numbersOnly) {
         isNumberLimit = numbersOnly;
     }
 
-    public boolean isNumberLimit()
-    {
+    public boolean isNumberLimit() {
         return isNumberLimit;
     }
 }

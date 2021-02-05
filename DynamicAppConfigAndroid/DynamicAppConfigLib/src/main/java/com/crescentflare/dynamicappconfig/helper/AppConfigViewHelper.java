@@ -14,21 +14,21 @@ import android.view.View;
  * Library helper: view utilities
  * A helper library to easily modify views
  */
-public class AppConfigViewHelper
-{
-    static public int getAccentColor(Context context)
-    {
+public class AppConfigViewHelper {
+
+    // --
+    // Obtain colors
+    // --
+
+    static public int getAccentColor(Context context) {
         int identifier = context.getResources().getIdentifier("colorAccent", "attr", context.getPackageName());
-        if (identifier == 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
+        if (identifier == 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             identifier = android.R.attr.colorAccent;
         }
-        if (identifier > 0)
-        {
+        if (identifier > 0) {
             TypedValue typedValue = new TypedValue();
             TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{identifier});
-            if (a != null)
-            {
+            if (a != null) {
                 int color = a.getColor(0, 0);
                 a.recycle();
                 return color;
@@ -37,26 +37,21 @@ public class AppConfigViewHelper
         return Color.BLACK;
     }
 
-    static public int getColor(Context context, int resourceId)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+    static public int getColor(Context context, int resourceId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getResources().getColor(resourceId, null);
         }
         return context.getResources().getColor(resourceId);
     }
 
-    static public int pickBestForegroundColor(int backgroundColor, int lightForegroundColor, int darkForegroundColor)
-    {
-        double colorComponents[] = {
+    static public int pickBestForegroundColor(int backgroundColor, int lightForegroundColor, int darkForegroundColor) {
+        double[] colorComponents = {
                 (double)(backgroundColor & 0xFF) / 255.0,
                 (double)((backgroundColor & 0xFF00) >> 8) / 255.0,
                 (double)((backgroundColor & 0xFF0000) >> 16) / 255.0
         };
-        for (int i = 0; i < colorComponents.length; i++)
-        {
-            if (colorComponents[i] <= 0.03928)
-            {
+        for (int i = 0; i < colorComponents.length; i++) {
+            if (colorComponents[i] <= 0.03928) {
                 colorComponents[i] /= 12.92;
             }
             colorComponents[i] = Math.pow((colorComponents[i] + 0.055) / 1.055, 2.4);
@@ -65,20 +60,25 @@ public class AppConfigViewHelper
         return intensity > 0.179 ? darkForegroundColor : lightForegroundColor;
     }
 
-    static public void setBackgroundDrawable(View view, Drawable drawable)
-    {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-        {
+
+    // --
+    // Set drawable
+    // --
+
+    static public void setBackgroundDrawable(View view, Drawable drawable) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackgroundDrawable(drawable);
-        }
-        else
-        {
+        } else {
             view.setBackground(drawable);
         }
     }
 
-    static public int dp(int dp)
-    {
+
+    // --
+    // Convert dimension pixels
+    // --
+
+    static public int dp(int dp) {
         return (int)(Resources.getSystem().getDisplayMetrics().density * dp);
     }
 }

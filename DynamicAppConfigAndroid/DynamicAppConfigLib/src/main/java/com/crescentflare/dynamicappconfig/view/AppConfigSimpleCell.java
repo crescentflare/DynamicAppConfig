@@ -2,7 +2,6 @@ package com.crescentflare.dynamicappconfig.view;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -18,33 +17,31 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library view: simple cell
  * Simulates a simple list view cell as a simple info item
  */
-public class AppConfigSimpleCell extends FrameLayout
-{
-    // ---
+public class AppConfigSimpleCell extends FrameLayout {
+
+    // --
     // Members
-    // ---
+    // --
 
-    private TextView labelView;
+    private final TextView labelView;
 
 
-    // ---
+    // --
     // Factory methods
-    // ---
+    // --
 
-    public static AppConfigSimpleCell generateInfoView(Context context, String infoLabel, String infoValue)
-    {
+    public static AppConfigSimpleCell generateInfoView(Context context, String infoLabel, String infoValue) {
         AppConfigSimpleCell cellView = new AppConfigSimpleCell(context);
         cellView.setText(infoLabel + ": " + infoValue);
         return cellView;
     }
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigSimpleCell(Context context)
-    {
+    public AppConfigSimpleCell(Context context) {
         // Prepare container
         super(context);
         LinearLayout container = new LinearLayout(context);
@@ -63,12 +60,11 @@ public class AppConfigSimpleCell extends FrameLayout
     }
 
 
-    // ---
+    // --
     // Modify view
-    // ---
+    // --
 
-    public void setText(String text)
-    {
+    public void setText(String text) {
         labelView.setText(text);
     }
 }

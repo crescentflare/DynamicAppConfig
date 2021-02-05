@@ -20,19 +20,19 @@ import org.junit.runner.RunWith;
  * So I can further customize app behavior during testing
  */
 @RunWith(AndroidJUnit4.class)
-public class Edit
-{
-    // ---
+public class Edit {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Edit a configuration
@@ -52,8 +52,7 @@ public class Edit
      * And I see "acceptAllSSL" set to "true"
      */
     @Test
-    public void testEditConfiguration()
-    {
+    public void testEditConfiguration() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()

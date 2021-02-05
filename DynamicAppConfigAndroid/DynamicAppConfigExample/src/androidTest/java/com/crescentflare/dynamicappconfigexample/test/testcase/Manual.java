@@ -20,19 +20,19 @@ import org.junit.runner.RunWith;
  * So I can optimize testing and make smaller test scripts
  */
 @RunWith(AndroidJUnit4.class)
-public class Manual
-{
-    // ---
+public class Manual {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Manually change a configuration
@@ -43,8 +43,7 @@ public class Manual
      * Then I see "apiUrl" set to "https://manualchange.example.com/"
      */
     @Test
-    public void testManuallyChangeConfiguration()
-    {
+    public void testManuallyChangeConfiguration() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
@@ -63,8 +62,7 @@ public class Manual
      * Then I see "logLevel" set to "logVerbose"
      */
     @Test
-    public void testManuallyChangeGlobalSetting()
-    {
+    public void testManuallyChangeGlobalSetting() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()

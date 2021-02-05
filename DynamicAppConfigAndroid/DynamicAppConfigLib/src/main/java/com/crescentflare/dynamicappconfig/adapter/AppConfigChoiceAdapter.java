@@ -1,7 +1,6 @@
 package com.crescentflare.dynamicappconfig.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -25,78 +24,70 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library adapter: basic selection list view
  * List view adapter for making configuration editing selections (of a list of strings)
  */
-public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
-{
-    // ---
-    // Members
-    // ---
+public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter {
 
-    private Context context;
+    // --
+    // Members
+    // --
+
+    private final Context context;
     private ArrayList<String> choices = new ArrayList<>();
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigChoiceAdapter(Context context)
-    {
+    public AppConfigChoiceAdapter(Context context) {
         this.context = context;
     }
 
 
-    // ---
+    // --
     // Enabled check
-    // ---
+    // --
 
     @Override
-    public boolean areAllItemsEnabled()
-    {
+    public boolean areAllItemsEnabled() {
         return false;
     }
 
     @Override
-    public boolean isEnabled(int i)
-    {
+    public boolean isEnabled(int i) {
         return true;
     }
 
 
-    // ---
+    // --
     // Item handling
-    // ---
+    // --
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return choices.size();
     }
 
     @Override
-    public Object getItem(int i)
-    {
+    public Object getItem(int i) {
         return choices.get(i);
     }
 
     @Override
-    public long getItemId(int i)
-    {
+    public long getItemId(int i) {
         return 0;
     }
 
     @Override
-    public boolean hasStableIds()
-    {
+    public boolean hasStableIds() {
         return false;
     }
 
 
-    // ---
+    // --
     // View handling
-    // ---
+    // --
 
-    private Drawable generateSelectionBackgroundDrawable()
-    {
+    private Drawable generateSelectionBackgroundDrawable() {
         StateListDrawable drawable = new StateListDrawable();
         drawable.addState(new int[] {  android.R.attr.state_focused }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
         drawable.addState(new int[] {  android.R.attr.state_pressed }, new ColorDrawable(AppConfigViewHelper.getColor(context, R.color.app_config_background)));
@@ -105,8 +96,7 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         return drawable;
     }
 
-    private View generateView()
-    {
+    private View generateView() {
         ViewHolder viewHolder = new ViewHolder();
         LinearLayout createdView = new LinearLayout(context);
         createdView.setOrientation(LinearLayout.VERTICAL);
@@ -118,12 +108,9 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
         viewHolder.labelView.setPadding(dp(12), dp(12), dp(12), dp(12));
         viewHolder.labelView.setTextSize(18);
         viewHolder.labelView.setTextColor(AppConfigViewHelper.getColor(context, R.color.app_config_text));
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-        {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             viewHolder.labelView.setBackgroundDrawable(generateSelectionBackgroundDrawable());
-        }
-        else
-        {
+        } else {
             viewHolder.labelView.setBackground(generateSelectionBackgroundDrawable());
         }
         viewHolder.dividerView.setBackgroundColor(AppConfigViewHelper.getColor(context, R.color.app_config_list_divider_line));
@@ -134,51 +121,41 @@ public class AppConfigChoiceAdapter extends BaseAdapter implements ListAdapter
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         String choice = (String)getItem(i);
-        if (view == null)
-        {
+        if (view == null) {
             view = generateView();
         }
-        if (view != null)
-        {
-            ViewHolder viewHolder = (ViewHolder)view.getTag();
-            if (viewHolder.labelView != null)
-            {
-                viewHolder.labelView.setText(choice);
+        ViewHolder viewHolder = (ViewHolder)view.getTag();
+        if (viewHolder.labelView != null) {
+            viewHolder.labelView.setText(choice);
+        }
+        if (viewHolder.dividerView != null) {
+            String nextChoice = null;
+            if (i < choices.size() - 1) {
+                nextChoice = (String)getItem(i + 1);
             }
-            if (viewHolder.dividerView != null)
-            {
-                String nextChoice = null;
-                if (i < choices.size() - 1)
-                {
-                    nextChoice = (String)getItem(i + 1);
-                }
-                viewHolder.dividerView.setVisibility(nextChoice != null ? View.VISIBLE : View.GONE);
-            }
+            viewHolder.dividerView.setVisibility(nextChoice != null ? View.VISIBLE : View.GONE);
         }
         return view;
     }
 
 
-    // ---
+    // --
     // Update list and notify data change
-    // ---
+    // --
 
-    public void setChoices(ArrayList<String> choices)
-    {
+    public void setChoices(ArrayList<String> choices) {
         this.choices = choices;
         notifyDataSetChanged();
     }
 
 
-    // ---
-    // Listview tag to easily access subviews
-    // ---
+    // --
+    // List view tag to easily access subviews
+    // --
 
-    public static class ViewHolder
-    {
+    public static class ViewHolder {
         TextView labelView = null;
         View dividerView = null;
     }

@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface AppConfigModelCategory
-{
+public @interface AppConfigModelCategory {
     String value() default "";
 }

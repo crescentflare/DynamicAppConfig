@@ -21,55 +21,47 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * Test helper: check view
  * Utilities to easily check for view content
  */
-public class CheckViewHelper
-{
-    // ---
-    // Convenience functions
-    // ---
+public class CheckViewHelper {
 
-    public static void checkOnPage(String pageTitle)
-    {
+    // --
+    // Convenience functions
+    // --
+
+    public static void checkOnPage(String pageTitle) {
         onView(allOf(isDescendantOfA(withId(R.id.action_bar_container)), withText(pageTitle))).check(matches(isDisplayed()));
     }
 
 
-    // ---
+    // --
     // Custom matcher for checking tags
-    // ---
+    // --
 
-    public static Matcher<Object> withConfigTagStringMatching(String expectedText)
-    {
+    public static Matcher<Object> withConfigTagStringMatching(String expectedText) {
         checkNotNull(expectedText);
         return withTagStringMatching(equalTo("config: " + expectedText));
     }
 
-    public static Matcher<Object> withCustomPluginTagStringMatching(String expectedText)
-    {
+    public static Matcher<Object> withCustomPluginTagStringMatching(String expectedText) {
         checkNotNull(expectedText);
         return withTagStringMatching(equalTo("plugin: " + expectedText));
     }
 
-    public static Matcher<Object> withTagStringMatching(String expectedText)
-    {
+    public static Matcher<Object> withTagStringMatching(String expectedText) {
         checkNotNull(expectedText);
         return withTagStringMatching(equalTo(expectedText));
     }
 
     @SuppressWarnings("rawtypes")
-    private static Matcher<Object> withTagStringMatching(final Matcher<String> itemTextMatcher)
-    {
+    private static Matcher<Object> withTagStringMatching(final Matcher<String> itemTextMatcher) {
         checkNotNull(itemTextMatcher);
-        return new BoundedMatcher<Object, String>(String.class)
-        {
+        return new BoundedMatcher<Object, String>(String.class) {
             @Override
-            public boolean matchesSafely(String string)
-            {
+            public boolean matchesSafely(String string) {
                 return itemTextMatcher.matches(string);
             }
 
             @Override
-            public void describeTo(Description description)
-            {
+            public void describeTo(Description description) {
                 description.appendText("with string: ");
                 itemTextMatcher.describeTo(description);
             }
@@ -77,30 +69,25 @@ public class CheckViewHelper
     }
 
 
-    // ---
+    // --
     // Custom matcher for a list view containing a string adapter
-    // ---
+    // --
 
-    public static Matcher<Object> withStringAdapterContent(String expectedText)
-    {
+    public static Matcher<Object> withStringAdapterContent(String expectedText) {
         checkNotNull(expectedText);
         return withStringAdapterContent(equalTo(expectedText));
     }
 
-    private static Matcher<Object> withStringAdapterContent(final Matcher<String> itemTextMatcher)
-    {
+    private static Matcher<Object> withStringAdapterContent(final Matcher<String> itemTextMatcher) {
         checkNotNull(itemTextMatcher);
-        return new BoundedMatcher<Object, String>(String.class)
-        {
+        return new BoundedMatcher<Object, String>(String.class) {
             @Override
-            public boolean matchesSafely(String entry)
-            {
+            public boolean matchesSafely(String entry) {
                 return itemTextMatcher.matches(entry);
             }
 
             @Override
-            public void describeTo(Description description)
-            {
+            public void describeTo(Description description) {
                 description.appendText("with item text: ");
                 itemTextMatcher.describeTo(description);
             }

@@ -21,19 +21,19 @@ import org.junit.runner.RunWith;
  * So I can test multiple configurations and settings in one build
  */
 @RunWith(AndroidJUnit4.class)
-public class Main
-{
-    // ---
+public class Main {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Selecting a configuration
@@ -42,8 +42,7 @@ public class Main
      * Then I see the "Test server" settings
      */
     @Test
-    public void testSelectConfiguration()
-    {
+    public void testSelectConfiguration() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
@@ -71,8 +70,7 @@ public class Main
      * And I see "consoleEnabled" set to "true"
      */
     @Test
-    public void testEditGlobalSettings()
-    {
+    public void testEditGlobalSettings() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()

@@ -8,29 +8,27 @@ import java.util.Arrays;
 /**
  * Unit test: storage item
  */
-public class AppConfigStorageItemTest
-{
-    // ---
+public class AppConfigStorageItemTest {
+
+    // --
     // Test cases
-    // ---
+    // --
 
     @Test
-    public void testStorage()
-    {
+    public void testStorage() {
         AppConfigStorageItem item = new AppConfigStorageItem();
         item.putString("string", "test");
         item.putLong("long", -90234);
         item.putInt("int", 512);
         item.putBoolean("boolean", true);
         Assert.assertEquals("test", item.getString("string"));
-        Assert.assertEquals((long)-90234, item.getLong("long"));
+        Assert.assertEquals(-90234, item.getLong("long"));
         Assert.assertEquals(512, item.getInt("int"));
-        Assert.assertEquals(true, item.getBoolean("boolean"));
+        Assert.assertTrue(item.getBoolean("boolean"));
     }
 
     @Test
-    public void testConversion()
-    {
+    public void testConversion() {
         AppConfigStorageItem item = new AppConfigStorageItem();
         item.putString("string", "-1234");
         item.putLong("long", -90234);
@@ -38,13 +36,12 @@ public class AppConfigStorageItemTest
         item.putBoolean("boolean", true);
         Assert.assertEquals(-1234, item.getInt("string"));
         Assert.assertEquals(-90234, item.getInt("long"));
-        Assert.assertEquals(true, item.getBoolean("int"));
+        Assert.assertTrue(item.getBoolean("int"));
         Assert.assertEquals("true", item.getString("boolean"));
     }
 
     @Test
-    public void testValueList()
-    {
+    public void testValueList() {
         AppConfigStorageItem item = new AppConfigStorageItem();
         item.putString("string", "test");
         item.putString("extraString", "testExtra");

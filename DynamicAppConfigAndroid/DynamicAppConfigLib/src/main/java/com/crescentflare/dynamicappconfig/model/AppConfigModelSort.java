@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
-public @interface AppConfigModelSort
-{
+public @interface AppConfigModelSort {
     int value() default 0;
 }

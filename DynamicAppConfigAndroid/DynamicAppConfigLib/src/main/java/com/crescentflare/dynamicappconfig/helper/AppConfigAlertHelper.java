@@ -19,14 +19,13 @@ import com.crescentflare.dynamicappconfig.R;
  * Library helper: show alert dialog
  * A helper library to show an alert dialog (for text input)
  */
-public class AppConfigAlertHelper
-{
-    // ---
-    // An input dialog with ok/cancel buttons
-    // ---
+public class AppConfigAlertHelper {
 
-    public static void inputDialog(Context context, String title, String hintText, String preFilledValue, InputType inputType, final OnAlertInputListener listener)
-    {
+    // --
+    // An input dialog with ok/cancel buttons
+    // --
+
+    public static void inputDialog(Context context, String title, String hintText, String preFilledValue, InputType inputType, final OnAlertInputListener listener) {
         // Set up container
         FrameLayout editTextContainer = new FrameLayout(context);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -44,15 +43,11 @@ public class AppConfigAlertHelper
         editText.setText(preFilledValue);
         editText.setSelection(editText.getText().length());
         editText.setId(R.id.app_config_dialog_input);
-        switch (inputType)
-        {
-            case NumbersOnly:
-                editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                editText.setKeyListener(DigitsKeyListener.getInstance(true, false));
-                break;
-            default:
-                editText.setInputType(android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                break;
+        if (inputType == InputType.NumbersOnly) {
+            editText.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            editText.setKeyListener(DigitsKeyListener.getInstance(true, false));
+        } else {
+            editText.setInputType(android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         }
         editTextContainer.addView(editText);
 
@@ -60,36 +55,27 @@ public class AppConfigAlertHelper
         final AlertDialog dialog = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setView(editTextContainer)
-                .setPositiveButton(context.getString(R.string.app_config_action_ok), new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton(context.getString(R.string.app_config_action_ok), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
                         String enteredText = String.valueOf(editText.getText());
-                        if (listener != null)
-                        {
+                        if (listener != null) {
                             listener.onInputEntered(enteredText);
                         }
                     }
                 })
-                .setNegativeButton(context.getString(R.string.app_config_action_cancel), new DialogInterface.OnClickListener()
-                {
+                .setNegativeButton(context.getString(R.string.app_config_action_cancel), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        if (listener != null)
-                        {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (listener != null) {
                             listener.onInputCanceled();
                         }
                     }
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener()
-                {
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
-                    public void onCancel(DialogInterface dialog)
-                    {
-                        if (listener != null)
-                        {
+                    public void onCancel(DialogInterface dialog) {
+                        if (listener != null) {
                             listener.onInputCanceled();
                         }
                     }
@@ -97,22 +83,17 @@ public class AppConfigAlertHelper
                 .create();
 
         // Manage keyboard
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener()
-        {
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus)
-            {
-                if (hasFocus && dialog.getWindow() != null)
-                {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus && dialog.getWindow() != null) {
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 }
             }
         });
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
-        {
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-            {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
                 return true;
             }
@@ -123,23 +104,21 @@ public class AppConfigAlertHelper
     }
 
 
-    // ---
+    // --
     // Input type enum
-    // ---
+    // --
 
-    public enum InputType
-    {
+    public enum InputType {
         Normal,
         NumbersOnly
     }
 
 
-    // ---
+    // --
     // Input callback listener
-    // ---
+    // --
 
-    public interface OnAlertInputListener
-    {
+    public interface OnAlertInputListener {
         void onInputEntered(String text);
         void onInputCanceled();
     }

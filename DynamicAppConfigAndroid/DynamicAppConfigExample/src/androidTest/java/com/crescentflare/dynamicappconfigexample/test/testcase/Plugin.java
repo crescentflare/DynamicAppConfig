@@ -18,19 +18,19 @@ import org.junit.runner.RunWith;
  * So I can integrate my own tools within the app config library easily
  */
 @RunWith(AndroidJUnit4.class)
-public class Plugin
-{
-    // ---
+public class Plugin {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Using a custom plugin
@@ -39,8 +39,7 @@ public class Plugin
      * Then I see the "Show log" screen
      */
     @Test
-    public void testViewLog()
-    {
+    public void testViewLog() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
