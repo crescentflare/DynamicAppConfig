@@ -3,7 +3,9 @@
 [![CI Status](http://img.shields.io/travis/crescentflare/DynamicAppConfig.svg?style=flat)](https://travis-ci.org/crescentflare/DynamicAppConfig)
 [![License](https://img.shields.io/cocoapods/l/DynamicAppConfig.svg?style=flat)](http://cocoapods.org/pods/DynamicAppConfig)
 [![Version](https://img.shields.io/cocoapods/v/DynamicAppConfig.svg?style=flat)](http://cocoapods.org/pods/DynamicAppConfig)
-[![Version](https://img.shields.io/bintray/v/crescentflare/maven/DynamicAppConfigLib.svg?style=flat)](https://bintray.com/crescentflare/maven/DynamicAppConfigLib)
+[![Version](https://img.shields.io/maven-central/v/com/crescentflare/dynamicappconfig/DynamicAppConfigLib.svg?style=flat)](https://repo1.maven.org/maven2/com/crescentflare/dynamicappconfig/DynamicAppConfigLib)
+
+**Notice for Android developers**: JCenter plans to shut down in may 2021. To mitigate this, the DynamicAppConfig library has moved to Maven Central from version 1.4.1 onwards. Make sure to update to the latest version in time.
 
 A useful library to support multiple build configurations or global settings in one application build.
 
@@ -36,7 +38,7 @@ For example: be able to make one build with a build selector that contains devel
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add one of the following lines to your Podfile.
 
 ```ruby
-pod "DynamicAppConfig", '~> 1.4.0'
+pod "DynamicAppConfig", '~> 1.4.1'
 ```
 
 The above version is for Swift 5.0. For older Swift versions use the following:
@@ -49,10 +51,10 @@ The above version is for Swift 5.0. For older Swift versions use the following:
 When using gradle, the library can easily be imported into the build.gradle file of your project. Add the following dependency:
 
 ```
-implementation 'com.crescentflare.dynamicappconfig:DynamicAppConfigLib:1.4.0'
+implementation 'com.crescentflare.dynamicappconfig:DynamicAppConfigLib:1.4.1'
 ```
 
-Make sure that jcenter is added as a repository. The above is for Android API level 14 and higher. To support older Android versions use the old library, available [here](https://github.com/crescentflare/DynamicAppConfigAndroid).
+The above is for Android API level 14 and higher. To support older Android versions use the old library, available [here](https://github.com/crescentflare/DynamicAppConfigAndroid).
 
 
 ### Integration documentation
