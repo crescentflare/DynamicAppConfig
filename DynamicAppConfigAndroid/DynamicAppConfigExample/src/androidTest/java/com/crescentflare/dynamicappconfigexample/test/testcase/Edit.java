@@ -1,7 +1,7 @@
 package com.crescentflare.dynamicappconfigexample.test.testcase;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.crescentflare.dynamicappconfigexample.MainActivity;
 import com.crescentflare.dynamicappconfigexample.appconfig.ExampleAppConfigRunType;
@@ -20,19 +20,19 @@ import org.junit.runner.RunWith;
  * So I can further customize app behavior during testing
  */
 @RunWith(AndroidJUnit4.class)
-public class Edit
-{
-    // ---
+public class Edit {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Edit a configuration
@@ -52,8 +52,7 @@ public class Edit
      * And I see "acceptAllSSL" set to "true"
      */
     @Test
-    public void testEditConfiguration()
-    {
+    public void testEditConfiguration() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
@@ -61,8 +60,8 @@ public class Edit
                 .expectEditConfigScreen()
                 .changeSetting(SettingType.ApiURL).to("https://changed.example.com")
                 .changeSetting(SettingType.NetworkTimeoutSeconds).to(10)
-                .changeSetting(SettingType.RunType).to(ExampleAppConfigRunType.RunQuickly)
                 .changeSetting(SettingType.AcceptAllSSL).to(true)
+                .changeSetting(SettingType.RunType).to(ExampleAppConfigRunType.RunQuickly)
                 .applyChanges()
                 .expectAppConfigurationsScreen()
                 .selectConfig(ManageAppConfigModel.Configuration.Test)
@@ -70,7 +69,7 @@ public class Edit
                 .expectSetting(SettingType.Name).toBe("Test server")
                 .expectSetting(SettingType.ApiURL).toBe("https://changed.example.com")
                 .expectSetting(SettingType.NetworkTimeoutSeconds).toBe(10)
-                .expectSetting(SettingType.RunType).toBe(ExampleAppConfigRunType.RunQuickly)
-                .expectSetting(SettingType.AcceptAllSSL).toBe(true);
+                .expectSetting(SettingType.AcceptAllSSL).toBe(true)
+                .expectSetting(SettingType.RunType).toBe(ExampleAppConfigRunType.RunQuickly);
     }
 }

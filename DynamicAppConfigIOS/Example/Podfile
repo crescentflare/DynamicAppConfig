@@ -2,14 +2,20 @@ use_frameworks!
 
 platform :ios, '8.0'
 
-target 'DynamicAppConfig_Example' do
+def library_pod
   pod 'DynamicAppConfig', :path => '../../'
+end
 
-  target 'DynamicAppConfig_Tests' do
-    inherit! :search_paths
-  end
+target 'DynamicAppConfig_Example' do
+  library_pod
+end
 
-  target 'DynamicAppConfig_UITests' do
-    inherit! :search_paths
-  end
+target 'DynamicAppConfig_Tests' do
+  inherit! :search_paths
+  library_pod
+end
+
+target 'DynamicAppConfig_UITests' do
+  inherit! :search_paths
+  library_pod
 end

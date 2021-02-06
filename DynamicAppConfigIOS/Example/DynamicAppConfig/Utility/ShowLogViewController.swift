@@ -14,7 +14,7 @@ class ShowLogViewController: UIViewController {
     // MARK: View components
     // --
     
-    @IBOutlet weak var logText: UILabel!
+    @IBOutlet weak var logText: UILabel?
     
     
     // --
@@ -24,7 +24,7 @@ class ShowLogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "View log"
-        logText.text = Logger.logString()
+        logText?.text = Logger.logString()
     }
     
 }

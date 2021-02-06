@@ -1,8 +1,8 @@
 package com.crescentflare.dynamicappconfigexample.test.helper;
 
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import android.widget.ListView;
 
@@ -11,8 +11,8 @@ import com.crescentflare.dynamicappconfig.view.AppConfigSwitchCell;
 
 import org.hamcrest.Matcher;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Test helper: perform view
@@ -20,39 +20,33 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 public class PerformViewHelper
 {
-    // ---
+    // --
     // Utility functions
-    // ---
+    // --
 
-    public static void disableLongClick(int viewId)
-    {
+    public static void disableLongClick(int viewId) {
         onView(withId(viewId)).perform(disableListViewLongClick());
     }
 
 
-    // ---
+    // --
     // View action to force a cell text setting
-    // ---
+    // --
 
-    public static ViewAction setCellText(final String text)
-    {
-        return new ViewAction()
-        {
+    public static ViewAction setCellText(final String text) {
+        return new ViewAction() {
             @Override
-            public Matcher<View> getConstraints()
-            {
+            public Matcher<View> getConstraints() {
                 return ViewMatchers.isAssignableFrom(AppConfigEditableCell.class);
             }
 
             @Override
-            public String getDescription()
-            {
+            public String getDescription() {
                 return "Set cell text to: " + text;
             }
 
             @Override
-            public void perform(UiController uiController, View view)
-            {
+            public void perform(UiController uiController, View view) {
                 AppConfigEditableCell editView = (AppConfigEditableCell)view;
                 editView.setValue(text);
             }
@@ -60,29 +54,24 @@ public class PerformViewHelper
     }
 
 
-    // ---
+    // --
     // View action to force a cell switch setting
-    // ---
+    // --
 
-    public static ViewAction setCellSwitch(final boolean enabled)
-    {
-        return new ViewAction()
-        {
+    public static ViewAction setCellSwitch(final boolean enabled) {
+        return new ViewAction() {
             @Override
-            public Matcher<View> getConstraints()
-            {
+            public Matcher<View> getConstraints() {
                 return ViewMatchers.isAssignableFrom(AppConfigSwitchCell.class);
             }
 
             @Override
-            public String getDescription()
-            {
+            public String getDescription() {
                 return "Set cell switch to: " + enabled;
             }
 
             @Override
-            public void perform(UiController uiController, View view)
-            {
+            public void perform(UiController uiController, View view) {
                 AppConfigSwitchCell switchView = (AppConfigSwitchCell)view;
                 switchView.setChecked(enabled);
             }
@@ -90,29 +79,24 @@ public class PerformViewHelper
     }
 
 
-    // ---
+    // --
     // View action: disable long click (workaround for list views supporting long click which is triggered, even when not intended)
-    // ---
+    // --
 
-    private static ViewAction disableListViewLongClick()
-    {
-        return new ViewAction()
-        {
+    private static ViewAction disableListViewLongClick() {
+        return new ViewAction() {
             @Override
-            public Matcher<View> getConstraints()
-            {
+            public Matcher<View> getConstraints() {
                 return ViewMatchers.isAssignableFrom(ListView.class);
             }
 
             @Override
-            public String getDescription()
-            {
+            public String getDescription() {
                 return "Disable long click on listview (workaround)";
             }
 
             @Override
-            public void perform(UiController uiController, View view)
-            {
+            public void perform(UiController uiController, View view) {
                 ((ListView)view).setOnItemLongClickListener(null);
             }
         };

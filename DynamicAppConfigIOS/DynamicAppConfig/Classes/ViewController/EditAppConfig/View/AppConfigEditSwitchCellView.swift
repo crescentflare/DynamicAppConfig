@@ -23,9 +23,9 @@ protocol AppConfigEditSwitchCellViewDelegate: class {
     // --
     
     weak var delegate: AppConfigEditSwitchCellViewDelegate?
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
-    @IBOutlet private var _switchControl: UISwitch! = nil
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
+    @IBOutlet private var _switchControl: UISwitch?
 
     
     // --
@@ -34,28 +34,28 @@ protocol AppConfigEditSwitchCellViewDelegate: class {
     
     @IBInspectable var labelText: String = "" {
         didSet {
-            _label.text = labelText
+            _label?.text = labelText
         }
     }
     
     @IBInspectable var switchOn: Bool = false {
         didSet {
-            _switchControl.isOn = switchOn
+            _switchControl?.isOn = switchOn
         }
     }
 
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
 
     var on: Bool {
         set {
-            _switchControl!.isOn = newValue
+            _switchControl?.isOn = newValue
         }
-        get { return _switchControl!.isOn }
+        get { return _switchControl?.isOn ?? false }
     }
 
     
@@ -75,9 +75,9 @@ protocol AppConfigEditSwitchCellViewDelegate: class {
     
     func setupView() {
         _contentView = AppConfigViewUtility.loadNib(named: "EditSwitchCell", parentView: self)
-        _label.text = ""
-        _switchControl.addTarget(self, action: #selector(setState), for: .valueChanged)
-        _switchControl.isOn = false
+        _label?.text = ""
+        _switchControl?.addTarget(self, action: #selector(setState), for: .valueChanged)
+        _switchControl?.isOn = false
     }
    
 
@@ -96,7 +96,7 @@ protocol AppConfigEditSwitchCellViewDelegate: class {
     
     func toggleState() {
         let newState = !on
-        _switchControl.setOn(newState, animated: true)
+        _switchControl?.setOn(newState, animated: true)
         delegate?.changedSwitchState(newState, forConfigSetting: label ?? "")
     }
 

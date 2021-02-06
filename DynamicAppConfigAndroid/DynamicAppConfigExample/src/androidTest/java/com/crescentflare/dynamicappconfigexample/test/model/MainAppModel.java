@@ -6,51 +6,46 @@ import com.crescentflare.dynamicappconfigexample.appconfig.ExampleAppConfigLogLe
 import com.crescentflare.dynamicappconfigexample.appconfig.ExampleAppConfigRunType;
 import com.crescentflare.dynamicappconfigexample.test.model.shared.SettingType;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Test model: main app
  * Interaction related to the main example application
  */
-public class MainAppModel
-{
-    // ---
-    // Interaction
-    // ---
+public class MainAppModel {
 
-    public ManualSetting setSettingManually(SettingType setting)
-    {
+    // --
+    // Interaction
+    // --
+
+    public ManualSetting setSettingManually(SettingType setting) {
         return new ManualSetting(this, setting.toString(), false);
     }
 
-    public ManualSetting setGlobalSettingManually(SettingType setting)
-    {
+    public ManualSetting setGlobalSettingManually(SettingType setting) {
         return new ManualSetting(this, setting.toString(), true);
     }
 
 
-    // ---
+    // --
     // Checks
-    // ---
+    // --
 
-    public Setting expectSetting(SettingType setting)
-    {
+    public Setting expectSetting(SettingType setting) {
         return new Setting(this, settingToViewId(setting), settingToPrefix(setting));
     }
 
 
-    // ---
+    // --
     // Helper
-    // ---
+    // --
 
-    private int settingToViewId(SettingType setting)
-    {
-        switch (setting)
-        {
+    private int settingToViewId(SettingType setting) {
+        switch (setting) {
             case Name:
                 return R.id.activity_main_config_name;
             case ApiURL:
@@ -73,52 +68,41 @@ public class MainAppModel
         return 0;
     }
 
-    private String settingToPrefix(SettingType setting)
-    {
+    private String settingToPrefix(SettingType setting) {
         return setting.toString() + ": ";
     }
 
 
-    // ---
+    // --
     // Setting class for manually changing values
-    // ---
+    // --
 
-    public static class ManualSetting
-    {
-        private MainAppModel model;
-        private String key;
-        private boolean global;
+    public static class ManualSetting {
+        private final MainAppModel model;
+        private final String key;
+        private final boolean global;
 
-        public ManualSetting(MainAppModel model, String key, boolean global)
-        {
+        public ManualSetting(MainAppModel model, String key, boolean global) {
             this.model = model;
             this.key = key;
             this.global = global;
         }
 
-        public MainAppModel to(boolean value)
-        {
+        public MainAppModel to(boolean value) {
             return to(value ? "true" : "false");
         }
 
-        public MainAppModel to(int value)
-        {
+        public MainAppModel to(int value) {
             return to("" + value);
         }
 
-        public MainAppModel to(final String value)
-        {
-            getInstrumentation().runOnMainSync(new Runnable()
-            {
+        public MainAppModel to(final String value) {
+            getInstrumentation().runOnMainSync(new Runnable() {
                 @Override
-                public void run()
-                {
-                    if (global)
-                    {
+                public void run() {
+                    if (global) {
                         AppConfigStorage.instance.manuallyChangeGlobalConfig(getInstrumentation().getTargetContext(), key, value);
-                    }
-                    else
-                    {
+                    } else {
                         AppConfigStorage.instance.manuallyChangeCurrentConfig(getInstrumentation().getTargetContext(), key, value);
                     }
                 }
@@ -126,61 +110,52 @@ public class MainAppModel
             return model;
         }
 
-        public MainAppModel to(ExampleAppConfigRunType value)
-        {
+        public MainAppModel to(ExampleAppConfigRunType value) {
             return to("" + value);
         }
 
-        public MainAppModel to(ExampleAppConfigLogLevel value)
-        {
+        public MainAppModel to(ExampleAppConfigLogLevel value) {
             return to("" + value);
         }
     }
 
 
-    // ---
+    // --
     // Setting class for checking values
-    // ---
+    // --
 
-    public static class Setting
-    {
-        private MainAppModel model;
-        private String prefix;
-        private int viewId;
+    public static class Setting {
+        private final MainAppModel model;
+        private final String prefix;
+        private final int viewId;
 
-        public Setting(MainAppModel model, int viewId, String prefix)
-        {
+        public Setting(MainAppModel model, int viewId, String prefix) {
             this.model = model;
             this.viewId = viewId;
             this.prefix = prefix;
         }
 
-        public MainAppModel toBe(boolean value)
-        {
+        public MainAppModel toBe(boolean value) {
             onView(withId(viewId)).check(matches(withText(prefix + (value ? "true" : "false"))));
             return model;
         }
 
-        public MainAppModel toBe(int value)
-        {
+        public MainAppModel toBe(int value) {
             onView(withId(viewId)).check(matches(withText(prefix + value)));
             return model;
         }
 
-        public MainAppModel toBe(String value)
-        {
+        public MainAppModel toBe(String value) {
             onView(withId(viewId)).check(matches(withText(prefix + value)));
             return model;
         }
 
-        public MainAppModel toBe(ExampleAppConfigRunType value)
-        {
+        public MainAppModel toBe(ExampleAppConfigRunType value) {
             onView(withId(viewId)).check(matches(withText(prefix + value)));
             return model;
         }
 
-        public MainAppModel toBe(ExampleAppConfigLogLevel value)
-        {
+        public MainAppModel toBe(ExampleAppConfigLogLevel value) {
             onView(withId(viewId)).check(matches(withText(prefix + value)));
             return model;
         }

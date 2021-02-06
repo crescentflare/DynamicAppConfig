@@ -1,7 +1,7 @@
 package com.crescentflare.dynamicappconfigexample.test.testcase;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.crescentflare.dynamicappconfigexample.MainActivity;
 import com.crescentflare.dynamicappconfigexample.appconfig.ExampleAppConfigLogLevel;
@@ -21,19 +21,19 @@ import org.junit.runner.RunWith;
  * So I can test multiple configurations and settings in one build
  */
 @RunWith(AndroidJUnit4.class)
-public class Main
-{
-    // ---
+public class Main {
+
+    // --
     // Members
-    // ---
+    // --
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    // ---
+    // --
     // Scenarios
-    // ---
+    // --
 
     /**
      * Scenario: Selecting a configuration
@@ -42,8 +42,7 @@ public class Main
      * Then I see the "Test server" settings
      */
     @Test
-    public void testSelectConfiguration()
-    {
+    public void testSelectConfiguration() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
@@ -71,20 +70,19 @@ public class Main
      * And I see "consoleEnabled" set to "true"
      */
     @Test
-    public void testEditGlobalSettings()
-    {
+    public void testEditGlobalSettings() {
         TestApplication.instance
                 .expectAppConfigurationsScreen()
                 .revertToConfigurationDefaults()
                 .changeGlobalSetting(SettingType.ConsoleURL).to("https://console.example.com")
                 .changeGlobalSetting(SettingType.ConsoleTimeoutSeconds).to(100)
-                .changeGlobalSetting(SettingType.LogLevel).to(ExampleAppConfigLogLevel.LogVerbose)
                 .changeGlobalSetting(SettingType.ConsoleEnabled).to(true)
+                .changeGlobalSetting(SettingType.LogLevel).to(ExampleAppConfigLogLevel.LogVerbose)
                 .selectConfig(ManageAppConfigModel.Configuration.Mock)
                 .expectMainAppScreen()
                 .expectSetting(SettingType.ConsoleURL).toBe("https://console.example.com")
                 .expectSetting(SettingType.ConsoleTimeoutSeconds).toBe(100)
-                .expectSetting(SettingType.LogLevel).toBe(ExampleAppConfigLogLevel.LogVerbose)
-                .expectSetting(SettingType.ConsoleEnabled).toBe(true);
+                .expectSetting(SettingType.ConsoleEnabled).toBe(true)
+                .expectSetting(SettingType.LogLevel).toBe(ExampleAppConfigLogLevel.LogVerbose);
     }
 }

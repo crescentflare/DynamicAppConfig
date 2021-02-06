@@ -4,21 +4,19 @@ package com.crescentflare.dynamicappconfigexample.appconfig;
  * App config: application configuration log setting
  * An enum used by the application build configuration
  */
-public enum ExampleAppConfigLogLevel
-{
+public enum ExampleAppConfigLogLevel {
+
     LogDisabled("logDisabled"),
     LogNormal("logNormal"),
     LogVerbose("logVerbose");
 
-    private String text;
+    private final String text;
 
-    ExampleAppConfigLogLevel(String text)
-    {
+    ExampleAppConfigLogLevel(String text) {
         this.text = text;
     }
 
-    public static ExampleAppConfigLogLevel fromString(String text)
-    {
+    public static ExampleAppConfigLogLevel fromString(String text) {
         if (text != null)
             for (ExampleAppConfigLogLevel e : ExampleAppConfigLogLevel.values())
                 if (text.equalsIgnoreCase(e.text))
@@ -26,8 +24,7 @@ public enum ExampleAppConfigLogLevel
         return LogDisabled;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return text;
     }
 }

@@ -13,7 +13,7 @@ open class AppConfigBaseManager {
     // --
     
     var currentConfig: AppConfigBaseModel?
-    var plugins: [AppConfigPlugin] = []
+    var plugins = [AppConfigPlugin]()
 
     
     // --
@@ -36,8 +36,9 @@ open class AppConfigBaseManager {
     // Used by the derived manager to return the selected configuration instance
     // Will usually be typecasted to the specific model class for the app
     public func currentConfigInstance() -> AppConfigBaseModel {
-        currentConfig = currentConfig ?? obtainBaseModelInstance()
-        return currentConfig!
+        let result = currentConfig ?? obtainBaseModelInstance()
+        currentConfig = result
+        return result
     }
     
     // Internal method to apply a new configuration selection to the model

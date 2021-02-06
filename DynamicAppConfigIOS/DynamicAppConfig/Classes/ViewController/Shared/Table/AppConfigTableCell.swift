@@ -16,15 +16,15 @@ class AppConfigTableCell : UITableViewCell {
     // --
     
     var shouldHideDivider: Bool = false
-    var _dividerLine: UIView? = nil
-    var _cellView: UIView? = nil
+    var _dividerLine: UIView?
+    var _cellView: UIView?
     var cellView: UIView? {
         set {
             _cellView?.removeFromSuperview()
             _cellView = newValue
-            if _cellView != nil {
-                contentView.addSubview(_cellView!)
-                AppConfigViewUtility.addPinSuperViewEdgesConstraints(view: _cellView!, parentView: contentView)
+            if let addView = _cellView {
+                contentView.addSubview(addView)
+                AppConfigViewUtility.addPinSuperViewEdgesConstraints(view: addView, parentView: contentView)
             }
         }
         get { return _cellView }
@@ -52,11 +52,13 @@ class AppConfigTableCell : UITableViewCell {
         } else {
             _dividerLine?.backgroundColor = UIColor.init(white: 0.8, alpha: 1)
         }
-        addSubview(_dividerLine!)
-        AppConfigViewUtility.addHeightConstraint(view: _dividerLine!, height: 1 / UIScreen.main.scale)
-        AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: _dividerLine!, parentView: self, edge: .left, constant: 16)
-        AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: _dividerLine!, parentView: self, edge: .right)
-        AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: _dividerLine!, parentView: self, edge: .bottom)
+        if let addView = _dividerLine {
+            addSubview(addView)
+            AppConfigViewUtility.addHeightConstraint(view: addView, height: 1 / UIScreen.main.scale)
+            AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: addView, parentView: self, edge: .left, constant: 16)
+            AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: addView, parentView: self, edge: .right)
+            AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: addView, parentView: self, edge: .bottom)
+        }
     }
 
     

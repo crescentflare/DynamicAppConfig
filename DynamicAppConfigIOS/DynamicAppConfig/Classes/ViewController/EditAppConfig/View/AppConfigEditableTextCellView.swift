@@ -15,9 +15,9 @@ import UIKit
     // MARK: Members
     // --
     
-    private var _contentView: UIView! = nil
-    @IBOutlet private var _label: UILabel! = nil
-    @IBOutlet private var _value: UILabel! = nil
+    private var _contentView: UIView?
+    @IBOutlet private var _label: UILabel?
+    @IBOutlet private var _value: UILabel?
     private var _applyNumberLimitation = false
     private var _isEmpty = true
 
@@ -46,27 +46,27 @@ import UIKit
 
     var label: String? {
         set {
-            _label!.text = newValue
+            _label?.text = newValue
         }
-        get { return _label!.text }
+        get { return _label?.text }
     }
 
     var value: String? {
         set {
             _isEmpty = newValue?.count == 0
-            _value!.text = _isEmpty ? AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY") : newValue
+            _value?.text = _isEmpty ? AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY") : newValue
             if #available(iOS 13.0, *) {
-                _value!.textColor = _isEmpty ? UIColor.placeholderText : UIColor.label
+                _value?.textColor = _isEmpty ? UIColor.placeholderText : UIColor.label
             } else {
-                _value!.textColor = _isEmpty ? UIColor.gray : UIColor.black
+                _value?.textColor = _isEmpty ? UIColor.gray : UIColor.black
             }
-            _value!.font = _isEmpty ? UIFont.italicSystemFont(ofSize: 14) : UIFont.systemFont(ofSize: 14)
+            _value?.font = _isEmpty ? UIFont.italicSystemFont(ofSize: 14) : UIFont.systemFont(ofSize: 14)
         }
         get {
             if _isEmpty {
                 return ""
             }
-            return _value!.text
+            return _value?.text
         }
     }
     
@@ -94,15 +94,15 @@ import UIKit
     
     func setupView() {
         _contentView = AppConfigViewUtility.loadNib(named: "EditableTextCell", parentView: self)
-        _label.textColor = tintColor
-        _label.text = ""
+        _label?.textColor = tintColor
+        _label?.text = ""
         if #available(iOS 13.0, *) {
-            _value.textColor = UIColor.placeholderText
+            _value?.textColor = UIColor.placeholderText
         } else {
-            _value.textColor = UIColor.gray
+            _value?.textColor = UIColor.gray
         }
-        _value.text = AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY")
-        _value.font = UIFont.italicSystemFont(ofSize: 14)
+        _value?.text = AppConfigBundle.localizedString(key: "CFLAC_EDIT_VALUE_EMPTY")
+        _value?.font = UIFont.italicSystemFont(ofSize: 14)
     }
     
 }

@@ -25,8 +25,8 @@ enum AppConfigCellSectionLocation: String {
     // --
     
     private var _location = AppConfigCellSectionLocation.none
-    private var _dividerLine: UIView? = nil
-    private var _dividerLineConstraint: NSLayoutConstraint? = nil
+    private var _dividerLine: UIView?
+    private var _dividerLineConstraint: NSLayoutConstraint?
 
     
     // --
@@ -42,11 +42,11 @@ enum AppConfigCellSectionLocation: String {
     var location: AppConfigCellSectionLocation? {
         set {
             _location = newValue ?? .none
-            if _dividerLine != nil {
-                if _dividerLineConstraint != nil {
-                    _dividerLine?.removeConstraint(_dividerLineConstraint!)
+            if let dividerLine = _dividerLine {
+                if let removeConstraint = _dividerLineConstraint {
+                    _dividerLine?.removeConstraint(removeConstraint)
                 }
-                _dividerLineConstraint = AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: _dividerLine!, parentView: self, edge: _location == .top ? .bottom : .top)
+                _dividerLineConstraint = AppConfigViewUtility.addPinSuperViewEdgeConstraint(view: dividerLine, parentView: self, edge: _location == .top ? .bottom : .top)
                 _dividerLine?.isHidden = _location == .none
             }
         }
@@ -88,9 +88,11 @@ enum AppConfigCellSectionLocation: String {
         } else {
             _dividerLine?.backgroundColor = UIColor.init(white: 0.75, alpha: 1)
         }
-        addSubview(_dividerLine!)
-        AppConfigViewUtility.addPinSuperViewHorizontalEdgesConstraints(view: _dividerLine!, parentView: self)
-        AppConfigViewUtility.addHeightConstraint(view: _dividerLine!, height: 1 / UIScreen.main.scale)
+        if let addView = _dividerLine {
+            addSubview(addView)
+            AppConfigViewUtility.addPinSuperViewHorizontalEdgesConstraints(view: addView, parentView: self)
+            AppConfigViewUtility.addHeightConstraint(view: addView, height: 1 / UIScreen.main.scale)
+        }
         self.location = location
     }
     

@@ -2,7 +2,7 @@ package com.crescentflare.dynamicappconfigexample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,72 +15,65 @@ import com.crescentflare.dynamicappconfigexample.utility.Logger;
 /**
  * The example activity shows a simple screen with a message
  */
-public class MainActivity extends AppCompatActivity implements AppConfigStorage.ChangedConfigListener
-{
-    // ---
+public class MainActivity extends AppCompatActivity implements AppConfigStorage.ChangedConfigListener {
+
+    // --
     // Constants
-    // ---
+    // --
 
     private static final int RESULT_CODE_MANAGE_APP_CONFIG = 1001;
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fillContent();
-        if (AppConfigStorage.instance.isInitialized() && (getIntent().getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) > 0)
-        {
+        if (AppConfigStorage.instance.isInitialized() && (getIntent().getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) > 0) {
             ManageAppConfigActivity.startWithResult(this, RESULT_CODE_MANAGE_APP_CONFIG);
         }
     }
 
 
-    // ---
+    // --
     // Activity state handling
-    // ---
+    // --
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         fillContent();
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         AppConfigStorage.instance.removeChangedConfigListener(this);
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         AppConfigStorage.instance.addChangedConfigListener(this);
         fillContent();
     }
 
 
-    // ---
+    // --
     // Fill content (show configuration values)
-    // ---
+    // --
 
     @Override
-    public void onChangedConfig()
-    {
+    public void onChangedConfig() {
         Logger.log("Configuration changed");
         fillContent();
     }
 
-    public void fillContent()
-    {
+    public void fillContent() {
         // Log config
         Logger.logVerbose("apiUrl set to: " + ExampleAppConfigManager.currentConfig().getApiUrl());
         Logger.logVerbose("runType set to: " + ExampleAppConfigManager.currentConfig().getRunType().toString());
@@ -111,13 +104,10 @@ public class MainActivity extends AppCompatActivity implements AppConfigStorage.
 
         // Set long click listener on the action bar to show the selection menu again
         View actionBar = findActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setOnLongClickListener(new View.OnLongClickListener()
-            {
+        if (actionBar != null) {
+            actionBar.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v)
-                {
+                public boolean onLongClick(View v) {
                     ManageAppConfigActivity.startWithResult(MainActivity.this, RESULT_CODE_MANAGE_APP_CONFIG);
                     return true;
                 }
@@ -126,41 +116,32 @@ public class MainActivity extends AppCompatActivity implements AppConfigStorage.
     }
 
 
-    // ---
+    // --
     // Helpers
-    // ---
+    // --
 
-    public ViewGroup findActionBar()
-    {
+    public ViewGroup findActionBar() {
         int id = getResources().getIdentifier("action_bar", "id", "android");
         ViewGroup actionBar = null;
-        if (id != 0)
-        {
+        if (id != 0) {
             actionBar = (ViewGroup)findViewById(id);
         }
-        if (actionBar == null)
-        {
+        if (actionBar == null) {
             actionBar = findToolbar((ViewGroup)findViewById(android.R.id.content).getRootView());
         }
         return actionBar;
     }
 
-    private ViewGroup findToolbar(ViewGroup viewGroup)
-    {
+    private ViewGroup findToolbar(ViewGroup viewGroup) {
         ViewGroup toolbar = null;
-        for (int i = 0, len = viewGroup.getChildCount(); i < len; i++)
-        {
+        for (int i = 0, len = viewGroup.getChildCount(); i < len; i++) {
             View view = viewGroup.getChildAt(i);
-            if (view.getClass().getName().equals("android.support.v7.widget.Toolbar") || view.getClass().getName().equals("android.widget.Toolbar"))
-            {
+            if (view.getClass().getName().equals("android.support.v7.widget.Toolbar") || view.getClass().getName().equals("androidx.appcompat.widget.Toolbar") || view.getClass().getName().equals("android.widget.Toolbar")) {
                 toolbar = (ViewGroup)view;
-            }
-            else if (view instanceof ViewGroup)
-            {
+            } else if (view instanceof ViewGroup) {
                 toolbar = findToolbar((ViewGroup)view);
             }
-            if (toolbar != null)
-            {
+            if (toolbar != null) {
                 break;
             }
         }

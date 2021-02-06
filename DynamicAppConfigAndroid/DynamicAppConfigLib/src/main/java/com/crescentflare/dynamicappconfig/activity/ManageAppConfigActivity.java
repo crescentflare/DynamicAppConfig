@@ -38,22 +38,22 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library activity: managing configurations
  * Be able to select, add and edit app configurations
  */
-public class ManageAppConfigActivity extends Activity implements AppConfigStorage.ChangedConfigListener
-{
-    // ---
+public class ManageAppConfigActivity extends Activity implements AppConfigStorage.ChangedConfigListener {
+
+    // --
     // Constants
-    // ---
+    // --
 
     private static final int RESULT_CODE_CUSTOM_COPY_FROM = 1000;
     private static final int RESULT_CODE_EDIT_CONFIG = 1001;
     private static final int RESULT_CODE_SELECT_ENUM = 1004;
 
 
-    // ---
+    // --
     // Members
-    // ---
+    // --
 
-    private ArrayList<View> fieldViews = new ArrayList<>();
+    private final ArrayList<View> fieldViews = new ArrayList<>();
     private LinearLayout layout = null;
     private AppConfigCellList managingView = null;
     private LinearLayout spinnerView = null;
@@ -62,39 +62,31 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
     private int buildNr = -1;
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public static Intent newInstance(Context context)
-    {
+    public static Intent newInstance(Context context) {
         return new Intent(context, ManageAppConfigActivity.class);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         // Obtain build number
         super.onCreate(savedInstanceState);
-        if (!AppConfigStorage.instance.isInitialized())
-        {
+        if (!AppConfigStorage.instance.isInitialized()) {
             finish();
             return;
         }
-        try
-        {
+        try {
             PackageManager manager = getPackageManager();
-            if (manager != null)
-            {
+            if (manager != null) {
                 PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-                if (info != null)
-                {
+                if (info != null) {
                     buildNr = info.versionCode;
                 }
             }
-        }
-        catch (PackageManager.NameNotFoundException ignored)
-        {
+        } catch (PackageManager.NameNotFoundException ignored) {
         }
 
         // Create layout and configure action bar
@@ -103,11 +95,9 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         setContentView(layout);
 
         // Load data and populate content
-        AppConfigStorage.instance.loadFromSource(this, new Runnable()
-        {
+        AppConfigStorage.instance.loadFromSource(this, new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 populateContent();
                 initialEditValues = fetchEditedValues();
                 latestEditValues = initialEditValues;
@@ -115,40 +105,30 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         });
     }
 
-    public static void startWithResult(Activity fromActivity, int resultCode)
-    {
+    public static void startWithResult(Activity fromActivity, int resultCode) {
         fromActivity.startActivityForResult(newInstance(fromActivity), resultCode);
     }
 
 
-    // ---
+    // --
     // State handling
-    // ---
+    // --
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_CODE_CUSTOM_COPY_FROM && resultCode == RESULT_OK)
-        {
+        if (requestCode == RESULT_CODE_CUSTOM_COPY_FROM && resultCode == RESULT_OK) {
             String resultString = data.getStringExtra(AppConfigStringChoiceActivity.ARG_INTENT_RESULT_SELECTED_STRING);
-            if (resultString.length() > 0)
-            {
+            if (resultString.length() > 0) {
                 EditAppConfigActivity.startWithResult(this, resultString, true, RESULT_CODE_EDIT_CONFIG);
             }
-        }
-        else if (requestCode == RESULT_CODE_EDIT_CONFIG && resultCode == RESULT_OK)
-        {
+        } else if (requestCode == RESULT_CODE_EDIT_CONFIG && resultCode == RESULT_OK) {
             populateContent();
-        }
-        else if (requestCode >= RESULT_CODE_SELECT_ENUM && requestCode < RESULT_CODE_SELECT_ENUM + 1000 && resultCode == RESULT_OK)
-        {
+        } else if (requestCode >= RESULT_CODE_SELECT_ENUM && requestCode < RESULT_CODE_SELECT_ENUM + 1000 && resultCode == RESULT_OK) {
             String resultString = data.getStringExtra(AppConfigStringChoiceActivity.ARG_INTENT_RESULT_SELECTED_STRING);
-            if (resultString.length() > 0)
-            {
+            if (resultString.length() > 0) {
                 int index = requestCode - RESULT_CODE_SELECT_ENUM;
-                if (index < fieldViews.size() && fieldViews.get(index) instanceof AppConfigClickableCell)
-                {
+                if (index < fieldViews.size() && fieldViews.get(index) instanceof AppConfigClickableCell) {
                     ((AppConfigClickableCell)fieldViews.get(index)).setText(fieldViews.get(index).getTag() + ": " + resultString);
                 }
             }
@@ -156,33 +136,27 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
     }
 
     @Override
-    public void finish()
-    {
+    public void finish() {
         boolean hasChange = false;
-        if (initialEditValues != null)
-        {
+        if (initialEditValues != null) {
             hasChange = !fetchEditedValues().equals(initialEditValues);
         }
-        if (hasChange)
-        {
+        if (hasChange) {
             saveGlobalData();
         }
         super.finish();
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         AppConfigStorage.instance.removeChangedConfigListener(this);
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
-        if (initialEditValues != null)
-        {
+        if (initialEditValues != null) {
             latestEditValues = fetchEditedValues();
         }
         populateContent();
@@ -190,15 +164,14 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
     }
 
     @Override
-    public void onChangedConfig()
-    {
+    public void onChangedConfig() {
         populateContent();
     }
 
 
-    // ---
+    // --
     // Layout and content handling
-    // ---
+    // --
 
     private LinearLayout createContentView()
     {
@@ -255,8 +228,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         spinnerView.addView(progressTextView);
 
         // Add build number below loading text
-        if (buildNr > 0)
-        {
+        if (buildNr > 0) {
             TextView progressBuildView = new TextView(this);
             LinearLayout.LayoutParams buildLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             buildLayoutParams.setMargins(0, dp(2), 0, 0);
@@ -268,18 +240,13 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         return layout;
     }
 
-    private void generateEditingContent(String category, ArrayList<String> values, AppConfigStorageItem config, AppConfigBaseModel baseModel)
-    {
+    private void generateEditingContent(String category, ArrayList<String> values, AppConfigStorageItem config, AppConfigBaseModel baseModel) {
         // Start section
         String title = getString(R.string.app_config_header_global_prefix);
-        if (category != null)
-        {
-            if (category.length() > 0)
-            {
+        if (category != null) {
+            if (category.length() > 0) {
                 title += ": " + category;
-            }
-            else
-            {
+            } else {
                 title += ": " + getString(R.string.app_config_header_edit_other);
             }
         }
@@ -288,49 +255,39 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         // Fetch objects and filter by category
         ArrayList<String> editValues = new ArrayList<>();
         ArrayList<Object> editObjects = new ArrayList<>();
-        for (String value : values)
-        {
+        for (String value : values) {
             boolean belongsToCategory = true;
-            if (category != null && baseModel != null)
-            {
+            if (category != null && baseModel != null) {
                 belongsToCategory = baseModel.valueBelongsToCategory(value, category);
             }
-            if (belongsToCategory && !value.equals("name"))
-            {
+            if (belongsToCategory && !value.equals("name")) {
                 editValues.add(value);
                 editObjects.add(baseModel != null ? baseModel.getCurrentValue(value) : config.get(value));
             }
         }
 
         // Add editing views
-        for (int i = 0; i < editValues.size(); i++)
-        {
+        for (int i = 0; i < editValues.size(); i++) {
             final String value = editValues.get(i);
             View layoutView = null;
             final Object result = editObjects.get(i);
-            if (result != null)
-            {
-                if (result instanceof Boolean)
-                {
+            if (result != null) {
+                if (result instanceof Boolean) {
                     layoutView = AppConfigSwitchCell.generateSwitchView(this, value, (Boolean)result, null);
-                }
-                else if (result.getClass().isEnum())
-                {
+                } else if (result.getClass().isEnum()) {
                     final int index = fieldViews.size();
                     layoutView = AppConfigClickableCell.generateButtonView(this, value, value + ": " + result.toString(), false);
-                    layoutView.setOnClickListener(new View.OnClickListener()
-                    {
+                    layoutView.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v)
-                        {
-                            Object constants[] = result.getClass().getEnumConstants();
+                        public void onClick(View v) {
+                            Object[] constants = result.getClass().getEnumConstants();
                             ArrayList<String> enumValues = new ArrayList<>();
-                            for (Object constant : constants)
-                            {
-                                enumValues.add(constant.toString());
+                            if (constants != null) {
+                                for (Object constant : constants) {
+                                    enumValues.add(constant.toString());
+                                }
                             }
-                            if (enumValues.size() > 0)
-                            {
+                            if (enumValues.size() > 0) {
                                 AppConfigStringChoiceActivity.startWithResult(
                                         ManageAppConfigActivity.this,
                                         getString(R.string.app_config_title_choose_enum_prefix) + " " + value,
@@ -341,17 +298,12 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                             }
                         }
                     });
-                }
-                else if (result instanceof Integer || result instanceof Long)
-                {
+                } else if (result instanceof Integer || result instanceof Long) {
                     layoutView = AppConfigEditableCell.generateEditableView(this, value, "" + result, true, null);
-                }
-                else if (result instanceof String)
-                {
+                } else if (result instanceof String) {
                     layoutView = AppConfigEditableCell.generateEditableView(this, value, (String)result, false, null);
                 }
-                if (layoutView != null)
-                {
+                if (layoutView != null) {
                     managingView.addSectionItem(layoutView);
                     fieldViews.add(layoutView.findViewWithTag(value));
                 }
@@ -362,13 +314,11 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         managingView.endSection();
     }
 
-    private void populateContent()
-    {
+    private void populateContent() {
         // Show/hide spinner depending on the config being loaded
         spinnerView.setVisibility(AppConfigStorage.instance.isLoaded() ? View.GONE : View.VISIBLE);
         managingView.setVisibility(AppConfigStorage.instance.isLoaded() ? View.VISIBLE : View.GONE);
-        if (!AppConfigStorage.instance.isLoaded())
-        {
+        if (!AppConfigStorage.instance.isLoaded()) {
             return;
         }
 
@@ -378,8 +328,7 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
 
         // Add last selected configuration (if present)
         ArrayList<String> configs = AppConfigStorage.instance.configList();
-        if (configs.size() > 0)
-        {
+        if (configs.size() > 0) {
             // Start section
             managingView.startSection(getString(R.string.app_config_header_list_last_selection));
 
@@ -387,14 +336,11 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             String buttonName;
             boolean isOverride = false;
             boolean hasLastSelection = false;
-            if (AppConfigStorage.instance.getSelectedConfig() != null)
-            {
+            if (AppConfigStorage.instance.getSelectedConfig() != null) {
                 buttonName = AppConfigStorage.instance.getSelectedConfigName();
                 isOverride = AppConfigStorage.instance.isConfigOverride(buttonName);
                 hasLastSelection = true;
-            }
-            else
-            {
+            } else {
                 buttonName = getString(R.string.app_config_item_none);
             }
 
@@ -402,23 +348,18 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             AppConfigClickableCell selectButton = AppConfigClickableCell.generateButtonView(this, buttonName, isOverride);
             selectButton.setId(R.id.app_config_activity_manage_select_current);
             managingView.addSectionItem(selectButton);
-            if (hasLastSelection)
-            {
-                selectButton.setOnClickListener(new View.OnClickListener()
-                {
+            if (hasLastSelection) {
+                selectButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         setResult(RESULT_OK);
                         finish();
                     }
                 });
                 final String configName = buttonName;
-                selectButton.setOnLongClickListener(new View.OnLongClickListener()
-                {
+                selectButton.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public boolean onLongClick(View v)
-                    {
+                    public boolean onLongClick(View v) {
                         EditAppConfigActivity.startWithResult(ManageAppConfigActivity.this, configName, false, RESULT_CODE_EDIT_CONFIG);
                         return true;
                     }
@@ -430,33 +371,27 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         }
 
         // Add list of configurations
-        if (configs.size() > 0)
-        {
+        if (configs.size() > 0) {
             // Start section
             managingView.startSection(getString(R.string.app_config_header_list));
 
             // Add buttons
-            for (final String configName : configs)
-            {
+            for (final String configName : configs) {
                 AppConfigClickableCell configButton = AppConfigClickableCell.generateButtonView(this, configName, AppConfigStorage.instance.isConfigOverride(configName));
                 configButton.setTag("config: " + configName);
                 managingView.addSectionItem(configButton);
-                configButton.setOnClickListener(new View.OnClickListener()
-                {
+                configButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         saveGlobalData();
                         AppConfigStorage.instance.selectConfig(ManageAppConfigActivity.this, configName);
                         setResult(RESULT_OK);
                         finish();
                     }
                 });
-                configButton.setOnLongClickListener(new View.OnLongClickListener()
-                {
+                configButton.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public boolean onLongClick(View v)
-                    {
+                    public boolean onLongClick(View v) {
                         EditAppConfigActivity.startWithResult(ManageAppConfigActivity.this, configName, false, RESULT_CODE_EDIT_CONFIG);
                         return true;
                     }
@@ -468,36 +403,29 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         }
 
         // Add area for custom configurations, and adding them
-        if (configs.size() > 0)
-        {
+        if (configs.size() > 0) {
             // Start section
             managingView.startSection(getString(R.string.app_config_header_list_custom));
 
             // Add buttons
             ArrayList<String> customConfigs = AppConfigStorage.instance.customConfigList();
-            for (final String configName : customConfigs)
-            {
-                if (AppConfigStorage.instance.isCustomConfig(configName))
-                {
+            for (final String configName : customConfigs) {
+                if (AppConfigStorage.instance.isCustomConfig(configName)) {
                     AppConfigClickableCell configButton = AppConfigClickableCell.generateButtonView(this, configName, false);
                     configButton.setTag("config: " + configName);
                     managingView.addSectionItem(configButton);
-                    configButton.setOnClickListener(new View.OnClickListener()
-                    {
+                    configButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v)
-                        {
+                        public void onClick(View v) {
                             saveGlobalData();
                             AppConfigStorage.instance.selectConfig(ManageAppConfigActivity.this, configName);
                             setResult(RESULT_OK);
                             finish();
                         }
                     });
-                    configButton.setOnLongClickListener(new View.OnLongClickListener()
-                    {
+                    configButton.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
-                        public boolean onLongClick(View v)
-                        {
+                        public boolean onLongClick(View v) {
                             EditAppConfigActivity.startWithResult(ManageAppConfigActivity.this, configName, false, RESULT_CODE_EDIT_CONFIG);
                             return true;
                         }
@@ -509,11 +437,9 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
             AppConfigClickableCell newButton = AppConfigClickableCell.generateButtonView(this, getString(R.string.app_config_action_add), false);
             newButton.setId(R.id.app_config_activity_manage_new_custom);
             managingView.addSectionItem(newButton);
-            newButton.setOnClickListener(new View.OnClickListener()
-            {
+            newButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     ArrayList<String> configs = AppConfigStorage.instance.configList();
                     AppConfigStringChoiceActivity.startWithResult(ManageAppConfigActivity.this, getString(R.string.app_config_title_edit_new), getString(R.string.app_config_header_choose_custom_copy), configs, RESULT_CODE_CUSTOM_COPY_FROM);
                 }
@@ -525,15 +451,13 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
 
         // Determine global values and categories
         AppConfigStorageItem config = AppConfigStorage.instance.getGlobalConfig();
-        if (latestEditValues != null)
-        {
+        if (latestEditValues != null) {
             config = latestEditValues;
         }
         ArrayList<String> values = config.valueList();
         ArrayList<String> categories = new ArrayList<>();
         AppConfigBaseModel baseModel = null;
-        if (AppConfigStorage.instance.getConfigManager() != null)
-        {
+        if (AppConfigStorage.instance.getConfigManager() != null) {
             baseModel = AppConfigStorage.instance.getConfigManager().getBaseModelInstance();
             baseModel.applyCustomSettings("Global", config);
             values = AppConfigStorage.instance.getConfigManager().getBaseModelInstance().globalValueList();
@@ -541,41 +465,30 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
         }
 
         // Add global editing fields to view (if present)
-        if (values.size() > 0)
-        {
-            if (categories.size() > 0)
-            {
-                for (String category : categories)
-                {
+        if (values.size() > 0) {
+            if (categories.size() > 0) {
+                for (String category : categories) {
                     generateEditingContent(category, values, config, baseModel);
                 }
-            }
-            else
-            {
+            } else {
                 generateEditingContent(null, values, config, baseModel);
             }
         }
 
         // Add plugins
-        if (AppConfigStorage.instance.getConfigManager() != null && AppConfigStorage.instance.getConfigManager().getPlugins() != null && AppConfigStorage.instance.getConfigManager().getPlugins().size() > 0)
-        {
+        if (AppConfigStorage.instance.getConfigManager() != null && AppConfigStorage.instance.getConfigManager().getPlugins() != null && AppConfigStorage.instance.getConfigManager().getPlugins().size() > 0) {
             // Start section
             managingView.startSection(getString(R.string.app_config_header_list_plugins));
 
             // Add plugins
-            for (final AppConfigPlugin plugin : AppConfigStorage.instance.getConfigManager().getPlugins())
-            {
+            for (final AppConfigPlugin plugin : AppConfigStorage.instance.getConfigManager().getPlugins()) {
                 // Determine text for plugin
                 String buttonText = plugin.displayName();
-                if (buttonText != null)
-                {
-                    if (plugin.displayValue() != null && plugin.displayValue().length() > 0)
-                    {
+                if (buttonText != null) {
+                    if (plugin.displayValue() != null && plugin.displayValue().length() > 0) {
                         buttonText += ": " + plugin.displayValue();
                     }
-                }
-                else
-                {
+                } else {
                     buttonText = plugin.displayValue();
                 }
 
@@ -583,17 +496,24 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
                 AppConfigClickableCell pluginButton = AppConfigClickableCell.generateButtonView(this, buttonText, false);
                 pluginButton.setTag("plugin: " + plugin.displayName());
                 managingView.addSectionItem(pluginButton);
-                if (plugin.canInteract())
-                {
-                    pluginButton.setOnClickListener(new View.OnClickListener()
-                    {
+                if (plugin.canInteract()) {
+                    pluginButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v)
-                        {
+                        public void onClick(View v) {
                             plugin.interact(ManageAppConfigActivity.this);
                             populateContent();
                         }
                     });
+                    if (plugin.canEdit()) {
+                        pluginButton.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                plugin.edit(ManageAppConfigActivity.this);
+                                populateContent();
+                                return true;
+                            }
+                        });
+                    }
                 }
             }
 
@@ -609,52 +529,37 @@ public class ManageAppConfigActivity extends Activity implements AppConfigStorag
     }
 
 
-    // ---
+    // --
     // Global configuration mutations
-    // ---
+    // --
 
-    private AppConfigStorageItem fetchEditedValues()
-    {
+    private AppConfigStorageItem fetchEditedValues() {
         AppConfigStorageItem item = new AppConfigStorageItem();
-        for (View view : fieldViews)
-        {
-            if (view.getTag() == null)
-            {
+        for (View view : fieldViews) {
+            if (view.getTag() == null) {
                 break;
             }
-            if (view instanceof AppConfigEditableCell)
-            {
-                if (((AppConfigEditableCell)view).isNumberLimit())
-                {
+            if (view instanceof AppConfigEditableCell) {
+                if (((AppConfigEditableCell)view).isNumberLimit()) {
                     long number = 0;
-                    try
-                    {
+                    try {
                         number = Long.parseLong(((AppConfigEditableCell)view).getValue());
-                    }
-                    catch (Exception ignored)
-                    {
+                    } catch (Exception ignored) {
                     }
                     item.putLong((String)view.getTag(), number);
-                }
-                else
-                {
+                } else {
                     item.putString((String)view.getTag(), ((AppConfigEditableCell)view).getValue());
                 }
-            }
-            else if (view instanceof AppConfigSwitchCell)
-            {
+            } else if (view instanceof AppConfigSwitchCell) {
                 item.putBoolean((String)view.getTag(), ((AppConfigSwitchCell)view).isChecked());
-            }
-            else if (view instanceof AppConfigClickableCell)
-            {
+            } else if (view instanceof AppConfigClickableCell) {
                 item.putString((String)view.getTag(), ((AppConfigClickableCell)view).getText().replace(view.getTag() + ": ", ""));
             }
         }
         return item;
     }
 
-    private void saveGlobalData()
-    {
+    private void saveGlobalData() {
         AppConfigStorageItem item = fetchEditedValues();
         AppConfigStorage.instance.updateGlobalConfig(ManageAppConfigActivity.this, item);
     }

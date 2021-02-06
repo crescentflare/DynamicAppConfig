@@ -28,7 +28,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     // --
     
     weak var delegate: AppConfigEditTableDelegate?
-    var tableValues: [AppConfigEditTableValue] = []
+    var tableValues = [AppConfigEditTableValue]()
     var configName = ""
     var newConfig = false
     let table = UITableView()
@@ -83,7 +83,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     
     func setConfiguration(settings: [String: Any], model: AppConfigBaseModel?) {
         // Add editable fields
-        var rawTableValues: [AppConfigEditTableValue] = []
+        var rawTableValues = [AppConfigEditTableValue]()
         tableValues = []
         if settings.count > 0 {
             // First add the name section + field for custom configurations
@@ -103,7 +103,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
                 // Using model and optional categories
                 let modelValues = model?.obtainConfigurationValues() ?? [:]
                 let hasMultipleCategories = categorizedFields.allKeys().count > 1
-                var sortedCategories: [String] = []
+                var sortedCategories = [String]()
                 for category in categorizedFields.allKeys() {
                     if category.count > 0 {
                         sortedCategories.append(category)
@@ -192,7 +192,7 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
         rawTableValues.append(AppConfigEditTableValue.valueForAction(.cancel, andText: AppConfigBundle.localizedString(key: "CFLAC_EDIT_ACTION_CANCEL")))
 
         // Style table by adding dividers and reload
-        var prevType: AppConfigEditTableValueType = .unknown
+        var prevType = AppConfigEditTableValueType.unknown
         for tableValue in rawTableValues {
             if !prevType.isCellType() && tableValue.type.isCellType() {
                 tableValues.append(AppConfigEditTableValue.valueForDivider(type: .topDivider))
@@ -213,27 +213,26 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     }
     
     func obtainNewConfigurationSettings() -> [String: Any] {
-        var result: [String: Any] = [:]
+        var result = [String: Any]()
         result["name"] = configName
         for tableValue in tableValues {
-            switch tableValue.type {
-            case .textEntry:
-                if tableValue.limitUsage {
-                    let formatter = NumberFormatter()
-                    formatter.numberStyle = .decimal
-                    result[tableValue.configSetting!] = formatter.number(from: tableValue.labelString)
-                } else {
-                    result[tableValue.configSetting!] = tableValue.labelString
+            if let configSetting = tableValue.configSetting {
+                switch tableValue.type {
+                case .textEntry:
+                    if tableValue.limitUsage {
+                        let formatter = NumberFormatter()
+                        formatter.numberStyle = .decimal
+                        result[configSetting] = formatter.number(from: tableValue.labelString)
+                    } else {
+                        result[configSetting] = tableValue.labelString
+                    }
+                case .switchValue:
+                    result[configSetting] = tableValue.booleanValue
+                case .selection:
+                    result[configSetting] = tableValue.labelString
+                default:
+                    break // Others are not editable cells
                 }
-                break
-            case .switchValue:
-                result[tableValue.configSetting!] = tableValue.booleanValue
-                break
-            case .selection:
-                result[tableValue.configSetting!] = tableValue.labelString
-                break
-            default:
-                break // Others are not editable cells
             }
         }
         return result
@@ -379,13 +378,10 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
             switch tableValue.action {
             case .save:
                 delegate?.saveConfig(newSettings: obtainNewConfigurationSettings())
-                break
             case .cancel:
                 delegate?.cancelEditing()
-                break
             case .revert:
                 delegate?.revertConfig()
-                break
             default:
                 break
             }
@@ -439,8 +435,8 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     func changedSwitchState(_ on: Bool, forConfigSetting: String) {
         for i in 0..<tableValues.count {
             let tableValue = tableValues[i]
-            if tableValue.configSetting == forConfigSetting {
-                tableValues[i] = AppConfigEditTableValue.valueForSwitchValue(configSetting: tableValue.configSetting!, andSwitchedOn: on)
+            if let configSetting = tableValue.configSetting, configSetting == forConfigSetting {
+                tableValues[i] = AppConfigEditTableValue.valueForSwitchValue(configSetting: configSetting, andSwitchedOn: on)
                 delegate?.configChanged(newSettings: obtainNewConfigurationSettings())
                 break
             }
@@ -455,9 +451,9 @@ class AppConfigEditTable : UIView, UITableViewDataSource, UITableViewDelegate, A
     func selectedItem(_ item: String, token: String?) {
         for i in 0..<tableValues.count {
             let tableValue = tableValues[i]
-            if tableValue.configSetting == token {
+            if let configSetting = tableValue.configSetting, configSetting == token {
                 let totalIndexPath = IndexPath.init(row: i, section: 0)
-                tableValues[i] = AppConfigEditTableValue.valueForSelection(configSetting: tableValue.configSetting!, andValue: item, andChoices: tableValue.selectionItems!)
+                tableValues[i] = AppConfigEditTableValue.valueForSelection(configSetting: configSetting, andValue: item, andChoices: tableValue.selectionItems!)
                 table.beginUpdates()
                 table.reloadRows(at: [totalIndexPath], with: .none)
                 table.endUpdates()

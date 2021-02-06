@@ -8,15 +8,14 @@ import java.util.Arrays;
 /**
  * Unit test: base model
  */
-public class AppConfigBaseModelTest
-{
-    // ---
+public class AppConfigBaseModelTest {
+
+    // --
     // Test cases
-    // ---
+    // --
 
     @Test
-    public void testConfigurationValueListForFields()
-    {
+    public void testConfigurationValueListForFields() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         String[] expectedValues = { "simpleEnumField", "complexEnumField", "stringField", "longField", "intField", "boolField" };
         String[] modelValues = model.configurationValueList().toArray(new String[0]);
@@ -26,8 +25,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGlobalValueListForFields()
-    {
+    public void testGlobalValueListForFields() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         String[] expectedValues = { "globalComplexEnumField", "globalStringField" };
         String[] modelValues = model.globalValueList().toArray(new String[0]);
@@ -37,8 +35,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testConfigurationValueListForMethods()
-    {
+    public void testConfigurationValueListForMethods() {
         DerivedModelWithMethods model = new DerivedModelWithMethods();
         String[] expectedValues = { "simpleEnumField", "complexEnumField", "stringField", "longField", "intField", "boolField" };
         String[] modelValues = model.configurationValueList().toArray(new String[0]);
@@ -48,8 +45,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGlobalValueListForMethods()
-    {
+    public void testGlobalValueListForMethods() {
         DerivedModelWithMethods model = new DerivedModelWithMethods();
         String[] expectedValues = { "globalComplexEnumField", "globalStringField" };
         String[] modelValues = model.globalValueList().toArray(new String[0]);
@@ -59,8 +55,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGetConfigurationCategories()
-    {
+    public void testGetConfigurationCategories() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         String[] expectedValues = { "Enums", "Strings", "Numbers", "Booleans" };
         String[] modelValues = model.getConfigurationCategories().toArray(new String[0]);
@@ -70,8 +65,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGetGlobalCategories()
-    {
+    public void testGetGlobalCategories() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         String[] expectedValues = { "GlobalEnums", "GlobalStrings" };
         String[] modelValues = model.getGlobalCategories().toArray(new String[0]);
@@ -81,8 +75,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGetCategoriesWithUnCategorized()
-    {
+    public void testGetCategoriesWithUnCategorized() {
         DerivedModelWithMethods model = new DerivedModelWithMethods();
         String[] expectedValues = { "Enums", "Strings", "Numbers", "" };
         String[] modelValues = model.getConfigurationCategories().toArray(new String[0]);
@@ -92,8 +85,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGetCurrentValueForFields()
-    {
+    public void testGetCurrentValueForFields() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         model.simpleEnumField = SimpleEnum.Value;
         model.complexEnumField = ComplexEnum.Test;
@@ -110,8 +102,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testGetCurrentValueForMethods()
-    {
+    public void testGetCurrentValueForMethods() {
         DerivedModelWithMethods model = new DerivedModelWithMethods();
         model.setSimpleEnumField(SimpleEnum.Name);
         model.setComplexEnumField(ComplexEnum.Application);
@@ -128,8 +119,7 @@ public class AppConfigBaseModelTest
     }
 
     @Test
-    public void testApplyCustomSettingsForFields()
-    {
+    public void testApplyCustomSettingsForFields() {
         DerivedModelWithFields model = new DerivedModelWithFields();
         AppConfigStorageItem overrides = new AppConfigStorageItem();
         overrides.putString("simpleEnumField", SimpleEnum.Simple.toString());
@@ -142,14 +132,13 @@ public class AppConfigBaseModelTest
         Assert.assertEquals(SimpleEnum.Simple, model.simpleEnumField);
         Assert.assertEquals(ComplexEnum.EnumValues, model.complexEnumField);
         Assert.assertEquals("Override test", model.stringField);
-        Assert.assertEquals((long)83480, model.longField);
+        Assert.assertEquals(83480, model.longField);
         Assert.assertEquals(-19028234, model.intField);
-        Assert.assertEquals(false, model.boolField);
+        Assert.assertFalse(model.boolField);
     }
 
     @Test
-    public void testApplyCustomSettingsForMethods()
-    {
+    public void testApplyCustomSettingsForMethods() {
         DerivedModelWithMethods model = new DerivedModelWithMethods();
         AppConfigStorageItem overrides = new AppConfigStorageItem();
         overrides.putString("simpleEnumField", SimpleEnum.Value.toString());
@@ -162,44 +151,40 @@ public class AppConfigBaseModelTest
         Assert.assertEquals(SimpleEnum.Value, model.getSimpleEnumField());
         Assert.assertEquals(ComplexEnum.Application, model.getComplexEnumField());
         Assert.assertEquals("Another override test", model.getStringField());
-        Assert.assertEquals((long)-234908, model.getLongField());
+        Assert.assertEquals(-234908, model.getLongField());
         Assert.assertEquals(908345, model.getIntField());
-        Assert.assertEquals(true, model.isBoolField());
+        Assert.assertTrue(model.isBoolField());
     }
 
 
-    // ---
+    // --
     // A simple enum
-    // ---
+    // --
 
-    public enum SimpleEnum
-    {
+    public enum SimpleEnum {
         Simple,
         Value,
-        Name;
+        Name
     }
 
 
-    // ---
+    // --
     // A more complex enum which has string serialization
-    // ---
+    // --
 
-    public enum ComplexEnum
-    {
+    public enum ComplexEnum {
         Unknown(""),
         Test("test"),
         Application("application"),
         EnumValues("enumValues");
 
-        private String text;
+        private final String text;
 
-        ComplexEnum(String text)
-        {
+        ComplexEnum(String text) {
             this.text = text;
         }
 
-        public static ComplexEnum fromString(String text)
-        {
+        public static ComplexEnum fromString(String text) {
             if (text != null)
                 for (ComplexEnum e : ComplexEnum.values())
                     if (text.equalsIgnoreCase(e.text))
@@ -207,19 +192,17 @@ public class AppConfigBaseModelTest
             return Unknown;
         }
 
-        public String toString()
-        {
+        public String toString() {
             return text;
         }
     }
 
 
-    // ---
+    // --
     // A derived model using public fields
-    // ---
+    // --
 
-    public static class DerivedModelWithFields extends AppConfigBaseModel
-    {
+    public static class DerivedModelWithFields extends AppConfigBaseModel {
         @AppConfigModelCategory("Enums")
         public SimpleEnum simpleEnumField = SimpleEnum.Simple;
 
@@ -248,12 +231,11 @@ public class AppConfigBaseModelTest
     }
 
 
-    // ---
+    // --
     // A derived model using getters and setters
-    // ---
+    // --
 
-    public static class DerivedModelWithMethods extends AppConfigBaseModel
-    {
+    public static class DerivedModelWithMethods extends AppConfigBaseModel {
         @AppConfigModelCategory("Enums")
         private SimpleEnum simpleEnumField = SimpleEnum.Simple;
 
@@ -279,97 +261,78 @@ public class AppConfigBaseModelTest
         @AppConfigModelCategory("GlobalStrings")
         private String globalStringField = "";
 
-        public SimpleEnum getSimpleEnumField()
-        {
+        public SimpleEnum getSimpleEnumField() {
             return simpleEnumField;
         }
 
-        public void setSimpleEnumField(SimpleEnum simpleEnumField)
-        {
+        public void setSimpleEnumField(SimpleEnum simpleEnumField) {
             this.simpleEnumField = simpleEnumField;
         }
 
-        public ComplexEnum getComplexEnumField()
-        {
+        public ComplexEnum getComplexEnumField() {
             return complexEnumField;
         }
 
-        public void setComplexEnumField(ComplexEnum complexEnumField)
-        {
+        public void setComplexEnumField(ComplexEnum complexEnumField) {
             this.complexEnumField = complexEnumField;
         }
 
-        public String getStringField()
-        {
+        public String getStringField() {
             return stringField;
         }
 
-        public void setStringField(String stringField)
-        {
+        public void setStringField(String stringField) {
             this.stringField = stringField;
         }
 
-        public long getLongField()
-        {
+        public long getLongField() {
             return longField;
         }
 
-        public void setLongField(long longField)
-        {
+        public void setLongField(long longField) {
             this.longField = longField;
         }
 
-        public int getIntField()
-        {
+        public int getIntField() {
             return intField;
         }
 
-        public void setIntField(int intField)
-        {
+        public void setIntField(int intField) {
             this.intField = intField;
         }
 
-        public boolean isBoolField()
-        {
+        public boolean isBoolField() {
             return boolField;
         }
 
-        public void setBoolField(boolean boolField)
-        {
+        public void setBoolField(boolean boolField) {
             this.boolField = boolField;
         }
 
-        public void setShouldSkip()
-        {
+        public void setShouldSkip() {
         }
 
-        public String getShouldSkipValue()
-        {
+        public String getShouldSkipValue() {
             return null;
         }
 
-        public boolean isShouldSkipValue()
-        {
+        public boolean isShouldSkipValue() {
             return false;
         }
 
-        public ComplexEnum getGlobalComplexEnumField()
-        {
+        public ComplexEnum getGlobalComplexEnumField() {
             return globalComplexEnumField;
         }
 
-        public void setGlobalComplexEnumField(ComplexEnum globalComplexEnumField)
-        {
+        public void setGlobalComplexEnumField(ComplexEnum globalComplexEnumField) {
             this.globalComplexEnumField = globalComplexEnumField;
         }
 
-        public String getGlobalStringField()
-        {
+        public String getGlobalStringField() {
             return globalStringField;
         }
 
-        public void setGlobalStringField(String globalStringField)
-        {
+        public void setGlobalStringField(String globalStringField) {
             this.globalStringField = globalStringField;
         }
     }

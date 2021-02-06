@@ -3,7 +3,6 @@ package com.crescentflare.dynamicappconfig.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -28,11 +27,11 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library activity: selection activity
  * Select an item from a given set of strings, used when needed to make a choice out of a limited set of options
  */
-public class AppConfigStringChoiceActivity extends Activity
-{
-    // ---
+public class AppConfigStringChoiceActivity extends Activity {
+
+    // --
     // Constants
-    // ---
+    // --
 
     public static final String ARG_INTENT_RESULT_SELECTED_INDEX = "ARG_INTENT_RESULT_SELECTED_INDEX";
     public static final String ARG_INTENT_RESULT_SELECTED_STRING = "ARG_INTENT_RESULT_SELECTED_STRING";
@@ -41,12 +40,11 @@ public class AppConfigStringChoiceActivity extends Activity
     private static final String ARG_CHOICES = "ARG_CHOICES";
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public static Intent newInstance(Context context, String title, String selectionTitle, ArrayList<String> options)
-    {
+    public static Intent newInstance(Context context, String title, String selectionTitle, ArrayList<String> options) {
         Intent intent = new Intent(context, AppConfigStringChoiceActivity.class);
         intent.putExtra(ARG_TITLE, title);
         intent.putExtra(ARG_SELECTION_TITLE, selectionTitle);
@@ -55,8 +53,7 @@ public class AppConfigStringChoiceActivity extends Activity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         // Create main layout
         super.onCreate(savedInstanceState);
         LinearLayout layout = new LinearLayout(this);
@@ -97,13 +94,10 @@ public class AppConfigStringChoiceActivity extends Activity
         adapter.setChoices(getIntent().getStringArrayListExtra(ARG_CHOICES));
 
         // Listview click handler
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                if (parent.getItemAtPosition(position) != null)
-                {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position) != null) {
                     Intent intent = AppConfigStringChoiceActivity.this.getIntent();
                     intent.putExtra(ARG_INTENT_RESULT_SELECTED_INDEX, position);
                     intent.putExtra(ARG_INTENT_RESULT_SELECTED_STRING, (String) parent.getItemAtPosition(position));
@@ -114,18 +108,16 @@ public class AppConfigStringChoiceActivity extends Activity
         });
     }
 
-    public static void startWithResult(Activity fromActivity, String title, String selectionTitle, ArrayList<String> options, int resultCode)
-    {
+    public static void startWithResult(Activity fromActivity, String title, String selectionTitle, ArrayList<String> options, int resultCode) {
         fromActivity.startActivityForResult(newInstance(fromActivity, title, selectionTitle, options), resultCode);
     }
 
 
-    // ---
+    // --
     // View handling
-    // ---
+    // --
 
-    private View generateHeader()
-    {
+    private View generateHeader() {
         LinearLayout createdView = new LinearLayout(this);
         TextView labelView = new TextView(this);
         createdView.setOrientation(LinearLayout.VERTICAL);
@@ -138,8 +130,7 @@ public class AppConfigStringChoiceActivity extends Activity
         return createdView;
     }
 
-    private View generateFooter()
-    {
+    private View generateFooter() {
         // Create container
         LinearLayout dividerLayout = new LinearLayout(this);
         dividerLayout.setOrientation(LinearLayout.VERTICAL);
@@ -152,20 +143,16 @@ public class AppConfigStringChoiceActivity extends Activity
 
         // Middle divider (gradient on background)
         View gradientView = new View(this);
-        int colors[] = new int[]
-        {
+        int[] colors = new int[] {
             AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_start),
             AppConfigViewHelper.getColor(this, R.color.app_config_section_gradient_end),
             AppConfigViewHelper.getColor(this, R.color.app_config_background)
         };
         GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
         gradientView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(8)));
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-        {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             gradientView.setBackgroundDrawable(drawable);
-        }
-        else
-        {
+        } else {
             gradientView.setBackground(drawable);
         }
         dividerLayout.addView(gradientView);

@@ -19,21 +19,20 @@ import static com.crescentflare.dynamicappconfig.helper.AppConfigViewHelper.dp;
  * Library view: simple cell
  * Simulates a list view cell as a switch item
  */
-public class AppConfigSwitchCell extends FrameLayout
-{
-    // ---
+public class AppConfigSwitchCell extends FrameLayout {
+
+    // --
     // Members
-    // ---
+    // --
 
-    private Switch switchView;
+    private final Switch switchView;
 
 
-    // ---
+    // --
     // Factory methods
-    // ---
+    // --
 
-    public static AppConfigSwitchCell generateSwitchView(Context context, String label, boolean setting, CompoundButton.OnCheckedChangeListener changeListener)
-    {
+    public static AppConfigSwitchCell generateSwitchView(Context context, String label, boolean setting, CompoundButton.OnCheckedChangeListener changeListener) {
         AppConfigSwitchCell switchView = new AppConfigSwitchCell(context);
         LinearLayout.LayoutParams switchViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         switchView.setLayoutParams(switchViewLayoutParams);
@@ -45,12 +44,11 @@ public class AppConfigSwitchCell extends FrameLayout
     }
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
-    public AppConfigSwitchCell(Context context)
-    {
+    public AppConfigSwitchCell(Context context) {
         // Prepare container
         super(context);
         LinearLayout container = new LinearLayout(context);
@@ -71,27 +69,23 @@ public class AppConfigSwitchCell extends FrameLayout
     }
 
 
-    // ---
+    // --
     // Modify view
-    // ---
+    // --
 
-    public void setText(String text)
-    {
+    public void setText(String text) {
         switchView.setText(text);
     }
 
-    public void setChecked(boolean checked)
-    {
+    public void setChecked(boolean checked) {
         switchView.setChecked(checked);
     }
 
-    public boolean isChecked()
-    {
+    public boolean isChecked() {
         return switchView.isChecked();
     }
 
-    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener)
-    {
+    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
         switchView.setOnCheckedChangeListener(listener);
     }
 }

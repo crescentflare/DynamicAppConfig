@@ -23,12 +23,15 @@ class AppConfigBundle {
         return UIImage.init(named: named, in: AppConfigBundle.podBundle(), compatibleWith: nil)
     }
     
-    static func loadNib(named: String!, owner: AnyObject!, options: [AnyHashable: Any]!) -> UINib! {
+    static func loadNib(named: String, owner: AnyObject, options: [AnyHashable: Any]? = nil) -> UINib? {
         return UINib(nibName: named, bundle: AppConfigBundle.podBundle())
     }
 
     static func localizedString(key: String) -> String {
-        return NSLocalizedString(key, tableName: "Localizable", bundle: AppConfigBundle.podBundle()!, value: key, comment: "")
+        if let bundle = AppConfigBundle.podBundle() {
+            return NSLocalizedString(key, tableName: "Localizable", bundle: bundle, value: key, comment: "")
+        }
+        return key
     }
 
     

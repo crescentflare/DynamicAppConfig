@@ -15,16 +15,16 @@ class ViewController: UIViewController {
     // MARK: View components
     // --
     
-    @IBOutlet var changeButton: UIButton!
-    @IBOutlet var selectedConfigValue: UILabel!
-    @IBOutlet var apiUrlValue: UILabel!
-    @IBOutlet var runTypeValue: UILabel!
-    @IBOutlet var acceptAllSslValue: UILabel!
-    @IBOutlet var networkTimeoutValue: UILabel!
-    @IBOutlet var consoleUrlValue: UILabel!
-    @IBOutlet var consoleTimeoutValue: UILabel!
-    @IBOutlet var enableConsoleValue: UILabel!
-    @IBOutlet var logLevelValue: UILabel!
+    @IBOutlet var changeButton: UIButton?
+    @IBOutlet var selectedConfigValue: UILabel?
+    @IBOutlet var apiUrlValue: UILabel?
+    @IBOutlet var runTypeValue: UILabel?
+    @IBOutlet var acceptAllSslValue: UILabel?
+    @IBOutlet var networkTimeoutValue: UILabel?
+    @IBOutlet var consoleUrlValue: UILabel?
+    @IBOutlet var consoleTimeoutValue: UILabel?
+    @IBOutlet var enableConsoleValue: UILabel?
+    @IBOutlet var logLevelValue: UILabel?
 
     
     // --
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         self.updateConfigurationValues()
         AppConfigStorage.shared.addDataObserver(self, selector: #selector(configurationDidUpdate), name: AppConfigStorage.configurationChanged)
         if !AppConfigStorage.shared.isActivated() {
-            changeButton.isHidden = true
+            changeButton?.isHidden = true
         }
     }
     
@@ -62,15 +62,15 @@ class ViewController: UIViewController {
         Logger.logVerbose(text: "networkTimeout set to: " + String(ExampleAppConfigManager.currentConfig().networkTimeoutSec))
 
         // Update UI
-        self.selectedConfigValue.text = ExampleAppConfigManager.currentConfig().name
-        self.apiUrlValue.text = ExampleAppConfigManager.currentConfig().apiUrl
-        self.runTypeValue.text = ExampleAppConfigManager.currentConfig().runType.rawValue
-        self.acceptAllSslValue.text = ExampleAppConfigManager.currentConfig().acceptAllSSL ? "true" : "false"
-        self.networkTimeoutValue.text = String(ExampleAppConfigManager.currentConfig().networkTimeoutSec)
-        self.consoleUrlValue.text = ExampleAppConfigManager.currentConfig().consoleUrl
-        self.consoleTimeoutValue.text = String(ExampleAppConfigManager.currentConfig().consoleTimeoutSec)
-        self.enableConsoleValue.text = ExampleAppConfigManager.currentConfig().consoleEnabled ? "true" : "false"
-        self.logLevelValue.text = ExampleAppConfigManager.currentConfig().logLevel.rawValue
+        selectedConfigValue?.text = ExampleAppConfigManager.currentConfig().name
+        apiUrlValue?.text = ExampleAppConfigManager.currentConfig().apiUrl
+        runTypeValue?.text = ExampleAppConfigManager.currentConfig().runType.rawValue
+        acceptAllSslValue?.text = ExampleAppConfigManager.currentConfig().acceptAllSSL ? "true" : "false"
+        networkTimeoutValue?.text = String(ExampleAppConfigManager.currentConfig().networkTimeoutSec)
+        consoleUrlValue?.text = ExampleAppConfigManager.currentConfig().consoleUrl
+        consoleTimeoutValue?.text = String(ExampleAppConfigManager.currentConfig().consoleTimeoutSec)
+        enableConsoleValue?.text = ExampleAppConfigManager.currentConfig().consoleEnabled ? "true" : "false"
+        logLevelValue?.text = ExampleAppConfigManager.currentConfig().logLevel.rawValue
     }
     
     
