@@ -1,27 +1,20 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'DynamicAppConfigLib'
+    PUBLISH_GROUP_ID = 'com.crescentflare.dynamicappconfig'
+    PUBLISH_ARTIFACT_ID = 'DynamicAppConfigLib'
+    PUBLISH_VERSION = library_version
 
-    publishedGroupId = 'com.crescentflare.dynamicappconfig'
-    libraryName = 'DynamicAppConfigAndroid'
-    artifact = 'DynamicAppConfigLib'
+    PUBLISH_DESCRIPTION = "A useful library to support multiple build configurations in one application build"
+    PUBLISH_SITE_URL = "https://github.com/crescentflare/DynamicAppConfig"
+    PUBLISH_GIT_URL = "github.com/crescentflare/DynamicAppConfig"
 
-    libraryDescription = 'A useful library to support multiple build configurations in one application build'
+    PUBLISH_LICENSE_NAME = "The MIT License (MIT)"
+    PUBLISH_LICENSE_URL = "https://opensource.org/licenses/MIT"
 
-    siteUrl = 'https://github.com/crescentflare/DynamicAppConfig'
-    gitUrl = 'https://github.com/crescentflare/DynamicAppConfig.git'
-
-    libraryVersion = '1.4.0'
-
-    developerId = 'crescentflare'
-    developerName = 'Johan Bos'
-    developerEmail = 'info@crescentflare.com'
-
-    licenseName = 'The MIT License (MIT)'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
-    allLicenses = ["MIT"]
+    PUBLISH_DEVELOPER_ID = "crescentflare"
+    PUBLISH_DEVELOPER_NAME = "Johan Bos"
+    PUBLISH_DEVELOPER_EMAIL = "info@crescentflare.com"
 }
 
 android {
@@ -32,7 +25,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
         versionCode 1
-        versionName "1.4.0"
+        versionName library_version
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
@@ -56,5 +49,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: "publish-mavencentral.gradle"
