@@ -64,8 +64,8 @@ publishing {
                 }
 
                 scm {
-                    connection = 'scm:git:' + PUBLISH_GIT_URL + ".git"
-                    developerConnection = 'scm:git:ssh://' + PUBLISH_GIT_URL + ".git"
+                    connection = 'scm:git:' + PUBLISH_GIT_URL + '.git'
+                    developerConnection = 'scm:git:ssh://' + PUBLISH_GIT_URL + '.git'
                     url = 'https://' + PUBLISH_GIT_URL + '/tree/master'
                 }
 

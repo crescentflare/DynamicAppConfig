@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.crescentflare.dynamicappconfig'
     PUBLISH_ARTIFACT_ID = 'DynamicAppConfigLib'
-    PUBLISH_VERSION = android.defaultConfig.versionName
+    PUBLISH_VERSION = library_version
 
     PUBLISH_DESCRIPTION = "A useful library to support multiple build configurations in one application build"
     PUBLISH_SITE_URL = "https://github.com/crescentflare/DynamicAppConfig"
@@ -25,7 +25,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
         versionCode 1
-        versionName "1.4.1"
+        versionName library_version
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 

@@ -1,4 +1,6 @@
 buildscript {
+    ext.library_version = '1.4.1'
+
     repositories {
         google()
         jcenter()
