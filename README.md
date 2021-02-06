@@ -3,7 +3,7 @@
 [![CI Status](http://img.shields.io/travis/crescentflare/DynamicAppConfig.svg?style=flat)](https://travis-ci.org/crescentflare/DynamicAppConfig)
 [![License](https://img.shields.io/cocoapods/l/DynamicAppConfig.svg?style=flat)](http://cocoapods.org/pods/DynamicAppConfig)
 [![Version](https://img.shields.io/cocoapods/v/DynamicAppConfig.svg?style=flat)](http://cocoapods.org/pods/DynamicAppConfig)
-[![Version](https://img.shields.io/maven-central/v/com/crescentflare/dynamicappconfig/DynamicAppConfigLib.svg?style=flat)](https://repo1.maven.org/maven2/com/crescentflare/dynamicappconfig/DynamicAppConfigLib)
+[![Version](https://img.shields.io/maven-central/v/com.crescentflare.dynamicappconfig/DynamicAppConfigLib.svg?style=flat)](https://repo1.maven.org/maven2/com/crescentflare/dynamicappconfig/DynamicAppConfigLib)
 
 **Notice for Android developers**: JCenter plans to shut down in may 2021. To mitigate this, the DynamicAppConfig library has moved to Maven Central from version 1.4.1 onwards. Make sure to update to the latest version in time.
 
